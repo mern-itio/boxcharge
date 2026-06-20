@@ -33,3 +33,5 @@ pm2 save
 
 echo "==> Done. App should be on http://127.0.0.1:3000"
 echo "    Point Nginx to port 3000 — see deploy/nginx.boxcharge.conf"
+echo ""
+echo " First time migrating from old main? Run: bash scripts/migrate-live-server.sh"
