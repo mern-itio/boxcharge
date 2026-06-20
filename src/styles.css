@@ -95,8 +95,16 @@
 
 @layer base {
   * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  html {
+    width: 100%;
+    scroll-behavior: smooth;
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+  }
   body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: clip;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -106,6 +114,8 @@
       radial-gradient(ellipse 60% 50% at 90% 10%, oklch(0.72 0.18 50 / 0.10), transparent 70%);
   }
   h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  img, video, svg { max-width: 100%; height: auto; }
+  #root, [data-tanstack-router] { width: 100%; min-width: 0; }
 }
 
 @layer utilities {

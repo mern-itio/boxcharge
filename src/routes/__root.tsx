@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { name: "theme-color", content: "#0f172a" },
       { property: "og:site_name", content: "BoxCharge" },
       { property: "og:type", content: "website" },
@@ -142,9 +142,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen flex flex-col">
+      <div className="flex min-h-screen w-full min-w-0 flex-col overflow-x-clip">
         {!isAdminSurface && <Header />}
-        <main className="flex-1">
+        <main className="min-w-0 flex-1 w-full">
           <Outlet />
         </main>
         {!isAdminSurface && <Footer />}

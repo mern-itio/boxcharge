@@ -33,6 +33,7 @@ import {
   IndustrySwitcher,
   useIndustryState,
 } from "@/components/site/IndustrySwitcher";
+import { ClientOnly } from "@/components/site/ClientOnly";
 import { Button } from "@/components/ui/button";
 import { buildHead } from "@/components/seo/buildHead";
 import { useHomeSections } from "@/lib/homeCms";
@@ -156,32 +157,32 @@ function Hero() {
       <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
       <div className="pointer-events-none absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
 
-      <div className="relative mx-auto max-w-7xl px-4">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
+      <div className="relative mx-auto w-full max-w-7xl px-3 sm:px-4">
+        <div className="grid min-w-0 items-center gap-10 lg:grid-cols-2 lg:gap-12">
+          <div className="min-w-0">
             <RotatingBadge />
 
             <IndustrySwitcher value={industry} onChange={setIndustry} />
 
-            <h1 className="font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="font-display text-[clamp(1.75rem,7.5vw,3.75rem)] font-semibold leading-[1.08] tracking-tight">
               {cmsHeadline ? (
-                <span className="gradient-text">{cmsHeadline}</span>
+                <span className="gradient-text break-words">{cmsHeadline}</span>
               ) : (
                 <>
                   {DEFAULT_HEADLINE.slice(0, 2).map((w, i) => (
                     <span
                       key={`a-${w}`}
-                      className="word-rise gradient-text mr-3"
+                      className="word-rise gradient-text mr-1.5 inline-block break-words sm:mr-2 lg:mr-3"
                       style={{ animationDelay: `${120 + i * 90}ms` }}
                     >
                       {w}
                     </span>
                   ))}
-                  <br />
+                  <br className="hidden min-[420px]:block" />
                   {DEFAULT_HEADLINE.slice(2).map((w, i) => (
                     <span
                       key={`b-${w}`}
-                      className="word-rise mr-3 text-foreground"
+                      className="word-rise mr-1.5 inline-block break-words text-foreground sm:mr-2 lg:mr-3"
                       style={{ animationDelay: `${360 + i * 90}ms` }}
                     >
                       {w}
@@ -238,7 +239,7 @@ function Hero() {
 
             <div
               key={`chips-${industry}`}
-              className="reveal-init reveal-fade reveal-in mt-8 grid max-w-xl grid-cols-3 gap-3"
+              className="reveal-init reveal-fade reveal-in mt-8 grid max-w-xl grid-cols-1 gap-3 min-[420px]:grid-cols-3"
             >
               {data.chips.map((t, i) => {
                 const ChipIcon = i === 0 ? Icon : i === 1 ? RouteIcon : ShieldCheck;
@@ -254,7 +255,7 @@ function Hero() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
             <GlobeVisual />
           </div>
         </div>
@@ -286,6 +287,18 @@ function RotatingBadge() {
 }
 
 function LiveTicker() {
+  return (
+    <ClientOnly
+      fallback={
+        <div className="mt-6 flex min-h-[34px] flex-wrap items-center gap-2" aria-hidden />
+      }
+    >
+      <LiveTickerInner />
+    </ClientOnly>
+  );
+}
+
+function LiveTickerInner() {
   // Seed today's count based on seconds elapsed in UTC day so SSR + client roughly agree
   const [n, setN] = useState(() => {
     const now = new Date();
@@ -321,7 +334,7 @@ function LiveTicker() {
         </span>
         <span>
           Live · <span className="font-mono text-foreground/80">UTC {clock}</span> ·{" "}
-          <span className="font-medium text-foreground tabular-nums">{n.toLocaleString()}</span>{" "}
+          <span className="font-medium text-foreground tabular-nums">{n.toLocaleString("en-US")}</span>{" "}
           routed today
         </span>
       </div>

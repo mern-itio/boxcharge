@@ -153,11 +153,11 @@ export function GlobeVisual() {
         ))}
       </svg>
 
-      {/* Floating transaction chips */}
-      <ApprovalChip className="left-2 top-8" />
-      <Chip className="right-0 top-1/3" delay="2.4s" label="Routed via" value="Acquirer · APAC" />
-      <ApmChip className="bottom-6 left-6" delay="4.8s" />
-      <Chip className="right-4 bottom-16" delay="3.6s" label="3DS" value="Authenticated" />
+      {/* Floating transaction chips — hidden on narrow screens to avoid overflow */}
+      <ApprovalChip className="left-2 top-8 hidden sm:block" />
+      <Chip className="right-0 top-1/3 hidden sm:block" delay="2.4s" label="Routed via" value="Acquirer · APAC" />
+      <ApmChip className="bottom-6 left-6 hidden md:block" delay="4.8s" />
+      <Chip className="right-4 bottom-16 hidden md:block" delay="3.6s" label="3DS" value="Authenticated" />
     </div>
   );
 }

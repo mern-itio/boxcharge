@@ -87,7 +87,7 @@ export function CheckoutTour() {
     <section id="checkout-tour" className="relative py-24">
       <div className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 mx-auto h-[560px] max-w-5xl -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
 
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto max-w-7xl px-3 sm:px-4">
         <div className="mx-auto max-w-2xl text-center">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
@@ -102,11 +102,11 @@ export function CheckoutTour() {
         </div>
 
         <div
-          className="group relative mx-auto mt-12 max-w-6xl"
+          className="group relative mx-auto mt-12 max-w-6xl overflow-x-auto"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          <div className="gradient-border overflow-hidden rounded-2xl border border-border/60 bg-card/40 shadow-[0_30px_120px_-30px_oklch(0.68_0.18_250/0.45)] backdrop-blur">
+          <div className="gradient-border min-w-[min(100%,320px)] overflow-hidden rounded-2xl border border-border/60 bg-card/40 shadow-[0_30px_120px_-30px_oklch(0.68_0.18_250/0.45)] backdrop-blur">
             <div className="flex items-center gap-2 border-b border-border/60 bg-background/60 px-4 py-2.5">
               <div className="flex gap-1.5">
                 <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />

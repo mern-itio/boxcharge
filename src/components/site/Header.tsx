@@ -64,13 +64,13 @@ export function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="mx-auto mt-3 max-w-7xl px-4">
-        <div className="glass-strong gradient-border flex items-center justify-between rounded-2xl px-4 py-3">
-          <Link to="/" className="flex items-center" aria-label={`${siteName} home`}>
+      <div className="mx-auto mt-2 max-w-7xl px-3 sm:mt-3 sm:px-4">
+        <div className="glass-strong gradient-border flex items-center justify-between gap-2 rounded-2xl px-3 py-2.5 sm:px-4 sm:py-3">
+          <Link to="/" className="flex min-w-0 shrink items-center" aria-label={`${siteName} home`}>
             <img
               src={logoSrc}
               alt={`${siteName} — One API, Many Payments`}
-              className="h-9 w-auto md:h-10"
+              className="h-8 w-auto max-w-[140px] object-contain sm:h-9 sm:max-w-none md:h-10"
               width={1536}
               height={512}
             />
