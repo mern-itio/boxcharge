@@ -7,9 +7,9 @@ const logoPath = resolve("src/assets/boxcharge-logo.png");
 const publicDir = resolve("public");
 
 const logo = await Jimp.read(logoPath);
+// Crop the starting BC mark from the latest logo (left square).
 const cropSize = logo.bitmap.height;
-
-const icon = logo.clone().crop({ x: 0, y: 0, w: cropSize, h: cropSize });
+const bcIcon = logo.clone().crop({ x: 0, y: 0, w: cropSize, h: cropSize });
 
 const sizes = [
   { name: "favicon-16.png", size: 16 },
@@ -21,13 +21,12 @@ const sizes = [
 const icoInputs = [];
 for (const { name, size } of sizes) {
   const out = resolve(publicDir, name);
-  await icon.clone().resize({ w: size, h: size }).write(out);
+  await bcIcon.clone().resize({ w: size, h: size }).write(out);
   if (size === 16 || size === 32 || size === 192) icoInputs.push(out);
 }
 
 const ico = await pngToIco(icoInputs);
 writeFileSync(resolve(publicDir, "favicon.ico"), ico);
+await bcIcon.clone().resize({ w: 512, h: 512 }).write(resolve(publicDir, "favicon.png"));
 
-await icon.clone().resize({ w: 512, h: 512 }).write(resolve(publicDir, "favicon.png"));
-
-console.log("Generated favicons from boxcharge-logo.png (BC mark)");
+console.log("Generated favicons from BoxCharge BC logo mark");
