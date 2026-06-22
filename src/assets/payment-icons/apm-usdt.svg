@@ -1,0 +1,6 @@
+<svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="120" height="80" rx="4" fill="white"/>
+<circle cx="60" cy="40" r="18" fill="#26A17B"/>
+<text x="60" y="46" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="16" font-weight="800" fill="white">®</text>
+<text x="60" y="66" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="10" font-weight="700" fill="#26A17B">USDT</text>
+</svg>

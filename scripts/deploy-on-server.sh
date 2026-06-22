@@ -20,10 +20,24 @@ git pull origin "${DEPLOY_BRANCH:-feat/production-deploy-and-mobile-fixes}"
 echo "==> Install dependencies"
 npm ci
 
+echo "==> Stop app during rebuild (avoids stale asset 500s)"
+if pm2 describe boxcharge >/dev/null 2>&1; then
+  pm2 stop boxcharge
+fi
+
+echo "==> Clean previous build output"
+rm -rf .output
+
 echo "==> Production build (VITE_* vars from .env are baked in here)"
+export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=1536}"
 npm run build
 
-echo "==> Restart PM2"
+if [ ! -f .output/server/index.mjs ]; then
+  echo "ERROR: Build failed — .output/server/index.mjs not found"
+  exit 1
+fi
+
+echo "==> Start / restart PM2"
 if pm2 describe boxcharge >/dev/null 2>&1; then
   pm2 restart ecosystem.config.cjs --update-env
 else

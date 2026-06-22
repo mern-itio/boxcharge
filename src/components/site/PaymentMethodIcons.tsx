@@ -1,29 +1,27 @@
-import type { ComponentType, ReactElement, ReactNode } from "react";
-import {
-  SiVisa,
-  SiMastercard,
-  SiAmericanexpress,
-  SiJcb,
-  SiDiscover,
-  SiDinersclub,
-  SiPix,
-  SiGrab,
-  SiShopee,
-  SiSepa,
-  SiTether,
-  SiKlarna,
-  SiAlipay,
-  SiWechat,
-  SiPaypal,
-  SiApplepay,
-  SiGooglepay,
-} from "@icons-pack/react-simple-icons";
+import type { ReactElement, ReactNode } from "react";
 
+import alipayLogo from "@/assets/payment-icons/apm-alipay.svg?url";
 import bancontactLogo from "@/assets/payment-icons/apm-bancontact.svg?url";
 import giropayLogo from "@/assets/payment-icons/apm-giropay.svg?url";
+import grabLogo from "@/assets/payment-icons/apm-grab.svg?url";
 import idealLogo from "@/assets/payment-icons/apm-ideal.svg?url";
+import klarnaLogo from "@/assets/payment-icons/apm-klarna.svg?url";
+import paypalLogo from "@/assets/payment-icons/apm-paypal.svg?url";
+import pixLogo from "@/assets/payment-icons/apm-pix.svg?url";
 import przelewy24Logo from "@/assets/payment-icons/apm-przelewy24.svg?url";
+import sepaLogo from "@/assets/payment-icons/apm-sepa.svg?url";
+import shopeeLogo from "@/assets/payment-icons/apm-shopee.svg?url";
+import usdtLogo from "@/assets/payment-icons/apm-usdt.svg?url";
+import wechatLogo from "@/assets/payment-icons/apm-wechat-pay.svg?url";
+import amexLogo from "@/assets/payment-icons/cards-american-express.svg?url";
+import dinersLogo from "@/assets/payment-icons/cards-diners.svg?url";
+import discoverLogo from "@/assets/payment-icons/cards-discover.svg?url";
+import jcbLogo from "@/assets/payment-icons/cards-jcb.svg?url";
+import mastercardLogo from "@/assets/payment-icons/cards-mastercard.svg?url";
 import unionpayLogo from "@/assets/payment-icons/cards-unionpay.svg?url";
+import visaLogo from "@/assets/payment-icons/cards-visa.svg?url";
+import applePayLogo from "@/assets/payment-icons/wallets-apple-pay.svg?url";
+import googlePayLogo from "@/assets/payment-icons/wallets-google-pay.svg?url";
 
 type IconProps = { className?: string; size?: "xs" | "sm" | "md" | "lg" };
 
@@ -34,42 +32,40 @@ const SIZE: Record<NonNullable<IconProps["size"]>, string> = {
   lg: "h-8",
 };
 
-type SiIcon = ComponentType<{ size?: number; color?: string; className?: string }>;
-
-const SI_LOGOS: Record<string, { Icon: SiIcon; color: string }> = {
-  VISA: { Icon: SiVisa, color: "#1A1F71" },
-  Visa: { Icon: SiVisa, color: "#1A1F71" },
-  Mastercard: { Icon: SiMastercard, color: "#EB001B" },
-  AMEX: { Icon: SiAmericanexpress, color: "#2E77BC" },
-  Amex: { Icon: SiAmericanexpress, color: "#2E77BC" },
-  "American Express": { Icon: SiAmericanexpress, color: "#2E77BC" },
-  JCB: { Icon: SiJcb, color: "#0B4EA2" },
-  Discover: { Icon: SiDiscover, color: "#FF6000" },
-  Diners: { Icon: SiDinersclub, color: "#0079BE" },
-  "Diners Club": { Icon: SiDinersclub, color: "#0079BE" },
-
-  SEPA: { Icon: SiSepa, color: "#10298E" },
-  PIX: { Icon: SiPix, color: "#32BCAD" },
-  Pix: { Icon: SiPix, color: "#32BCAD" },
-  Klarna: { Icon: SiKlarna, color: "#FFB3C7" },
-  Sofort: { Icon: SiKlarna, color: "#FFB3C7" },
-  Alipay: { Icon: SiAlipay, color: "#1677FF" },
-  "WeChat Pay": { Icon: SiWechat, color: "#07C160" },
-  WeChat: { Icon: SiWechat, color: "#07C160" },
-  PayPal: { Icon: SiPaypal, color: "#003087" },
-  "Apple Pay": { Icon: SiApplepay, color: "#000000" },
-  "Google Pay": { Icon: SiGooglepay, color: "#4285F4" },
-  GrabPay: { Icon: SiGrab, color: "#00B14F" },
-  ShopeePay: { Icon: SiShopee, color: "#EE4D2D" },
-  USDT: { Icon: SiTether, color: "#26A17B" },
-  "USDT TRC-20": { Icon: SiTether, color: "#26A17B" },
-  "Card networks": { Icon: SiVisa, color: "#1A1F71" },
-  "Local cards": { Icon: SiMastercard, color: "#EB001B" },
-};
-
-/** Official SVG marks bundled via Vite (not available in Simple Icons). */
-const IMG_LOGOS: Record<string, string> = {
+const BRAND_LOGOS: Record<string, string> = {
+  VISA: visaLogo,
+  Visa: visaLogo,
+  "Card networks": visaLogo,
+  Mastercard: mastercardLogo,
+  "Local cards": mastercardLogo,
+  AMEX: amexLogo,
+  Amex: amexLogo,
+  "American Express": amexLogo,
+  JCB: jcbLogo,
+  Discover: discoverLogo,
+  Diners: dinersLogo,
+  "Diners Club": dinersLogo,
   UnionPay: unionpayLogo,
+  SEPA: sepaLogo,
+  "SEPA Direct Debit": sepaLogo,
+  "SEPA Instant": sepaLogo,
+  "SEPA payouts": sepaLogo,
+  "SEPA Credit Transfer": sepaLogo,
+  "SEPA Instant (SCT Inst)": sepaLogo,
+  PIX: pixLogo,
+  Pix: pixLogo,
+  Klarna: klarnaLogo,
+  Sofort: klarnaLogo,
+  Alipay: alipayLogo,
+  "WeChat Pay": wechatLogo,
+  WeChat: wechatLogo,
+  PayPal: paypalLogo,
+  "Apple Pay": applePayLogo,
+  "Google Pay": googlePayLogo,
+  GrabPay: grabLogo,
+  ShopeePay: shopeeLogo,
+  USDT: usdtLogo,
+  "USDT TRC-20": usdtLogo,
   iDEAL: idealLogo,
   Bancontact: bancontactLogo,
   GiroPay: giropayLogo,
@@ -77,18 +73,6 @@ const IMG_LOGOS: Record<string, string> = {
   P24: przelewy24Logo,
   Przelewy24: przelewy24Logo,
 };
-
-const ALIASES: Record<string, string> = {
-  "SEPA Direct Debit": "SEPA",
-  "SEPA Instant": "SEPA",
-  "SEPA payouts": "SEPA",
-  "SEPA Credit Transfer": "SEPA",
-  "SEPA Instant (SCT Inst)": "SEPA",
-};
-
-function resolveName(name: string) {
-  return ALIASES[name] ?? name;
-}
 
 function BrandImage({ src, alt, className, size = "md" }: { src: string; alt: string } & IconProps) {
   return (
@@ -102,17 +86,6 @@ function BrandImage({ src, alt, className, size = "md" }: { src: string; alt: st
   );
 }
 
-function BrandSimpleIcon({
-  Icon,
-  color,
-  alt,
-  className,
-  size = "md",
-}: { Icon: SiIcon; color: string; alt: string } & IconProps) {
-  const px = size === "xs" ? 16 : size === "sm" ? 20 : size === "lg" ? 32 : 24;
-  return <Icon size={px} color={color} aria-label={alt} className={className} />;
-}
-
 function BrandFallback({ name, size = "md" }: { name: string } & IconProps) {
   return (
     <span
@@ -124,12 +97,9 @@ function BrandFallback({ name, size = "md" }: { name: string } & IconProps) {
 }
 
 export function BrandIcon({ name, className, size = "md" }: { name: string } & IconProps) {
-  const key = resolveName(name);
-  const si = SI_LOGOS[key];
-  if (si) return <BrandSimpleIcon Icon={si.Icon} color={si.color} alt={key} className={className} size={size} />;
-  const img = IMG_LOGOS[key];
-  if (img) return <BrandImage src={img} alt={key} className={className} size={size} />;
-  return <BrandFallback name={key} size={size} />;
+  const src = BRAND_LOGOS[name];
+  if (src) return <BrandImage src={src} alt={name} className={className} size={size} />;
+  return <BrandFallback name={name} size={size} />;
 }
 
 export function PaymentMethodIcon({ name, className, size = "md" }: { name: string } & IconProps) {
