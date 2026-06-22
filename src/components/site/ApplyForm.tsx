@@ -5,7 +5,7 @@ export function ApplyForm() {
   return (
     <section id="apply" className="py-24">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="grid gap-8 lg:grid-cols-5">
+        <div className="grid items-start gap-8 lg:grid-cols-5">
           <aside className="lg:col-span-2">
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Get a tailored plan
@@ -38,7 +38,7 @@ export function ApplyForm() {
           </aside>
 
           <div className="lg:col-span-3">
-            <div className="glass-strong gradient-border rounded-3xl p-4 sm:p-6">
+            <div className="glass-strong gradient-border overflow-hidden rounded-2xl p-5 sm:p-6">
               <Bitrix24ContactForm />
             </div>
             <p className="mt-3 text-center text-[11px] text-muted-foreground">

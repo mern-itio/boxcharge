@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "./styles/bitrix-form.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -418,11 +419,3 @@
   }
 }
 
-/* Bitrix24 inline CRM form on contact page */
-.bitrix24-form-host {
-  color-scheme: light;
-}
-.bitrix24-form-host iframe,
-.bitrix24-form-host form {
-  max-width: 100% !important;
-}

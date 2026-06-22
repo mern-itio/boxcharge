@@ -50,6 +50,7 @@ const nav: NavItem[] = [
       { label: "Integration Support", to: "/contact" },
     ],
   },
+  { label: "Blog", to: "/blog" },
   { label: "Contact Us", to: "/contact" },
 ];
 

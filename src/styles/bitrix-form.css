@@ -1,0 +1,245 @@
+/* BoxCharge dark theme overrides for Bitrix24 inline CRM form */
+
+.bitrix24-form-host {
+  color-scheme: dark;
+  --bx-bg: transparent;
+  --bx-field: var(--input);
+  --bx-field-border: oklch(1 0 0 / 0.12);
+  --bx-text: var(--foreground);
+  --bx-muted: var(--muted-foreground);
+  --bx-primary: var(--primary);
+  --bx-primary-glow: var(--electric-glow);
+  --bx-accent: var(--ember);
+  --bx-radius: var(--radius);
+}
+
+/* Transparent shell — glass card comes from parent .glass-strong */
+.bitrix24-form-host .b24-form-wrapper,
+.bitrix24-form-host .b24-form,
+.bitrix24-form-host .b24-form-content,
+.bitrix24-form-host .b24-form-container,
+.bitrix24-form-host .b24-form-padding-side,
+.bitrix24-form-host .b24-form-state-container,
+.bitrix24-form-host .b24-form-state-default,
+.bitrix24-form-host .b24-form-header,
+.bitrix24-form-host .b24-form-body {
+  background: var(--bx-bg) !important;
+  background-color: var(--bx-bg) !important;
+  box-shadow: none !important;
+  border: none !important;
+  max-width: 100% !important;
+}
+
+.bitrix24-form-host .b24-form-wrapper {
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+
+.bitrix24-form-host .b24-form-padding-side {
+  padding: 0 !important;
+}
+
+/* Compact 2-column grid: name|email, phone|website, then full-width message */
+.bitrix24-form-host .b24-form-body {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0.625rem !important;
+}
+
+@media (min-width: 480px) {
+  .bitrix24-form-host .b24-form-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 0.75rem !important;
+  }
+
+  .bitrix24-form-host .b24-form-field:has(.b24-form-control-text),
+  .bitrix24-form-host .b24-form-field-agreement,
+  .bitrix24-form-host .b24-form-btn-container {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+.bitrix24-form-host .b24-form,
+.bitrix24-form-host .b24-form * {
+  font-family: var(--font-sans) !important;
+}
+
+.bitrix24-form-host .b24-form-header-title,
+.bitrix24-form-host .b24-form-header-description {
+  display: none !important;
+}
+
+/* Fields */
+.bitrix24-form-host .b24-form-control-string .b24-form-control,
+.bitrix24-form-host .b24-form-control-list .b24-form-control,
+.bitrix24-form-host .b24-form-control-select .field-item {
+  height: 42px !important;
+  min-height: 42px !important;
+  background-color: var(--bx-field) !important;
+  color: var(--bx-text) !important;
+  padding: 0 0.75rem !important;
+  border: 1px solid var(--bx-field-border) !important;
+  border-radius: calc(var(--bx-radius) - 2px) !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.bitrix24-form-host .b24-form-control-text .b24-form-control,
+.bitrix24-form-host .b24-form-control textarea.b24-form-control {
+  min-height: 88px !important;
+  max-height: 140px !important;
+  height: 88px !important;
+  padding: 1.5rem 0.75rem 0.625rem !important;
+  resize: none !important;
+  background-color: var(--bx-field) !important;
+  color: var(--bx-text) !important;
+  border: 1px solid var(--bx-field-border) !important;
+  border-radius: calc(var(--bx-radius) - 2px) !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.bitrix24-form-host .b24-form-control {
+  font-size: 0.875rem !important;
+  color: var(--bx-text) !important;
+}
+
+.bitrix24-form-host .b24-form-control::placeholder {
+  color: var(--bx-muted) !important;
+  opacity: 0.85 !important;
+}
+
+/* Labels */
+.bitrix24-form-host .b24-form-control-label {
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  line-height: 42px !important;
+  color: oklch(0.92 0.02 250 / 0.75) !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  opacity: 1 !important;
+}
+
+.bitrix24-form-host .b24-form-control-select-label,
+.bitrix24-form-host .b24-form-control:focus + .b24-form-control-label,
+.bitrix24-form-host .b24-form-control-not-empty + .b24-form-control-label {
+  font-size: 0.625rem !important;
+  top: 0.35rem !important;
+  line-height: 1 !important;
+  color: var(--bx-muted) !important;
+  background: transparent !important;
+  padding-left: 0.625rem !important;
+}
+
+.bitrix24-form-host .b24-form-control-text .b24-form-control-label,
+.bitrix24-form-host .b24-form-control-text .b24-form-control:focus + .b24-form-control-label,
+.bitrix24-form-host .b24-form-control-text .b24-form-control-not-empty + .b24-form-control-label {
+  top: 0.45rem !important;
+  left: 0.75rem !important;
+  right: 0.75rem !important;
+  line-height: 1 !important;
+  transform: none !important;
+  padding: 0 !important;
+}
+
+.bitrix24-form-host .b24-form-field-required .b24-form-control-label::after,
+.bitrix24-form-host .b24-form-control-label .b24-form-field-required-symbol {
+  color: var(--bx-accent) !important;
+}
+
+/* List / select icons */
+.bitrix24-form-host .b24-form-control-list .b24-form-control-container::after {
+  filter: brightness(2) !important;
+}
+
+.bitrix24-form-host .b24-form-control-list-selector-item-title {
+  color: var(--bx-text) !important;
+  font-size: 0.875rem !important;
+}
+
+/* Focus */
+.bitrix24-form-host .b24-form-control-string .b24-form-control:focus:not([readonly]),
+.bitrix24-form-host .b24-form-control-list .b24-form-control:focus:not([readonly]),
+.bitrix24-form-host .b24-form-control-text .b24-form-control:focus:not([readonly]),
+.bitrix24-form-host .b24-form-control-select .field-item:focus:not([readonly]),
+.bitrix24-form-host .b24-form-control textarea.b24-form-control:focus:not([readonly]) {
+  border-color: oklch(0.68 0.18 250 / 0.65) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px oklch(0.68 0.18 250 / 0.35) !important;
+}
+
+/* Checkbox + agreement */
+.bitrix24-form-host .b24-form-control-desc,
+.bitrix24-form-host .b24-form-field-agreement .b24-form-field-agreement-link {
+  font-size: 0.6875rem !important;
+  line-height: 1.4 !important;
+  color: var(--bx-muted) !important;
+}
+
+.bitrix24-form-host .b24-form-field-agreement .b24-form-field-agreement-link {
+  color: var(--bx-primary-glow) !important;
+}
+
+.bitrix24-form-host .b24-form-control-agreement input[type="checkbox"],
+.bitrix24-form-host .b24-form-control-bool input[type="checkbox"] {
+  width: 1rem !important;
+  height: 1rem !important;
+  accent-color: var(--bx-primary) !important;
+}
+
+/* Submit — match header Apply Now CTA */
+.bitrix24-form-host .b24-form-btn {
+  width: 100% !important;
+  min-height: 44px !important;
+  height: 44px !important;
+  padding: 0 1.25rem !important;
+  border: none !important;
+  border-radius: var(--bx-radius) !important;
+  background: linear-gradient(
+    to right,
+    var(--bx-primary),
+    var(--bx-primary-glow)
+  ) !important;
+  color: var(--primary-foreground) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  box-shadow: 0 0 30px -5px oklch(0.68 0.18 250 / 0.6) !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.bitrix24-form-host .b24-form-btn:hover {
+  opacity: 0.9 !important;
+}
+
+.bitrix24-form-host .b24-form-btn:focus-visible {
+  outline: 2px solid var(--bx-primary-glow) !important;
+  outline-offset: 2px !important;
+}
+
+.bitrix24-form-host .b24-form-btn-container {
+  margin-top: 0.75rem !important;
+  padding: 0 !important;
+}
+
+/* Hide Bitrix builder clutter */
+.bitrix24-form-host .b24-form-field-add,
+.bitrix24-form-host .b24-form-sign,
+.bitrix24-form-host .b24-form-footer {
+  display: none !important;
+}
+
+/* Tight field spacing */
+.bitrix24-form-host .b24-form-field {
+  margin-bottom: 0 !important;
+}
+
+.bitrix24-form-host .b24-form-field-agreement {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0 !important;
+}
+
+.bitrix24-form-host iframe {
+  max-width: 100% !important;
+  background: transparent !important;
+}

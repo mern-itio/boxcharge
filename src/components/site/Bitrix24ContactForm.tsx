@@ -17,12 +17,34 @@ export function Bitrix24ContactForm() {
     script.dataset.skipMoving = "true";
     script.textContent = `(function(w,d,u){var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/180000|0);var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);})(window,document,'${BITRIX_LOADER}');`;
     host.appendChild(script);
+
+    // Bitrix sometimes injects inline white backgrounds — strip them for dark theme.
+    const clearWhiteBg = (root: ParentNode) => {
+      root.querySelectorAll<HTMLElement>("[class*='b24-form']").forEach((el) => {
+        const inline = el.getAttribute("style") ?? "";
+        if (/background(-color)?\s*:\s*(#fff(f(f)?)?|white|rgb\(\s*255\s*,\s*255\s*,\s*255)/i.test(inline)) {
+          el.style.background = "transparent";
+          el.style.backgroundColor = "transparent";
+        }
+      });
+    };
+
+    const observer = new MutationObserver(() => clearWhiteBg(host));
+    observer.observe(host, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["style", "class"],
+    });
+    clearWhiteBg(host);
+
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div
       ref={hostRef}
-      className="bitrix24-form-host min-h-[420px] w-full overflow-hidden rounded-2xl"
+      className="bitrix24-form-host w-full overflow-hidden"
       aria-label="Contact form"
     />
   );
