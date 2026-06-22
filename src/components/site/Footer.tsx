@@ -125,7 +125,7 @@ export function Footer() {
       "BoxCharge provides global merchant services, cross-border payment gateway connectivity, payment orchestration, APM access, and secure payment infrastructure for legitimate businesses operating across international markets.",
     );
   const domain = settings?.footer_domain || c("footer_domain", "boxchrge.com");
-  const email = settings?.footer_email || c("footer_email", "hello@boxchrge.com");
+  const email = settings?.footer_email || c("footer_email", "growth@boxchrge.com");
   const logoSrc = settings?.logo_url || logo;
   const siteName = settings?.site_name || "BoxCharge";
   const tagline = c("tagline", "One API · Many Payments · Built Global");
