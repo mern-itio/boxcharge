@@ -11,6 +11,13 @@ export function slugify(text: string): string {
   return s || "untitled";
 }
 
+/** Unique draft slug for new CMS posts/pages (avoids posts_slug_key collisions). */
+export function draftSlug(text: string): string {
+  const base = slugify(text);
+  const suffix = Date.now().toString(36).slice(-7);
+  return `${base}-${suffix}`.slice(0, 160);
+}
+
 export function isDefaultDraftTitle(title: string): boolean {
   return /^untitled\s*(page|post)?$/i.test(title.trim());
 }

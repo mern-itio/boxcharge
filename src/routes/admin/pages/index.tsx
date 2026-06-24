@@ -5,7 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { listCmsPagesAdmin, deleteCmsPage, upsertCmsPage } from "@/lib/cms.functions";
 import { PAGES, getPageCategory, getPublicPath } from "@/content/pages";
 import { customPagePath } from "@/lib/customPagePath";
-import { slugify } from "@/lib/slugify";
+import { draftSlug, slugify } from "@/lib/slugify";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -45,7 +45,7 @@ function PagesList() {
     mutationFn: () =>
       createFn({
         data: {
-          slug: slugify("Untitled page"),
+          slug: draftSlug("Untitled page"),
           title: "Untitled page",
           content_html: "",
           status: "draft" as const,

@@ -32,6 +32,22 @@ async function assertAdmin(supabase: SBClient, userId: string) {
   if (!data) throw new Error("Forbidden: admin only");
 }
 
+async function ensureUniqueSlug(
+  sb: SBClient,
+  table: "posts" | "cms_pages",
+  slug: string,
+  excludeId?: string,
+): Promise<string> {
+  const base = slug.replace(/-+$/, "") || "untitled";
+  let candidate = slug;
+  for (let i = 0; i < 25; i++) {
+    const { data: row } = await sb.from(table).select("id").eq("slug", candidate).maybeSingle();
+    if (!row || (excludeId && row.id === excludeId)) return candidate;
+    candidate = `${base}-${Date.now().toString(36).slice(-7)}${i ? `-${i}` : ""}`.slice(0, 160);
+  }
+  throw new Error("Could not generate a unique URL slug — try a different title.");
+}
+
 // -------- Save block --------
 export const saveBlock = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -270,8 +286,10 @@ export const upsertPost = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => postInput.parse(input))
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase as SBClient, context.userId);
+    const sb = context.supabase as SBClient;
+    const slug = await ensureUniqueSlug(sb, "posts", data.slug, data.id);
     const payload = {
-      slug: data.slug,
+      slug,
       title: data.title,
       excerpt: data.excerpt ?? null,
       body_md: data.body_md,
@@ -285,7 +303,6 @@ export const upsertPost = createServerFn({ method: "POST" })
       category_id: data.category_id ?? null,
       updated_by: context.userId,
     };
-    const sb = context.supabase as SBClient;
     if (data.id) {
       const { error } = await sb.from("posts").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
@@ -534,8 +551,9 @@ export const upsertCmsPage = createServerFn({ method: "POST" })
       throw new Error(`Slug "${data.slug}" is reserved — choose a different URL.`);
     }
     const sb = context.supabase as SBClient;
+    const slug = await ensureUniqueSlug(sb, "cms_pages", data.slug, data.id);
     const payload = {
-      slug: data.slug,
+      slug,
       title: data.title,
       content_html: data.content_html,
       excerpt: data.excerpt ?? null,

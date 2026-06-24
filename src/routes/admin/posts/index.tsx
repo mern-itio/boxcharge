@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2, Edit3, Search } from "lucide-react";
 import { toast } from "sonner";
-import { slugify } from "@/lib/slugify";
+import { draftSlug } from "@/lib/slugify";
 
 export const Route = createFileRoute("/admin/posts/")({
   component: PostsList,
@@ -41,7 +41,7 @@ function PostsList() {
     mutationFn: () =>
       createFn({
         data: {
-          slug: slugify("Untitled post"),
+          slug: draftSlug("Untitled post"),
           title: "Untitled post",
           body_md: "",
           tags: [],
