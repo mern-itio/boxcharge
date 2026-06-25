@@ -11,6 +11,7 @@ import { RichTextEditor } from "@/components/cms/RichTextEditor";
 import { ImageUploadField } from "@/components/cms/ImageUploadField";
 import { ArrowLeft, Save, Eye } from "lucide-react";
 import { toast } from "sonner";
+import { AdminSelect } from "@/components/cms/AdminSelect";
 import { TitleSlugFields } from "@/components/cms/TitleSlugFields";
 import { isDefaultDraftTitle, slugify, slugMatchesTitle } from "@/lib/slugify";
 
@@ -170,21 +171,21 @@ function PostEditor() {
               label="Featured image"
               value={form.cover_url}
               onChange={(cover_url) => setForm((f) => ({ ...f, cover_url }))}
-              hint="Shown at the top of the blog post."
+              hint="Shown on the blog listing and homepage preview cards — not inside the article body."
             />
           </div>
           <div className="rounded-xl border border-border/60 bg-card/30 p-4">
             <Label>Category</Label>
-            <select
+            <AdminSelect
               value={form.category_id}
               onChange={(e) => setForm({ ...form, category_id: e.target.value })}
-              className="mt-1.5 w-full h-9 rounded-md border border-input bg-transparent px-3 text-sm"
+              className="mt-1.5"
             >
               <option value="">— Select category —</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
               ))}
-            </select>
+            </AdminSelect>
             {categories.length === 0 && (
               <p className="mt-2 text-xs text-muted-foreground">
                 No categories yet. Create one first to organize posts.

@@ -141,7 +141,7 @@ function Toolbar({ editor }: { editor: Editor }) {
         <div className="flex items-center gap-1 px-1">
           <Type className="h-3.5 w-3.5 text-muted-foreground" />
           <select
-            className="h-8 rounded-md border border-input bg-transparent px-2 text-xs"
+            className="h-8 rounded-md border border-input bg-card px-2 text-xs text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             defaultValue=""
             onChange={(e) => {
               const size = e.target.value;

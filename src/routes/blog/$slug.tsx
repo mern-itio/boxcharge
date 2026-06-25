@@ -87,14 +87,6 @@ function ArticlePage() {
 
       <Section>
         <article className="cms-prose mx-auto max-w-4xl">
-          {post.cover_url && (
-            <img
-              src={post.cover_url}
-              alt={post.title}
-              className="mb-8 w-full rounded-lg"
-            />
-          )}
-
           {post.content_html ? (
             <div
               dangerouslySetInnerHTML={{

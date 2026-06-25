@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
+import { BlogPostCard } from "@/components/site/BlogPostCard";
 import { listPublishedPosts } from "@/lib/cms.functions";
 
 export function Insights() {
@@ -40,25 +41,15 @@ export function Insights() {
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {top.map((p, i) => (
             <Reveal key={p.slug} delay={i * 80}>
-              <Link
-                to="/blog/$slug"
-                params={{ slug: p.slug }}
-                className="group glass gradient-border card-lift relative block h-full overflow-hidden rounded-2xl p-6"
-              >
-                <div className="text-[11px] uppercase tracking-wider text-muted-foreground">
-                  {p.tags?.[0] ?? "Article"} ·{" "}
-                  {new Date(p.published_at ?? "").toLocaleDateString("en", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </div>
-                <h3 className="mt-3 text-lg font-semibold leading-snug">{p.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.excerpt ?? ""}</p>
-                <div className="mt-5 inline-flex items-center gap-1 text-xs font-medium text-primary transition-transform group-hover:translate-x-0.5">
-                  Read article <ArrowRight className="h-3.5 w-3.5" />
-                </div>
-              </Link>
+              <BlogPostCard
+                post={p}
+                className="card-lift h-full"
+                metaPrefix={`${p.tags?.[0] ?? "Article"} · ${new Date(p.published_at ?? "").toLocaleDateString("en", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}`}
+              />
             </Reveal>
           ))}
         </div>

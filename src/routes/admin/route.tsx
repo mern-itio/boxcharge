@@ -109,7 +109,7 @@ function AdminLayout() {
   }
 
   return (
-    <div className="flex min-h-screen w-full bg-background text-foreground">
+    <div className="flex min-h-screen w-full bg-background text-foreground admin-surface">
       <aside className="hidden w-64 shrink-0 flex-col border-r border-border/60 bg-card/30 md:flex">
         <div className="border-b border-border/60 px-5 py-4">
           <div className="text-base font-semibold tracking-tight">BoxCharge</div>
