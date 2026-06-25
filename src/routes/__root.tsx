@@ -133,7 +133,6 @@ function RootShell({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-        <AnalyticsScripts />
         <Scripts />
       </body>
     </html>
@@ -156,6 +155,7 @@ function RootComponent() {
         {!isAdminSurface && <StickyContactPill />}
       </div>
       {!isAdminSurface && <GoogleSiteVerification />}
+      {!isAdminSurface && <AnalyticsScripts />}
       <Toaster richColors position="top-right" />
     </QueryClientProvider>
   );

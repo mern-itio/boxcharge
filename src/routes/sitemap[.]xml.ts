@@ -41,11 +41,11 @@ export const Route = createFileRoute("/sitemap.xml")({
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { data: settings } = await supabaseAdmin
           .from("site_settings")
-          .select("site_url, footer_domain")
+          .select("footer_domain")
           .eq("id", 1)
           .maybeSingle();
 
-        const siteUrl = resolveSiteUrl(settings?.site_url || settings?.footer_domain || undefined);
+        const siteUrl = resolveSiteUrl(settings?.footer_domain || undefined);
 
         const { data: posts } = await supabaseAdmin
           .from("posts")
