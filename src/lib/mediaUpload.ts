@@ -17,7 +17,7 @@ type RecordMediaFn = (opts: {
 export async function uploadCmsImage(
   file: File,
   recordMedia: RecordMediaFn,
-  alt?: string,
+  options?: { alt?: string; filename?: string },
 ): Promise<string> {
   if (!file.type.startsWith("image/")) {
     throw new Error("Please choose an image file (JPEG, PNG, WebP, GIF, SVG).");
@@ -26,7 +26,9 @@ export async function uploadCmsImage(
     throw new Error("Max file size is 10 MB.");
   }
 
-  const path = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
+  const displayName = (options?.filename || file.name).trim() || file.name;
+  const storageName = displayName.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const path = `${Date.now()}-${storageName}`;
   const { error: upErr } = await supabase.storage.from(CMS_MEDIA_BUCKET).upload(path, file, {
     contentType: file.type,
     upsert: false,
@@ -42,9 +44,9 @@ export async function uploadCmsImage(
 
   await recordMedia({
     data: {
-      filename: file.name,
+      filename: displayName,
       url: signed.signedUrl,
-      alt: alt || undefined,
+      alt: options?.alt || undefined,
       mime_type: file.type,
       size_bytes: file.size,
     },

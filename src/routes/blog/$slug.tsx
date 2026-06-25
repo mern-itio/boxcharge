@@ -86,10 +86,10 @@ function ArticlePage() {
       />
 
       <Section>
-        <article className="prose prose-invert mx-auto max-w-4xl">
-          {post.featured_image_url && (
+        <article className="cms-prose mx-auto max-w-4xl">
+          {post.cover_url && (
             <img
-              src={post.featured_image_url}
+              src={post.cover_url}
               alt={post.title}
               className="mb-8 w-full rounded-lg"
             />

@@ -274,11 +274,14 @@ export type Database = {
           footer_blurb: string | null
           footer_domain: string | null
           footer_email: string | null
+          google_analytics_id: string | null
+          google_site_verification: string | null
           header_cta_href: string | null
           header_cta_label: string | null
           id: number
           logo_url: string | null
           site_name: string | null
+          site_url: string | null
           social_linkedin: string | null
           social_twitter: string | null
           social_youtube: string | null
@@ -292,11 +295,14 @@ export type Database = {
           footer_blurb?: string | null
           footer_domain?: string | null
           footer_email?: string | null
+          google_analytics_id?: string | null
+          google_site_verification?: string | null
           header_cta_href?: string | null
           header_cta_label?: string | null
           id?: number
           logo_url?: string | null
           site_name?: string | null
+          site_url?: string | null
           social_linkedin?: string | null
           social_twitter?: string | null
           social_youtube?: string | null
@@ -310,11 +316,14 @@ export type Database = {
           footer_blurb?: string | null
           footer_domain?: string | null
           footer_email?: string | null
+          google_analytics_id?: string | null
+          google_site_verification?: string | null
           header_cta_href?: string | null
           header_cta_label?: string | null
           id?: number
           logo_url?: string | null
           site_name?: string | null
+          site_url?: string | null
           social_linkedin?: string | null
           social_twitter?: string | null
           social_youtube?: string | null

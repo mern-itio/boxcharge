@@ -21,13 +21,16 @@ export function ImageUploadField({ label, value, onChange, hint }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [filename, setFilename] = useState("");
   const qc = useQueryClient();
   const recordFn = useServerFn(recordMedia);
 
   async function handleFile(file: File) {
     setUploading(true);
     try {
-      const url = await uploadCmsImage(file, recordFn);
+      const url = await uploadCmsImage(file, recordFn, {
+        filename: filename.trim() || file.name,
+      });
       qc.invalidateQueries({ queryKey: ["cms", "media"] });
       onChange(url);
       toast.success("Image uploaded");
@@ -72,12 +75,26 @@ export function ImageUploadField({ label, value, onChange, hint }: Props) {
         </Button>
       </div>
 
-      <Input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="mt-2 font-mono text-xs"
-        placeholder="https://… or upload above"
-      />
+      <div className="mt-3 space-y-2">
+        <div>
+          <Label className="text-xs text-muted-foreground">File name (for uploads)</Label>
+          <Input
+            value={filename}
+            onChange={(e) => setFilename(e.target.value)}
+            className="mt-1 font-mono text-xs"
+            placeholder="hero-banner.png"
+          />
+        </div>
+        <div>
+          <Label className="text-xs text-muted-foreground">Image URL</Label>
+          <Input
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="mt-1 font-mono text-xs"
+            placeholder="https://… — paste, edit, or upload above"
+          />
+        </div>
+      </div>
 
       {value ? (
         <div className="relative mt-2 inline-block max-w-full">

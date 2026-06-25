@@ -46,9 +46,9 @@ const channels = [
   },
   {
     icon: Calendar,
-    t: "Schedule a Call",
-    b: "Pick a 30-minute slot with a specialist.",
-    c: "Request via the inquiry form",
+    t: "Contact form",
+    b: "Send a business inquiry via our secure form — typical reply within 1 business day.",
+    c: "Open contact form",
     href: "#apply",
   },
 ];

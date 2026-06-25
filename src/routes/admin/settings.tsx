@@ -19,6 +19,7 @@ type Form = {
   header_cta_label: string; header_cta_href: string;
   footer_blurb: string; footer_email: string; footer_domain: string;
   social_linkedin: string; social_twitter: string; social_youtube: string;
+  site_url: string; google_analytics_id: string; google_site_verification: string;
 };
 
 const EMPTY: Form = {
@@ -26,6 +27,7 @@ const EMPTY: Form = {
   header_cta_label: "", header_cta_href: "",
   footer_blurb: "", footer_email: "", footer_domain: "",
   social_linkedin: "", social_twitter: "", social_youtube: "",
+  site_url: "", google_analytics_id: "", google_site_verification: "",
 };
 
 function SettingsPage() {
@@ -52,6 +54,9 @@ function SettingsPage() {
         social_linkedin: data.social_linkedin ?? "",
         social_twitter: data.social_twitter ?? "",
         social_youtube: data.social_youtube ?? "",
+        site_url: data.site_url ?? "",
+        google_analytics_id: data.google_analytics_id ?? "",
+        google_site_verification: data.google_site_verification ?? "",
       });
     }
   }, [data]);
@@ -132,6 +137,19 @@ function SettingsPage() {
               {field("footer_domain", "Domain text shown in footer")}
             </div>
           </div>
+        </section>
+
+        <section className="rounded-2xl border border-border/60 bg-card/30 p-5 lg:col-span-2">
+          <h2 className="mb-4 text-base font-semibold">Analytics & SEO</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {field("site_url", "Public site URL", "text", "https://boxchrge.com")}
+            {field("google_analytics_id", "Google Analytics measurement ID", "text", "G-XXXXXXXXXX")}
+            {field("google_site_verification", "Google Search Console verification code", "text", "paste meta content value")}
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">
+            After saving, submit <code className="text-foreground/80">https://boxchrge.com/sitemap.xml</code> in Google Search Console.
+            Analytics loads automatically when a measurement ID is set.
+          </p>
         </section>
 
         <section className="rounded-2xl border border-border/60 bg-card/30 p-5 lg:col-span-2">

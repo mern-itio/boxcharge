@@ -114,6 +114,21 @@ export const deleteMedia = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+export const updateMediaFilename = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { id: string; filename: string }) =>
+    z.object({ id: z.string().uuid(), filename: z.string().min(1).max(255) }).parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase as SBClient, context.userId);
+    const { error } = await (context.supabase as SBClient)
+      .from("media_assets")
+      .update({ filename: data.filename.trim() })
+      .eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
 // -------- Admin team --------
 export const listAdmins = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -224,7 +239,7 @@ const postInput = z.object({
   body_md: z.string().max(200_000).default(""),
   content_html: z.string().max(500_000).nullable().optional(),
   cover_url: z.string().url().max(2048).nullable().optional().or(z.literal("")),
-  tags: z.array(z.string().max(40)).max(20).default([]),
+  tags: z.array(z.string().max(120)).max(50).default([]),
   status: z.enum(["draft", "published"]).default("draft"),
   published_at: z.string().nullable().optional(),
   meta_title: z.string().max(240).nullable().optional(),
@@ -297,7 +312,11 @@ export const upsertPost = createServerFn({ method: "POST" })
       cover_url: data.cover_url || null,
       tags: data.tags,
       status: data.status,
-      published_at: data.status === "published" ? (data.published_at ?? new Date().toISOString()) : null,
+      published_at: data.published_at
+        ? data.published_at
+        : data.status === "published"
+          ? new Date().toISOString()
+          : null,
       meta_title: data.meta_title ?? null,
       meta_description: data.meta_description ?? null,
       category_id: data.category_id ?? null,
@@ -392,6 +411,9 @@ const siteSettingsInput = z.object({
   social_youtube: z.string().max(500).nullable().optional(),
   brand_primary: z.string().max(60).nullable().optional(),
   brand_accent: z.string().max(60).nullable().optional(),
+  site_url: z.string().max(500).nullable().optional().or(z.literal("")),
+  google_analytics_id: z.string().max(80).nullable().optional().or(z.literal("")),
+  google_site_verification: z.string().max(200).nullable().optional().or(z.literal("")),
 });
 
 export const getSiteSettings = createServerFn({ method: "GET" })

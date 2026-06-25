@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import {
   Bold, Italic, Strikethrough, List, ListOrdered, Quote, Code,
   Heading1, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon,
-  Undo, Redo, Minus, Upload, FolderOpen,
+  Undo, Redo, Minus, Upload, FolderOpen, Type,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -17,6 +17,7 @@ import { uploadCmsImage } from "@/lib/mediaUpload";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { MediaPickerDialog } from "./MediaPickerDialog";
+import { FontSize } from "./fontSizeExtension";
 
 interface Props {
   value: string;
@@ -25,19 +26,31 @@ interface Props {
   className?: string;
 }
 
+const FONT_SIZES = [
+  { label: "Small", value: "0.875rem" },
+  { label: "Normal", value: "1rem" },
+  { label: "Large", value: "1.125rem" },
+  { label: "XL", value: "1.25rem" },
+  { label: "2XL", value: "1.5rem" },
+];
+
 export function RichTextEditor({ value, onChange, placeholder, className }: Props) {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        bulletList: { keepMarks: true, keepAttributes: true },
+        orderedList: { keepMarks: true, keepAttributes: true },
+      }),
       Link.configure({ openOnClick: false, HTMLAttributes: { class: "text-primary underline" } }),
-      Image.configure({ HTMLAttributes: { class: "rounded-lg max-w-full h-auto" } }),
+      Image.configure({ HTMLAttributes: { class: "cms-inline-image" } }),
       Placeholder.configure({ placeholder: placeholder ?? "Start writing…" }),
+      FontSize,
     ],
     content: value || "",
     onUpdate: ({ editor: ed }) => onChange(ed.getHTML()),
     editorProps: {
       attributes: {
-        class: "prose prose-invert max-w-none min-h-[400px] focus:outline-none px-4 py-3",
+        class: "cms-editor max-w-none min-h-[400px] focus:outline-none px-4 py-3",
       },
     },
   });
@@ -63,6 +76,7 @@ function Toolbar({ editor }: { editor: Editor }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [uploadFilename, setUploadFilename] = useState("");
   const qc = useQueryClient();
   const recordFn = useServerFn(recordMedia);
 
@@ -76,9 +90,12 @@ function Toolbar({ editor }: { editor: Editor }) {
   async function handleFile(file: File) {
     setUploading(true);
     try {
-      const url = await uploadCmsImage(file, recordFn);
+      const url = await uploadCmsImage(file, recordFn, {
+        filename: uploadFilename.trim() || file.name,
+      });
       qc.invalidateQueries({ queryKey: ["cms", "media"] });
       insertImage(url);
+      setUploadFilename("");
       toast.success("Image inserted");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Upload failed");
@@ -121,8 +138,28 @@ function Toolbar({ editor }: { editor: Editor }) {
         <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("strike"))} onClick={() => editor.chain().focus().toggleStrike().run()}><Strikethrough className="h-4 w-4" /></Button>
         <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("code"))} onClick={() => editor.chain().focus().toggleCode().run()}><Code className="h-4 w-4" /></Button>
         <Separator />
-        <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("bulletList"))} onClick={() => editor.chain().focus().toggleBulletList().run()}><List className="h-4 w-4" /></Button>
-        <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("orderedList"))} onClick={() => editor.chain().focus().toggleOrderedList().run()}><ListOrdered className="h-4 w-4" /></Button>
+        <div className="flex items-center gap-1 px-1">
+          <Type className="h-3.5 w-3.5 text-muted-foreground" />
+          <select
+            className="h-8 rounded-md border border-input bg-transparent px-2 text-xs"
+            defaultValue=""
+            onChange={(e) => {
+              const size = e.target.value;
+              if (!size) editor.chain().focus().unsetFontSize().run();
+              else editor.chain().focus().setFontSize(size).run();
+              e.target.value = "";
+            }}
+            aria-label="Font size"
+          >
+            <option value="">Size</option>
+            {FONT_SIZES.map((s) => (
+              <option key={s.value} value={s.value}>{s.label}</option>
+            ))}
+          </select>
+        </div>
+        <Separator />
+        <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("bulletList"))} onClick={() => editor.chain().focus().toggleBulletList().run()} title="Bullet list"><List className="h-4 w-4" /></Button>
+        <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("orderedList"))} onClick={() => editor.chain().focus().toggleOrderedList().run()} title="Numbered list"><ListOrdered className="h-4 w-4" /></Button>
         <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("blockquote"))} onClick={() => editor.chain().focus().toggleBlockquote().run()}><Quote className="h-4 w-4" /></Button>
         <Button type="button" size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => editor.chain().focus().setHorizontalRule().run()}><Minus className="h-4 w-4" /></Button>
         <Separator />
@@ -164,6 +201,15 @@ function Toolbar({ editor }: { editor: Editor }) {
         <Separator />
         <Button type="button" size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => editor.chain().focus().undo().run()}><Undo className="h-4 w-4" /></Button>
         <Button type="button" size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => editor.chain().focus().redo().run()}><Redo className="h-4 w-4" /></Button>
+      </div>
+      <div className="border-b border-border/60 px-3 py-2">
+        <input
+          type="text"
+          value={uploadFilename}
+          onChange={(e) => setUploadFilename(e.target.value)}
+          placeholder="Optional file name for next upload (e.g. hero-banner.png)"
+          className="h-8 w-full rounded-md border border-input bg-transparent px-2 text-xs"
+        />
       </div>
       <MediaPickerDialog
         open={pickerOpen}

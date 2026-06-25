@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
-
-// TODO: replace with your project URL once a custom domain is set.
-const BASE_URL = "";
+import { absoluteUrl, resolveSiteUrl } from "@/lib/siteUrl";
 
 const staticPaths = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
@@ -36,37 +34,47 @@ const staticPaths = [
   { path: "/policies/merchant-protection", priority: "0.4", changefreq: "yearly" },
 ];
 
-const blogSlugs = [
-  "understanding-payment-orchestration",
-  "apm-connectivity-explained",
-  "designing-for-pci-aligned-operations",
-];
-
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        const { data: settings } = await supabaseAdmin
+          .from("site_settings")
+          .select("site_url, footer_domain")
+          .eq("id", 1)
+          .maybeSingle();
+
+        const siteUrl = resolveSiteUrl(settings?.site_url || settings?.footer_domain || undefined);
+
+        const { data: posts } = await supabaseAdmin
+          .from("posts")
+          .select("slug, updated_at, published_at")
+          .eq("status", "published")
+          .order("published_at", { ascending: false });
+
         const entries = [
           ...staticPaths,
-          ...blogSlugs.map((s) => ({
-            path: `/blog/${s}`,
+          ...(posts ?? []).map((p) => ({
+            path: `/blog/${p.slug}`,
             priority: "0.6",
             changefreq: "monthly" as const,
+            lastmod: (p.updated_at || p.published_at || undefined)?.slice(0, 10),
           })),
         ];
 
         const urls = entries
-          .map(
-            (e) =>
-              `  <url>\n    <loc>${BASE_URL}${e.path}</loc>\n    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`,
-          )
+          .map((e) => {
+            const lastmod = "lastmod" in e && e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : "";
+            return `  <url>\n    <loc>${absoluteUrl(e.path, siteUrl)}</loc>${lastmod}\n    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`;
+          })
           .join("\n");
 
         const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`;
 
         return new Response(xml, {
           headers: {
-            "Content-Type": "application/xml",
+            "Content-Type": "application/xml; charset=utf-8",
             "Cache-Control": "public, max-age=3600",
           },
         });

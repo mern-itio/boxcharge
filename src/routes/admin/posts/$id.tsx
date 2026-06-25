@@ -14,6 +14,14 @@ import { toast } from "sonner";
 import { TitleSlugFields } from "@/components/cms/TitleSlugFields";
 import { isDefaultDraftTitle, slugify, slugMatchesTitle } from "@/lib/slugify";
 
+function toDatetimeLocal(iso?: string | null) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 export const Route = createFileRoute("/admin/posts/$id")({
   component: PostEditor,
 });
@@ -38,6 +46,7 @@ function PostEditor() {
   const [form, setForm] = useState({
     slug: "", title: "", excerpt: "", content_html: "", cover_url: "",
     tags: "", category_id: "", meta_title: "", meta_description: "",
+    published_at: "",
     status: "draft" as "draft" | "published",
   });
   const [slugAuto, setSlugAuto] = useState(true);
@@ -57,6 +66,7 @@ function PostEditor() {
         category_id: post.category_id ?? "",
         meta_title: post.meta_title ?? "",
         meta_description: post.meta_description ?? "",
+        published_at: toDatetimeLocal(post.published_at),
         status: post.status as "draft" | "published",
       });
     }
@@ -77,6 +87,7 @@ function PostEditor() {
           category_id: form.category_id || null,
           meta_title: form.meta_title.trim() || null,
           meta_description: form.meta_description.trim() || null,
+          published_at: form.published_at ? new Date(form.published_at).toISOString() : null,
           status: status ?? form.status,
         },
       }),
@@ -169,18 +180,43 @@ function PostEditor() {
               onChange={(e) => setForm({ ...form, category_id: e.target.value })}
               className="mt-1.5 w-full h-9 rounded-md border border-input bg-transparent px-3 text-sm"
             >
-              <option value="">— none —</option>
+              <option value="">— Select category —</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
               ))}
             </select>
+            {categories.length === 0 && (
+              <p className="mt-2 text-xs text-muted-foreground">
+                No categories yet. Create one first to organize posts.
+              </p>
+            )}
             <Link to="/admin/categories" className="mt-2 inline-block text-xs text-primary hover:underline">
               Manage categories →
             </Link>
           </div>
           <div className="rounded-xl border border-border/60 bg-card/30 p-4">
+            <Label>Publish date & time</Label>
+            <Input
+              type="datetime-local"
+              value={form.published_at}
+              onChange={(e) => setForm({ ...form, published_at: e.target.value })}
+              className="mt-1.5"
+            />
+            <p className="mt-1.5 text-xs text-muted-foreground">
+              Controls the date shown on the blog and in search results. Leave blank to use the publish moment.
+            </p>
+          </div>
+          <div className="rounded-xl border border-border/60 bg-card/30 p-4">
             <Label>Tags (comma-separated)</Label>
-            <Input value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="mt-1.5" />
+            <Input
+              value={form.tags}
+              onChange={(e) => setForm({ ...form, tags: e.target.value })}
+              className="mt-1.5"
+              maxLength={4000}
+            />
+            <p className="mt-1.5 text-xs text-muted-foreground">
+              Up to 50 tags, 120 characters each — e.g. payments, cross-border, PCI compliance
+            </p>
           </div>
           <div className="rounded-xl border border-border/60 bg-card/30 p-4 space-y-3">
             <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">SEO</div>

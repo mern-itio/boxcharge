@@ -13,6 +13,8 @@ import appCss from "../styles.css?url";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { StickyContactPill } from "@/components/site/StickyContactPill";
+import { AnalyticsScripts } from "@/components/site/AnalyticsScripts";
+import { GoogleSiteVerification } from "@/components/site/GoogleSiteVerification";
 import { organizationSchema } from "@/components/seo/buildHead";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -131,6 +133,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <AnalyticsScripts />
         <Scripts />
       </body>
     </html>
@@ -152,6 +155,7 @@ function RootComponent() {
         {!isAdminSurface && <Footer />}
         {!isAdminSurface && <StickyContactPill />}
       </div>
+      {!isAdminSurface && <GoogleSiteVerification />}
       <Toaster richColors position="top-right" />
     </QueryClientProvider>
   );
