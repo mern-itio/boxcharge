@@ -490,6 +490,53 @@
   background: oklch(1 0 0 / 0.06);
 }
 
+/* Tables — editor + published blog content */
+.cms-editor .tableWrapper,
+.cms-prose .tableWrapper {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  border: 1px solid oklch(1 0 0 / 0.12);
+}
+
+.cms-editor table,
+.cms-prose table,
+.cms-editor .cms-table,
+.cms-prose .cms-table {
+  width: 100%;
+  min-width: 32rem;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.cms-editor th,
+.cms-prose th,
+.cms-editor td,
+.cms-prose td {
+  border: 1px solid oklch(1 0 0 / 0.14);
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.cms-editor th,
+.cms-prose th {
+  background: oklch(0.68 0.18 250 / 0.12);
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.cms-editor tbody tr:nth-child(even) td,
+.cms-prose tbody tr:nth-child(even) td {
+  background: oklch(1 0 0 / 0.03);
+}
+
+.cms-editor tbody tr:hover td,
+.cms-prose tbody tr:hover td {
+  background: oklch(1 0 0 / 0.05);
+}
+
 /* Admin panel — native selects readable on dark OS themes */
 .admin-surface {
   color-scheme: dark;

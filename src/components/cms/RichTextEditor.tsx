@@ -3,11 +3,12 @@ import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
+import { TableKit } from "@tiptap/extension-table";
 import { Button } from "@/components/ui/button";
 import {
   Bold, Italic, Strikethrough, List, ListOrdered, Quote, Code,
   Heading1, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon,
-  Undo, Redo, Minus, Upload, FolderOpen, Type,
+  Undo, Redo, Minus, Upload, FolderOpen, Type, Table as TableIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -45,6 +46,12 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Prop
       Image.configure({ HTMLAttributes: { class: "cms-inline-image" } }),
       Placeholder.configure({ placeholder: placeholder ?? "Start writing…" }),
       FontSize,
+      TableKit.configure({
+        table: {
+          resizable: true,
+          HTMLAttributes: { class: "cms-table" },
+        },
+      }),
     ],
     content: value || "",
     onUpdate: ({ editor: ed }) => onChange(ed.getHTML()),
@@ -163,6 +170,19 @@ function Toolbar({ editor }: { editor: Editor }) {
         <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("orderedList"))} onClick={() => editor.chain().focus().toggleOrderedList().run()} title="Numbered list"><ListOrdered className="h-4 w-4" /></Button>
         <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("blockquote"))} onClick={() => editor.chain().focus().toggleBlockquote().run()}><Quote className="h-4 w-4" /></Button>
         <Button type="button" size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => editor.chain().focus().setHorizontalRule().run()}><Minus className="h-4 w-4" /></Button>
+        <Separator />
+        <Button
+          type="button"
+          size="sm"
+          variant="ghost"
+          className={btn(editor.isActive("table"))}
+          title="Insert comparison table"
+          onClick={() =>
+            editor.chain().focus().insertTable({ rows: 4, cols: 3, withHeaderRow: true }).run()
+          }
+        >
+          <TableIcon className="h-4 w-4" />
+        </Button>
         <Separator />
         <Button type="button" size="sm" variant="ghost" className={btn(editor.isActive("link"))} onClick={addLink}><LinkIcon className="h-4 w-4" /></Button>
         <Button
