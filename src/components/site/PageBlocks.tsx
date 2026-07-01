@@ -44,12 +44,15 @@ export function Section({
   align?: "left" | "center";
   children?: React.ReactNode;
   className?: string;
+  /** Less vertical padding; omits top margin before children when there is no section header. */
+  tight?: boolean;
 }) {
   const al = align === "center" ? "text-center mx-auto" : "text-left";
+  const hasHeader = !!(eyebrow || title || subtitle);
   return (
-    <section id={id} className={`py-20 ${className}`}>
+    <section id={id} className={`${tight ? "py-8" : "py-20"} ${className}`}>
       <div className="mx-auto max-w-6xl px-4">
-        {(eyebrow || title || subtitle) && (
+        {hasHeader && (
           <div className={`${al} max-w-2xl`}>
             {eyebrow && (
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground">
@@ -65,7 +68,7 @@ export function Section({
             {subtitle && <p className="mt-4 text-base leading-relaxed text-muted-foreground">{subtitle}</p>}
           </div>
         )}
-        {children && <div className="mt-12">{children}</div>}
+        {children && <div className={hasHeader ? "mt-12" : ""}>{children}</div>}
       </div>
     </section>
   );

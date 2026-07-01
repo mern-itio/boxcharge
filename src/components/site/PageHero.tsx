@@ -12,6 +12,8 @@ interface PageHeroProps {
   secondaryCta?: { label: string; href: string };
   /** CMS page slug. When set, hero text + CTA labels can be overridden from /admin. */
   cmsSlug?: string;
+  /** Tighter bottom spacing — for article/detail pages with content directly below. */
+  compact?: boolean;
 }
 
 export function PageHero({
@@ -22,6 +24,7 @@ export function PageHero({
   primaryCta,
   secondaryCta,
   cmsSlug,
+  compact = false,
 }: PageHeroProps) {
   const { c } = useContent(cmsSlug ?? "__none__");
 
@@ -42,7 +45,11 @@ export function PageHero({
     : undefined;
 
   return (
-    <section className="relative overflow-hidden pt-32 pb-16 sm:pt-40 sm:pb-20">
+    <section
+      className={`relative overflow-hidden pt-32 sm:pt-40 ${
+        compact ? "pb-6 sm:pb-8" : "pb-16 sm:pb-20"
+      }`}
+    >
       <div className="grid-bg absolute inset-0" />
       <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
       <div className="relative mx-auto max-w-5xl px-4">

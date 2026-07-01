@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/react-router";
+import { postPreviewText } from "@/lib/postPreview";
 
 type PostPreview = {
   slug: string;
   title: string;
   excerpt?: string | null;
+  content_html?: string | null;
   cover_url?: string | null;
   published_at?: string | null;
   tags?: string[] | null;
@@ -30,6 +32,7 @@ export function BlogPostCard({ post, className = "", metaPrefix }: Props) {
     (categoryLabel && dateLabel
       ? `${categoryLabel} · ${dateLabel}`
       : categoryLabel ?? (post.tags?.[0] ? `${post.tags[0]} · ${dateLabel}` : dateLabel));
+  const preview = postPreviewText(post.content_html, post.excerpt);
 
   return (
     <Link
@@ -56,8 +59,8 @@ export function BlogPostCard({ post, className = "", metaPrefix }: Props) {
           <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{meta}</div>
         )}
         <h3 className="mt-2 text-lg font-semibold leading-snug">{post.title}</h3>
-        {post.excerpt && (
-          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
+        {preview && (
+          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{preview}</p>
         )}
         <div className="mt-4 text-xs font-medium text-primary">Read article →</div>
       </div>

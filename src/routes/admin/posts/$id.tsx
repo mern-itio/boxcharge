@@ -148,6 +148,9 @@ function PostEditor() {
           <div>
             <Label>Excerpt</Label>
             <Textarea value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} rows={2} className="mt-1.5" />
+            <p className="mt-1.5 text-xs text-muted-foreground">
+              Optional. Used for SEO meta description when set. Blog listing previews are generated automatically from the content below.
+            </p>
           </div>
           <div>
             <Label>Content</Label>

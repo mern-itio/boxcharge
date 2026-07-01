@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
+import { postPreviewText } from "@/lib/postPreview";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/blog/$slug")({
@@ -31,7 +32,10 @@ export const Route = createFileRoute("/blog/$slug")({
 
     return buildHead({
       title: `${loaderData.title} — BoxCharge Blog`,
-      description: loaderData.excerpt || "",
+      description:
+        postPreviewText(loaderData.content_html, loaderData.excerpt) ||
+        loaderData.excerpt ||
+        "",
       path: `/blog/${params.slug}`,
       ogType: "article",
       breadcrumbs: [
@@ -84,7 +88,7 @@ function ArticlePage() {
       <PageHero
         eyebrow={category?.name ?? "Blog"}
         title={post.title}
-        subtitle={post.excerpt || ""}
+        compact
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Blog", path: "/blog" },
@@ -92,9 +96,9 @@ function ArticlePage() {
         ]}
       />
 
-      <Section>
+      <Section tight className="!pt-0 pb-16">
         {(category || publishedLabel) && (
-          <div className="mx-auto mb-6 flex max-w-4xl flex-wrap gap-3 text-xs text-muted-foreground">
+          <div className="mx-auto mb-4 flex max-w-4xl flex-wrap gap-3 text-xs text-muted-foreground">
             {category && (
               <span className="rounded-full border border-border/60 bg-card/40 px-3 py-1 uppercase tracking-wider">
                 {category.name}
@@ -103,7 +107,7 @@ function ArticlePage() {
             {publishedLabel && <span>Published {publishedLabel}</span>}
           </div>
         )}
-        <article className="cms-prose mx-auto max-w-4xl">
+        <article className="cms-prose mx-auto max-w-4xl [&>:first-child]:mt-0">
           {post.content_html ? (
             <div
               dangerouslySetInnerHTML={{
