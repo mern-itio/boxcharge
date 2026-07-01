@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PayoutsRouteImport } from './routes/payouts'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -64,6 +65,11 @@ import { Route as AdminPagesEditIdRouteImport } from './routes/admin/pages/edit/
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -341,6 +347,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/payouts': typeof PayoutsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/media': typeof AdminMediaRoute
@@ -393,6 +400,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/payouts': typeof PayoutsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/media': typeof AdminMediaRoute
@@ -447,6 +455,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/payouts': typeof PayoutsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/media': typeof AdminMediaRoute
@@ -502,6 +511,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/payouts'
     | '/reset-password'
+    | '/robots.txt'
     | '/sitemap.xml'
     | '/admin/categories'
     | '/admin/media'
@@ -554,6 +564,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/payouts'
     | '/reset-password'
+    | '/robots.txt'
     | '/sitemap.xml'
     | '/admin/categories'
     | '/admin/media'
@@ -607,6 +618,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/payouts'
     | '/reset-password'
+    | '/robots.txt'
     | '/sitemap.xml'
     | '/admin/categories'
     | '/admin/media'
@@ -661,6 +673,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   PayoutsRoute: typeof PayoutsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
   DevelopersApiIntegrationRoute: typeof DevelopersApiIntegrationRoute
@@ -700,6 +713,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -1099,6 +1119,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   PayoutsRoute: PayoutsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
   DevelopersApiIntegrationRoute: DevelopersApiIntegrationRoute,

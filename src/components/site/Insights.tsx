@@ -41,15 +41,7 @@ export function Insights() {
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {top.map((p, i) => (
             <Reveal key={p.slug} delay={i * 80}>
-              <BlogPostCard
-                post={p}
-                className="card-lift h-full"
-                metaPrefix={`${p.tags?.[0] ?? "Article"} · ${new Date(p.published_at ?? "").toLocaleDateString("en", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}`}
-              />
+              <BlogPostCard post={p} className="card-lift h-full" />
             </Reveal>
           ))}
         </div>

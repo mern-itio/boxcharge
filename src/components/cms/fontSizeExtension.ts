@@ -39,13 +39,13 @@ export const FontSize = Extension.create({
       setFontSize:
         (fontSize: string) =>
         ({ commands }) =>
-          this.options.types.every((type: string) =>
+          this.options.types.some((type: string) =>
             commands.updateAttributes(type, { fontSize }),
           ),
       unsetFontSize:
         () =>
         ({ commands }) =>
-          this.options.types.every((type: string) =>
+          this.options.types.some((type: string) =>
             commands.updateAttributes(type, { fontSize: null }),
           ),
     };

@@ -213,10 +213,10 @@ function PostEditor() {
               value={form.tags}
               onChange={(e) => setForm({ ...form, tags: e.target.value })}
               className="mt-1.5"
-              maxLength={4000}
+              maxLength={8000}
             />
             <p className="mt-1.5 text-xs text-muted-foreground">
-              Up to 50 tags, 120 characters each — e.g. payments, cross-border, PCI compliance
+              Up to 80 tags, 200 characters each — e.g. payments, cross-border, PCI compliance
             </p>
           </div>
           <div className="rounded-xl border border-border/60 bg-card/30 p-4 space-y-3">

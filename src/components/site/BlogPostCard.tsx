@@ -7,6 +7,7 @@ type PostPreview = {
   cover_url?: string | null;
   published_at?: string | null;
   tags?: string[] | null;
+  category?: { name: string; slug: string } | null;
 };
 
 type Props = {
@@ -23,7 +24,12 @@ export function BlogPostCard({ post, className = "", metaPrefix }: Props) {
         year: "numeric",
       })
     : null;
-  const meta = metaPrefix ?? (post.tags?.[0] ? `${post.tags[0]} · ${dateLabel}` : dateLabel);
+  const categoryLabel = post.category?.name;
+  const meta =
+    metaPrefix ??
+    (categoryLabel && dateLabel
+      ? `${categoryLabel} · ${dateLabel}`
+      : categoryLabel ?? (post.tags?.[0] ? `${post.tags[0]} · ${dateLabel}` : dateLabel));
 
   return (
     <Link

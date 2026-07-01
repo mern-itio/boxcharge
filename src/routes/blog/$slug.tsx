@@ -2,14 +2,13 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
-import { MarkdownView } from "@/components/cms/MarkdownView";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
     const { data, error } = await supabase
       .from("posts")
-      .select("*")
+      .select("*, category:categories(name, slug)")
       .eq("slug", params.slug)
       .eq("status", "published")
       .single();
@@ -71,11 +70,19 @@ export const Route = createFileRoute("/blog/$slug")({
 function ArticlePage() {
   const post = Route.useLoaderData();
   const { slug } = Route.useParams();
+  const category = post.category as { name: string; slug: string } | null | undefined;
+  const publishedLabel = post.published_at
+    ? new Date(post.published_at).toLocaleDateString("en", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : null;
 
   return (
     <>
       <PageHero
-        eyebrow="Blog"
+        eyebrow={category?.name ?? "Blog"}
         title={post.title}
         subtitle={post.excerpt || ""}
         breadcrumbs={[
@@ -86,6 +93,16 @@ function ArticlePage() {
       />
 
       <Section>
+        {(category || publishedLabel) && (
+          <div className="mx-auto mb-6 flex max-w-4xl flex-wrap gap-3 text-xs text-muted-foreground">
+            {category && (
+              <span className="rounded-full border border-border/60 bg-card/40 px-3 py-1 uppercase tracking-wider">
+                {category.name}
+              </span>
+            )}
+            {publishedLabel && <span>Published {publishedLabel}</span>}
+          </div>
+        )}
         <article className="cms-prose mx-auto max-w-4xl">
           {post.content_html ? (
             <div

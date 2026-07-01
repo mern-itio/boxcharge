@@ -239,7 +239,7 @@ const postInput = z.object({
   body_md: z.string().max(200_000).default(""),
   content_html: z.string().max(500_000).nullable().optional(),
   cover_url: z.string().url().max(2048).nullable().optional().or(z.literal("")),
-  tags: z.array(z.string().max(120)).max(50).default([]),
+  tags: z.array(z.string().max(200)).max(80).default([]),
   status: z.enum(["draft", "published"]).default("draft"),
   published_at: z.string().nullable().optional(),
   meta_title: z.string().max(240).nullable().optional(),
@@ -264,7 +264,7 @@ export const listPublishedPosts = createServerFn({ method: "GET" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data, error } = await supabaseAdmin
       .from("posts")
-      .select("id,slug,title,excerpt,cover_url,tags,published_at")
+      .select("id,slug,title,excerpt,cover_url,tags,published_at,category:categories(name,slug)")
       .eq("status", "published")
       .order("published_at", { ascending: false, nullsFirst: false });
     if (error) throw new Error(error.message);

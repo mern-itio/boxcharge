@@ -14,9 +14,9 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { StickyContactPill } from "@/components/site/StickyContactPill";
 import { AnalyticsScripts } from "@/components/site/AnalyticsScripts";
-import { GoogleSiteVerification } from "@/components/site/GoogleSiteVerification";
 import { organizationSchema } from "@/components/seo/buildHead";
 import { Toaster } from "@/components/ui/sonner";
+import { siteSettingsQuery } from "@/hooks/useSiteSettings";
 
 function NotFoundComponent() {
   return (
@@ -76,11 +76,15 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
+  loader: async ({ context }) => context.queryClient.ensureQueryData(siteSettingsQuery()),
+  head: ({ loaderData }) => {
+    const gsc = loaderData?.google_site_verification?.trim();
+    return {
+      meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { name: "theme-color", content: "#0f172a" },
+      ...(gsc ? [{ name: "google-site-verification", content: gsc }] : []),
       { property: "og:site_name", content: "BoxCharge" },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/N6ibaw98g6biaZFsxjzO26HbI3h2/social-images/social-1780297771613-Screenshot_2026-06-01_at_12.39.26_PM.webp" },
@@ -118,7 +122,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify(organizationSchema()),
       },
     ],
-  }),
+  };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -154,7 +159,6 @@ function RootComponent() {
         {!isAdminSurface && <Footer />}
         {!isAdminSurface && <StickyContactPill />}
       </div>
-      {!isAdminSurface && <GoogleSiteVerification />}
       {!isAdminSurface && <AnalyticsScripts />}
       <Toaster richColors position="top-right" />
     </QueryClientProvider>

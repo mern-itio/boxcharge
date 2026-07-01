@@ -147,8 +147,11 @@ function SettingsPage() {
             {field("google_site_verification", "Google Search Console verification code", "text", "paste meta content value")}
           </div>
           <p className="mt-3 text-xs text-muted-foreground">
-            After saving, submit <code className="text-foreground/80">https://boxchrge.com/sitemap.xml</code> in Google Search Console.
-            Analytics loads automatically when a measurement ID is set.
+            After saving, submit{" "}
+            <code className="text-foreground/80">
+              {(form.site_url || "https://boxchrge.com").replace(/\/+$/, "")}/sitemap.xml
+            </code>{" "}
+            in Google Search Console. Analytics loads automatically when a measurement ID is set.
           </p>
         </section>
 

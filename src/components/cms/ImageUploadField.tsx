@@ -17,6 +17,17 @@ type Props = {
   hint?: string;
 };
 
+function filenameFromUrl(url: string): string {
+  if (!url) return "";
+  try {
+    const base = new URL(url).pathname.split("/").pop();
+    return base ? decodeURIComponent(base.split("?")[0]) : "";
+  } catch {
+    const base = url.split("/").pop();
+    return base ? decodeURIComponent(base.split("?")[0]) : "";
+  }
+}
+
 export function ImageUploadField({ label, value, onChange, hint }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -24,6 +35,7 @@ export function ImageUploadField({ label, value, onChange, hint }: Props) {
   const [filename, setFilename] = useState("");
   const qc = useQueryClient();
   const recordFn = useServerFn(recordMedia);
+  const currentFilename = filenameFromUrl(value);
 
   async function handleFile(file: File) {
     setUploading(true);
@@ -93,7 +105,23 @@ export function ImageUploadField({ label, value, onChange, hint }: Props) {
             className="mt-1 font-mono text-xs"
             placeholder="https://… — paste, edit, or upload above"
           />
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            Edit the full image URL directly. Upload or pick from the library to replace it.
+          </p>
         </div>
+        {currentFilename && (
+          <div>
+            <Label className="text-xs text-muted-foreground">Current file name</Label>
+            <Input
+              value={currentFilename}
+              readOnly
+              className="mt-1 font-mono text-xs text-muted-foreground"
+            />
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              Rename uploaded files in Admin → Media Library.
+            </p>
+          </div>
+        )}
       </div>
 
       {value ? (

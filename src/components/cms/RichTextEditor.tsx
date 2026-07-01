@@ -48,6 +48,7 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Prop
     ],
     content: value || "",
     onUpdate: ({ editor: ed }) => onChange(ed.getHTML()),
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         class: "cms-editor max-w-none min-h-[400px] focus:outline-none px-4 py-3",
