@@ -36,6 +36,7 @@ export function Section({
   align = "left",
   children,
   className = "",
+  tight = false,
 }: {
   id?: string;
   eyebrow?: string;
