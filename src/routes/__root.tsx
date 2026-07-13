@@ -79,26 +79,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   loader: async ({ context }) => context.queryClient.ensureQueryData(siteSettingsQuery()),
   head: ({ loaderData }) => {
     const gsc = loaderData?.google_site_verification?.trim();
+    const siteUrl = loaderData?.site_url || loaderData?.footer_domain || undefined;
     return {
       meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { name: "theme-color", content: "#0f172a" },
       ...(gsc ? [{ name: "google-site-verification", content: gsc }] : []),
-      { property: "og:site_name", content: "BoxCharge" },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/N6ibaw98g6biaZFsxjzO26HbI3h2/social-images/social-1780297771613-Screenshot_2026-06-01_at_12.39.26_PM.webp" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { name: "twitter:site", content: "@BoxCharge" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/N6ibaw98g6biaZFsxjzO26HbI3h2/social-images/social-1780297771613-Screenshot_2026-06-01_at_12.39.26_PM.webp" },
-      { title: "BC" },
-      { property: "og:title", content: "BC" },
-      { name: "twitter:title", content: "BC" },
-      { name: "description", content: "BoxCharge offers global merchant services and payment infrastructure for businesses." },
-      { property: "og:description", content: "BoxCharge offers global merchant services and payment infrastructure for businesses." },
-      { name: "twitter:description", content: "BoxCharge offers global merchant services and payment infrastructure for businesses." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

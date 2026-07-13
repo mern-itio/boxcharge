@@ -61,7 +61,6 @@ export const Route = createFileRoute("/")({
       title,
       description,
       path: "/",
-      image: "/og-boxcharge.jpg",
       keywords: DEFAULT_SEO.keywords,
     });
   },

@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
 import { postPreviewText } from "@/lib/postPreview";
+import { resolveOgImageUrl } from "@/lib/ogImage";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/blog/$slug")({
@@ -38,6 +39,8 @@ export const Route = createFileRoute("/blog/$slug")({
         "",
       path: `/blog/${params.slug}`,
       ogType: "article",
+      image: loaderData.cover_url,
+      imageAlt: loaderData.title,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Blog", path: "/blog" },
@@ -49,6 +52,9 @@ export const Route = createFileRoute("/blog/$slug")({
           "@type": "Article",
           headline: loaderData.title,
           datePublished: loaderData.published_at,
+          image: loaderData.cover_url
+            ? [resolveOgImageUrl(loaderData.cover_url)]
+            : [resolveOgImageUrl(null)],
           author: {
             "@type": "Organization",
             name: "BoxCharge",
@@ -56,6 +62,10 @@ export const Route = createFileRoute("/blog/$slug")({
           publisher: {
             "@type": "Organization",
             name: "BoxCharge",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://boxchrge.com/favicon-192.png",
+            },
           },
         },
       ],

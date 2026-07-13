@@ -31,7 +31,8 @@ export const Route = createFileRoute("/$slug")({
       description,
       path,
       ogType: "article",
-      image: loaderData.featured_image_url ?? "/og-boxcharge.jpg",
+      image: loaderData.featured_image_url,
+      imageAlt: loaderData.title,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: loaderData.title, path },
