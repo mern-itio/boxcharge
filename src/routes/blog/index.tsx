@@ -6,7 +6,10 @@ import { CmsHtmlBody } from "@/components/cms/CmsHtmlBody";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
-import { listCategories, listPublishedPosts } from "@/lib/cms.functions";
+import {
+  listCategoriesWithPublishedCounts,
+  listPublishedPosts,
+} from "@/lib/cms.functions";
 import { BlogPostCard } from "@/components/site/BlogPostCard";
 
 export const Route = createFileRoute("/blog/")({
@@ -25,7 +28,7 @@ export const Route = createFileRoute("/blog/")({
 
 function BlogIndex() {
   const listFn = useServerFn(listPublishedPosts);
-  const categoriesFn = useServerFn(listCategories);
+  const categoriesFn = useServerFn(listCategoriesWithPublishedCounts);
 
   const { data: posts = [], isLoading } = useQuery({
     queryKey: ["blog-posts"],
@@ -57,36 +60,46 @@ function BlogIndex() {
         cmsSlug="blog"
       />
 
-      {categories.length > 0 && (
-        <Section
-          eyebrow="Browse by topic"
-          title="Blog Categories"
-          subtitle="Explore articles and guides by payment topic."
-          className="!pb-0"
-        >
-          <div className="flex flex-wrap gap-3">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                to="/category/$slug"
-                params={{ slug: category.slug }}
-                className="rounded-full border border-border/60 bg-card/40 px-4 py-2 text-sm text-muted-foreground transition hover:border-primary/50 hover:bg-primary/10 hover:text-foreground"
+      <CmsHtmlBody slug="blog">
+        <Section>
+          <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+            <div>
+              <div className="grid gap-5 sm:grid-cols-2">
+                {posts.map((post) => (
+                  <BlogPostCard key={post.id} post={post} />
+                ))}
+              </div>
+            </div>
+
+            {categories.length > 0 && (
+              <aside
+                aria-label="Blog categories"
+                className="glass rounded-2xl border border-border/60 p-5 lg:sticky lg:top-24"
               >
-                {category.name}
-              </Link>
-            ))}
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                  Browse by topic
+                </div>
+                <h2 className="mt-2 text-xl font-semibold">Categories</h2>
+                <ul className="mt-4 divide-y divide-border/50">
+                  {categories.map((category) => (
+                    <li key={category.id}>
+                      <Link
+                        to="/category/$slug"
+                        params={{ slug: category.slug }}
+                        className="flex items-center justify-between gap-3 py-3 text-sm text-muted-foreground transition hover:text-foreground"
+                      >
+                        <span>{category.name}</span>
+                        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary">
+                          {category.published_post_count}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+            )}
           </div>
         </Section>
-      )}
-
-      <CmsHtmlBody slug="blog">
-      <Section>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <BlogPostCard key={post.id} post={post} />
-          ))}
-        </div>
-      </Section>
       </CmsHtmlBody>
     </>
   );

@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { Facebook, Globe, Linkedin, Mail, Twitter, Youtube } from "lucide-react";
 import logo from "@/assets/boxcharge-logo.png";
+import { TelegramIcon } from "@/components/site/TelegramIcon";
 import { useContent } from "@/hooks/useContent";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
@@ -101,9 +102,10 @@ function SocialIcon({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border/60 bg-card/40 text-muted-foreground transition hover:border-primary/40 hover:bg-primary/10 hover:text-foreground"
+      className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-primary/30 bg-primary/10 px-3 text-foreground transition hover:border-primary/60 hover:bg-primary/20"
     >
       {children}
+      <span className="text-xs font-medium">{label}</span>
     </a>
   );
 }
@@ -140,6 +142,7 @@ export function Footer() {
     { href: settings?.social_linkedin ?? "", label: "LinkedIn", icon: Linkedin },
     { href: settings?.social_facebook ?? "", label: "Facebook", icon: Facebook },
     { href: settings?.social_twitter ?? "", label: "Twitter", icon: Twitter },
+    { href: settings?.social_telegram ?? "", label: "Telegram", icon: TelegramIcon },
     { href: settings?.social_youtube ?? "", label: "YouTube", icon: Youtube },
   ].filter((s) => s.href);
 
@@ -217,12 +220,17 @@ export function Footer() {
             </div>
 
             {socials.length > 0 && (
-              <div className="mt-5 flex items-center gap-2">
+              <div className="mt-5">
+                <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                  Follow us
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
                 {socials.map(({ href, label, icon: Icon }) => (
                   <SocialIcon key={label} href={href} label={label}>
                     <Icon className="h-4 w-4" />
                   </SocialIcon>
                 ))}
+                </div>
               </div>
             )}
           </div>

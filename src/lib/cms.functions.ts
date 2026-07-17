@@ -409,6 +409,7 @@ const siteSettingsInput = z.object({
   social_linkedin: z.string().max(500).nullable().optional(),
   social_facebook: z.string().max(500).nullable().optional(),
   social_twitter: z.string().max(500).nullable().optional(),
+  social_telegram: z.string().max(500).nullable().optional(),
   social_youtube: z.string().max(500).nullable().optional(),
   brand_primary: z.string().max(60).nullable().optional(),
   brand_accent: z.string().max(60).nullable().optional(),
@@ -486,6 +487,30 @@ export const listCategories = createServerFn({ method: "GET" })
     const { data, error } = await supabaseAdmin.from("categories").select("*").order("name");
     if (error) throw new Error(error.message);
     return data ?? [];
+  });
+
+export const listCategoriesWithPublishedCounts = createServerFn({ method: "GET" })
+  .handler(async () => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const [{ data: categories, error: categoryError }, { data: posts, error: postsError }] =
+      await Promise.all([
+        supabaseAdmin.from("categories").select("*").order("name"),
+        supabaseAdmin.from("posts").select("category_id").eq("status", "published"),
+      ]);
+
+    if (categoryError) throw new Error(categoryError.message);
+    if (postsError) throw new Error(postsError.message);
+
+    const counts = new Map<string, number>();
+    for (const post of posts ?? []) {
+      if (!post.category_id) continue;
+      counts.set(post.category_id, (counts.get(post.category_id) ?? 0) + 1);
+    }
+
+    return (categories ?? []).map((category) => ({
+      ...category,
+      published_post_count: counts.get(category.id) ?? 0,
+    }));
   });
 
 export const upsertCategory = createServerFn({ method: "POST" })

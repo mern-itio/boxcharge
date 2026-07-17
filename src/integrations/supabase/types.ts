@@ -290,6 +290,7 @@ export type Database = {
           site_url: string | null
           social_facebook: string | null
           social_linkedin: string | null
+          social_telegram: string | null
           social_twitter: string | null
           social_youtube: string | null
           tagline: string | null
@@ -312,6 +313,7 @@ export type Database = {
           site_url?: string | null
           social_facebook?: string | null
           social_linkedin?: string | null
+          social_telegram?: string | null
           social_twitter?: string | null
           social_youtube?: string | null
           tagline?: string | null
@@ -334,6 +336,7 @@ export type Database = {
           site_url?: string | null
           social_facebook?: string | null
           social_linkedin?: string | null
+          social_telegram?: string | null
           social_twitter?: string | null
           social_youtube?: string | null
           tagline?: string | null

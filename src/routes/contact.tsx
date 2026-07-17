@@ -5,6 +5,7 @@ import { Section } from "@/components/site/PageBlocks";
 import { ApplyForm } from "@/components/site/ApplyForm";
 import { FAQAccordion } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
+import { TelegramIcon } from "@/components/site/TelegramIcon";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import {
   Building2,
@@ -109,6 +110,7 @@ function ContactPage() {
     { label: "LinkedIn", href: settings?.social_linkedin, icon: Linkedin },
     { label: "Facebook", href: settings?.social_facebook, icon: Facebook },
     { label: "X (Twitter)", href: settings?.social_twitter, icon: Twitter },
+    { label: "Telegram", href: settings?.social_telegram, icon: TelegramIcon },
   ].filter((profile) => profile.href);
 
   return (
