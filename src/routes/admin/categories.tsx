@@ -31,6 +31,7 @@ function CategoriesPage() {
     meta_description: "",
   };
   const [draft, setDraft] = useState(emptyDraft);
+  const [slugAuto, setSlugAuto] = useState(true);
 
   const create = useMutation({
     mutationFn: () =>
@@ -47,6 +48,7 @@ function CategoriesPage() {
     onSuccess: () => {
       toast.success(draft.id ? "Category updated" : "Category added");
       setDraft(emptyDraft);
+      setSlugAuto(true);
       qc.invalidateQueries({ queryKey: ["cms", "categories"] });
     },
     onError: (e: Error) => toast.error(e.message),
@@ -86,7 +88,7 @@ function CategoriesPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={() =>
+                      onClick={() => {
                         setDraft({
                           id: c.id,
                           name: c.name,
@@ -94,8 +96,9 @@ function CategoriesPage() {
                           description: c.description ?? "",
                           meta_title: c.meta_title ?? "",
                           meta_description: c.meta_description ?? "",
-                        })
-                      }
+                        });
+                        setSlugAuto(false);
+                      }}
                     >
                       <Pencil className="h-3.5 w-3.5" />
                     </Button>
@@ -113,18 +116,43 @@ function CategoriesPage() {
           <div className="flex items-center justify-between gap-2">
             <div className="text-sm font-semibold">{draft.id ? "Edit category" : "Add category"}</div>
             {draft.id && (
-              <Button size="sm" variant="ghost" onClick={() => setDraft(emptyDraft)}>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => {
+                  setDraft(emptyDraft);
+                  setSlugAuto(true);
+                }}
+              >
                 <X className="h-3.5 w-3.5" />
               </Button>
             )}
           </div>
           <div>
             <Label>Name</Label>
-            <Input value={draft.name} onChange={(e) => setDraft({ ...draft, name: e.target.value, slug: draft.slug || slugify(e.target.value) })} className="mt-1.5" />
+            <Input
+              value={draft.name}
+              onChange={(e) => {
+                const name = e.target.value;
+                setDraft({
+                  ...draft,
+                  name,
+                  slug: slugAuto ? slugify(name) : draft.slug,
+                });
+              }}
+              className="mt-1.5"
+            />
           </div>
           <div>
             <Label>Slug</Label>
-            <Input value={draft.slug} onChange={(e) => setDraft({ ...draft, slug: e.target.value })} className="mt-1.5 font-mono text-sm" />
+            <Input
+              value={draft.slug}
+              onChange={(e) => {
+                setSlugAuto(false);
+                setDraft({ ...draft, slug: slugify(e.target.value) });
+              }}
+              className="mt-1.5 font-mono text-sm"
+            />
           </div>
           <div>
             <Label>Description</Label>
