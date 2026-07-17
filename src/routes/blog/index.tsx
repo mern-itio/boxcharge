@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 
@@ -6,7 +6,7 @@ import { CmsHtmlBody } from "@/components/cms/CmsHtmlBody";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
-import { listPublishedPosts } from "@/lib/cms.functions";
+import { listCategories, listPublishedPosts } from "@/lib/cms.functions";
 import { BlogPostCard } from "@/components/site/BlogPostCard";
 
 export const Route = createFileRoute("/blog/")({
@@ -25,10 +25,15 @@ export const Route = createFileRoute("/blog/")({
 
 function BlogIndex() {
   const listFn = useServerFn(listPublishedPosts);
+  const categoriesFn = useServerFn(listCategories);
 
   const { data: posts = [], isLoading } = useQuery({
     queryKey: ["blog-posts"],
     queryFn: () => listFn(),
+  });
+  const { data: categories = [] } = useQuery({
+    queryKey: ["blog-categories"],
+    queryFn: () => categoriesFn(),
   });
 
   if (isLoading) {
@@ -52,10 +57,32 @@ function BlogIndex() {
         cmsSlug="blog"
       />
 
+      {categories.length > 0 && (
+        <Section
+          eyebrow="Browse by topic"
+          title="Blog Categories"
+          subtitle="Explore articles and guides by payment topic."
+          className="!pb-0"
+        >
+          <div className="flex flex-wrap gap-3">
+            {categories.map((category) => (
+              <Link
+                key={category.id}
+                to="/category/$slug"
+                params={{ slug: category.slug }}
+                className="rounded-full border border-border/60 bg-card/40 px-4 py-2 text-sm text-muted-foreground transition hover:border-primary/50 hover:bg-primary/10 hover:text-foreground"
+              >
+                {category.name}
+              </Link>
+            ))}
+          </div>
+        </Section>
+      )}
+
       <CmsHtmlBody slug="blog">
       <Section>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post: { id: string; slug: string; title: string; excerpt?: string | null; cover_url?: string | null; published_at?: string | null; tags?: string[] | null }) => (
+          {posts.map((post) => (
             <BlogPostCard key={post.id} post={post} />
           ))}
         </div>

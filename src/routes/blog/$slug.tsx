@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
@@ -32,8 +32,9 @@ export const Route = createFileRoute("/blog/$slug")({
     }
 
     return buildHead({
-      title: `${loaderData.title} — BoxCharge Blog`,
+      title: loaderData.meta_title || `${loaderData.title} — BoxCharge Blog`,
       description:
+        loaderData.meta_description ||
         postPreviewText(loaderData.content_html, loaderData.excerpt) ||
         loaderData.excerpt ||
         "",
@@ -110,9 +111,13 @@ function ArticlePage() {
         {(category || publishedLabel) && (
           <div className="mx-auto mb-4 flex max-w-4xl flex-wrap gap-3 text-xs text-muted-foreground">
             {category && (
-              <span className="rounded-full border border-border/60 bg-card/40 px-3 py-1 uppercase tracking-wider">
+              <Link
+                to="/category/$slug"
+                params={{ slug: category.slug }}
+                className="rounded-full border border-border/60 bg-card/40 px-3 py-1 uppercase tracking-wider transition hover:border-primary/50 hover:text-foreground"
+              >
                 {category.name}
-              </span>
+              </Link>
             )}
             {publishedLabel && <span>Published {publishedLabel}</span>}
           </div>

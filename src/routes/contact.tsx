@@ -5,7 +5,19 @@ import { Section } from "@/components/site/PageBlocks";
 import { ApplyForm } from "@/components/site/ApplyForm";
 import { FAQAccordion } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
-import { Mail, Globe2, Building2, Calendar, ShieldCheck, Clock, MessageSquare } from "lucide-react";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
+import {
+  Building2,
+  Calendar,
+  Clock,
+  Facebook,
+  Globe2,
+  Linkedin,
+  Mail,
+  MessageSquare,
+  ShieldCheck,
+  Twitter,
+} from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () =>
@@ -92,6 +104,13 @@ const faqs = [
 
 
 function ContactPage() {
+  const settings = useSiteSettings();
+  const socialProfiles = [
+    { label: "LinkedIn", href: settings?.social_linkedin, icon: Linkedin },
+    { label: "Facebook", href: settings?.social_facebook, icon: Facebook },
+    { label: "X (Twitter)", href: settings?.social_twitter, icon: Twitter },
+  ].filter((profile) => profile.href);
+
   return (
     <>
       <PageHero
@@ -124,6 +143,30 @@ function ContactPage() {
           ))}
         </div>
       </Section>
+
+      {socialProfiles.length > 0 && (
+        <Section
+          eyebrow="Connect"
+          title="Follow BoxCharge"
+          subtitle="Follow our official profiles for company news, payment insights, and product updates."
+          className="!pt-0"
+        >
+          <div className="flex flex-wrap gap-3">
+            {socialProfiles.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href ?? undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass inline-flex items-center gap-2 rounded-xl border border-border/60 px-4 py-3 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
+              >
+                <Icon className="h-4 w-4 text-primary" />
+                {label}
+              </a>
+            ))}
+          </div>
+        </Section>
+      )}
 
       {/* Form */}
       <ApplyForm />

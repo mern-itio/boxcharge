@@ -57,7 +57,7 @@ export const Route = createFileRoute("/sitemap.xml")({
 
         const siteUrl = resolveSiteUrl(settings?.site_url || settings?.footer_domain || undefined);
 
-        const [{ data: posts }, { data: cmsPages }] = await Promise.all([
+        const [{ data: posts }, { data: cmsPages }, { data: categories }] = await Promise.all([
           supabaseAdmin
             .from("posts")
             .select("slug, updated_at, published_at")
@@ -67,6 +67,10 @@ export const Route = createFileRoute("/sitemap.xml")({
             .from("cms_pages")
             .select("slug, updated_at, published_at")
             .eq("status", "published")
+            .order("updated_at", { ascending: false }),
+          supabaseAdmin
+            .from("categories")
+            .select("slug, updated_at")
             .order("updated_at", { ascending: false }),
         ]);
 
@@ -83,6 +87,12 @@ export const Route = createFileRoute("/sitemap.xml")({
             priority: "0.5",
             changefreq: "monthly" as const,
             lastmod: (p.updated_at || p.published_at || undefined)?.slice(0, 10),
+          })),
+          ...(categories ?? []).map((category) => ({
+            path: `/category/${category.slug}`,
+            priority: "0.6",
+            changefreq: "weekly" as const,
+            lastmod: category.updated_at?.slice(0, 10),
           })),
         ];
 

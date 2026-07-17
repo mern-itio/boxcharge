@@ -407,6 +407,7 @@ const siteSettingsInput = z.object({
   footer_email: z.string().max(200).nullable().optional(),
   footer_domain: z.string().max(200).nullable().optional(),
   social_linkedin: z.string().max(500).nullable().optional(),
+  social_facebook: z.string().max(500).nullable().optional(),
   social_twitter: z.string().max(500).nullable().optional(),
   social_youtube: z.string().max(500).nullable().optional(),
   brand_primary: z.string().max(60).nullable().optional(),
@@ -475,6 +476,8 @@ const categoryInput = z.object({
   name: z.string().min(1).max(120),
   slug: z.string().min(1).max(160).regex(/^[a-z0-9-]+$/, "lowercase letters, numbers, hyphens"),
   description: z.string().max(500).nullable().optional(),
+  meta_title: z.string().max(240).nullable().optional(),
+  meta_description: z.string().max(500).nullable().optional(),
 });
 
 export const listCategories = createServerFn({ method: "GET" })
@@ -491,7 +494,14 @@ export const upsertCategory = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase as SBClient, context.userId);
     const sb = context.supabase as SBClient;
-    const payload = { name: data.name, slug: data.slug, description: data.description ?? null, updated_by: context.userId };
+    const payload = {
+      name: data.name,
+      slug: data.slug,
+      description: data.description ?? null,
+      meta_title: data.meta_title ?? null,
+      meta_description: data.meta_description ?? null,
+      updated_by: context.userId,
+    };
     if (data.id) {
       const { error } = await sb.from("categories").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
@@ -510,6 +520,32 @@ export const deleteCategory = createServerFn({ method: "POST" })
     const { error } = await (context.supabase as SBClient).from("categories").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
+  });
+
+export const getCategoryArchive = createServerFn({ method: "GET" })
+  .inputValidator((input: { slug: string }) =>
+    z.object({ slug: z.string().min(1).max(160) }).parse(input),
+  )
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: category, error: categoryError } = await supabaseAdmin
+      .from("categories")
+      .select("*")
+      .eq("slug", data.slug)
+      .maybeSingle();
+
+    if (categoryError) throw new Error(categoryError.message);
+    if (!category) return null;
+
+    const { data: posts, error: postsError } = await supabaseAdmin
+      .from("posts")
+      .select("id,slug,title,excerpt,content_html,cover_url,tags,published_at,category:categories(name,slug)")
+      .eq("status", "published")
+      .eq("category_id", category.id)
+      .order("published_at", { ascending: false, nullsFirst: false });
+
+    if (postsError) throw new Error(postsError.message);
+    return { category, posts: posts ?? [] };
   });
 
 // ============================================================

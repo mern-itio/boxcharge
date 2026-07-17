@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Plus, Trash2, Save } from "lucide-react";
+import { ArrowLeft, Pencil, Plus, Save, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
 import { slugify } from "@/lib/slugify";
 
@@ -22,11 +22,33 @@ function CategoriesPage() {
   const delFn = useServerFn(deleteCategory);
 
   const { data: cats = [] } = useQuery({ queryKey: ["cms", "categories"], queryFn: () => listFn() });
-  const [draft, setDraft] = useState({ name: "", slug: "", description: "" });
+  const emptyDraft = {
+    id: undefined as string | undefined,
+    name: "",
+    slug: "",
+    description: "",
+    meta_title: "",
+    meta_description: "",
+  };
+  const [draft, setDraft] = useState(emptyDraft);
 
   const create = useMutation({
-    mutationFn: () => upFn({ data: { name: draft.name.trim(), slug: draft.slug || slugify(draft.name), description: draft.description || null } }),
-    onSuccess: () => { toast.success("Category added"); setDraft({ name: "", slug: "", description: "" }); qc.invalidateQueries({ queryKey: ["cms", "categories"] }); },
+    mutationFn: () =>
+      upFn({
+        data: {
+          id: draft.id,
+          name: draft.name.trim(),
+          slug: draft.slug || slugify(draft.name),
+          description: draft.description || null,
+          meta_title: draft.meta_title || null,
+          meta_description: draft.meta_description || null,
+        },
+      }),
+    onSuccess: () => {
+      toast.success(draft.id ? "Category updated" : "Category added");
+      setDraft(emptyDraft);
+      qc.invalidateQueries({ queryKey: ["cms", "categories"] });
+    },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -48,15 +70,35 @@ function CategoriesPage() {
         <div className="overflow-hidden rounded-xl border border-border/60">
           <table className="w-full text-sm">
             <thead className="border-b border-border/60 bg-card/40 text-left text-xs uppercase tracking-wider text-muted-foreground">
-              <tr><th className="px-4 py-2.5">Name</th><th className="px-4 py-2.5">Slug</th><th className="px-4 py-2.5 text-right">Actions</th></tr>
+              <tr><th className="px-4 py-2.5">Name</th><th className="px-4 py-2.5">Archive URL</th><th className="px-4 py-2.5 text-right">Actions</th></tr>
             </thead>
             <tbody>
               {cats.length === 0 && <tr><td colSpan={3} className="px-4 py-8 text-center text-muted-foreground">No categories yet.</td></tr>}
               {cats.map((c) => (
                 <tr key={c.id} className="border-t border-border/60">
                   <td className="px-4 py-2.5 font-medium">{c.name}</td>
-                  <td className="px-4 py-2.5 text-muted-foreground font-mono text-xs">{c.slug}</td>
+                  <td className="px-4 py-2.5 text-muted-foreground font-mono text-xs">
+                    <a href={`/category/${c.slug}`} target="_blank" rel="noreferrer" className="hover:text-primary">
+                      /category/{c.slug}
+                    </a>
+                  </td>
                   <td className="px-4 py-2.5 text-right">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() =>
+                        setDraft({
+                          id: c.id,
+                          name: c.name,
+                          slug: c.slug,
+                          description: c.description ?? "",
+                          meta_title: c.meta_title ?? "",
+                          meta_description: c.meta_description ?? "",
+                        })
+                      }
+                    >
+                      <Pencil className="h-3.5 w-3.5" />
+                    </Button>
                     <Button size="sm" variant="ghost" onClick={() => { if (confirm(`Delete "${c.name}"?`)) del.mutate(c.id); }}>
                       <Trash2 className="h-3.5 w-3.5 text-destructive" />
                     </Button>
@@ -68,7 +110,14 @@ function CategoriesPage() {
         </div>
 
         <div className="rounded-xl border border-border/60 bg-card/30 p-4 space-y-3 h-fit">
-          <div className="text-sm font-semibold">Add category</div>
+          <div className="flex items-center justify-between gap-2">
+            <div className="text-sm font-semibold">{draft.id ? "Edit category" : "Add category"}</div>
+            {draft.id && (
+              <Button size="sm" variant="ghost" onClick={() => setDraft(emptyDraft)}>
+                <X className="h-3.5 w-3.5" />
+              </Button>
+            )}
+          </div>
           <div>
             <Label>Name</Label>
             <Input value={draft.name} onChange={(e) => setDraft({ ...draft, name: e.target.value, slug: draft.slug || slugify(e.target.value) })} className="mt-1.5" />
@@ -81,8 +130,30 @@ function CategoriesPage() {
             <Label>Description</Label>
             <Textarea value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} rows={2} className="mt-1.5" />
           </div>
+          <div>
+            <Label>Meta title</Label>
+            <Input
+              value={draft.meta_title}
+              onChange={(e) => setDraft({ ...draft, meta_title: e.target.value })}
+              className="mt-1.5"
+              placeholder="Defaults to category name"
+              maxLength={240}
+            />
+          </div>
+          <div>
+            <Label>Meta description</Label>
+            <Textarea
+              value={draft.meta_description}
+              onChange={(e) => setDraft({ ...draft, meta_description: e.target.value })}
+              rows={3}
+              className="mt-1.5"
+              placeholder="Defaults to category description"
+              maxLength={500}
+            />
+          </div>
           <Button onClick={() => create.mutate()} disabled={!draft.name.trim() || create.isPending} className="w-full">
-            <Plus className="mr-1 h-4 w-4" /> Add
+            {draft.id ? <Save className="mr-1 h-4 w-4" /> : <Plus className="mr-1 h-4 w-4" />}
+            {draft.id ? "Save category" : "Add category"}
           </Button>
         </div>
       </div>

@@ -18,7 +18,7 @@ type Form = {
   site_name: string; tagline: string; logo_url: string;
   header_cta_label: string; header_cta_href: string;
   footer_blurb: string; footer_email: string; footer_domain: string;
-  social_linkedin: string; social_twitter: string; social_youtube: string;
+  social_linkedin: string; social_facebook: string; social_twitter: string; social_youtube: string;
   site_url: string; google_analytics_id: string; google_site_verification: string;
 };
 
@@ -26,7 +26,7 @@ const EMPTY: Form = {
   site_name: "", tagline: "", logo_url: "",
   header_cta_label: "", header_cta_href: "",
   footer_blurb: "", footer_email: "", footer_domain: "",
-  social_linkedin: "", social_twitter: "", social_youtube: "",
+  social_linkedin: "", social_facebook: "", social_twitter: "", social_youtube: "",
   site_url: "", google_analytics_id: "", google_site_verification: "",
 };
 
@@ -52,6 +52,7 @@ function SettingsPage() {
         footer_email: data.footer_email ?? "",
         footer_domain: data.footer_domain ?? "",
         social_linkedin: data.social_linkedin ?? "",
+        social_facebook: data.social_facebook ?? "",
         social_twitter: data.social_twitter ?? "",
         social_youtube: data.social_youtube ?? "",
         site_url: data.site_url ?? "",
@@ -157,8 +158,9 @@ function SettingsPage() {
 
         <section className="rounded-2xl border border-border/60 bg-card/30 p-5 lg:col-span-2">
           <h2 className="mb-4 text-base font-semibold">Social Links</h2>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {field("social_linkedin", "LinkedIn URL")}
+            {field("social_facebook", "Facebook URL")}
             {field("social_twitter", "Twitter / X URL")}
             {field("social_youtube", "YouTube URL")}
           </div>

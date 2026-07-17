@@ -47,6 +47,7 @@ import { Route as DevelopersWebhooksRouteImport } from './routes/developers/webh
 import { Route as DevelopersS2sIntegrationRouteImport } from './routes/developers/s2s-integration'
 import { Route as DevelopersHostedCheckoutRouteImport } from './routes/developers/hosted-checkout'
 import { Route as DevelopersApiIntegrationRouteImport } from './routes/developers/api-integration'
+import { Route as CategorySlugRouteImport } from './routes/category/$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as AdminTeamRouteImport } from './routes/admin/team'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
@@ -264,6 +265,11 @@ const DevelopersApiIntegrationRoute =
     path: '/developers/api-integration',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CategorySlugRoute = CategorySlugRouteImport.update({
+  id: '/category/$slug',
+  path: '/category/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
@@ -356,6 +362,7 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
   '/developers/api-integration': typeof DevelopersApiIntegrationRoute
   '/developers/hosted-checkout': typeof DevelopersHostedCheckoutRoute
   '/developers/s2s-integration': typeof DevelopersS2sIntegrationRoute
@@ -409,6 +416,7 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
   '/developers/api-integration': typeof DevelopersApiIntegrationRoute
   '/developers/hosted-checkout': typeof DevelopersHostedCheckoutRoute
   '/developers/s2s-integration': typeof DevelopersS2sIntegrationRoute
@@ -464,6 +472,7 @@ export interface FileRoutesById {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
   '/developers/api-integration': typeof DevelopersApiIntegrationRoute
   '/developers/hosted-checkout': typeof DevelopersHostedCheckoutRoute
   '/developers/s2s-integration': typeof DevelopersS2sIntegrationRoute
@@ -520,6 +529,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/team'
     | '/blog/$slug'
+    | '/category/$slug'
     | '/developers/api-integration'
     | '/developers/hosted-checkout'
     | '/developers/s2s-integration'
@@ -573,6 +583,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/team'
     | '/blog/$slug'
+    | '/category/$slug'
     | '/developers/api-integration'
     | '/developers/hosted-checkout'
     | '/developers/s2s-integration'
@@ -627,6 +638,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/team'
     | '/blog/$slug'
+    | '/category/$slug'
     | '/developers/api-integration'
     | '/developers/hosted-checkout'
     | '/developers/s2s-integration'
@@ -676,6 +688,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  CategorySlugRoute: typeof CategorySlugRoute
   DevelopersApiIntegrationRoute: typeof DevelopersApiIntegrationRoute
   DevelopersHostedCheckoutRoute: typeof DevelopersHostedCheckoutRoute
   DevelopersS2sIntegrationRoute: typeof DevelopersS2sIntegrationRoute
@@ -974,6 +987,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevelopersApiIntegrationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/category/$slug': {
+      id: '/category/$slug'
+      path: '/category/$slug'
+      fullPath: '/category/$slug'
+      preLoaderRoute: typeof CategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/blog/$slug'
@@ -1122,6 +1142,7 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
+  CategorySlugRoute: CategorySlugRoute,
   DevelopersApiIntegrationRoute: DevelopersApiIntegrationRoute,
   DevelopersHostedCheckoutRoute: DevelopersHostedCheckoutRoute,
   DevelopersS2sIntegrationRoute: DevelopersS2sIntegrationRoute,

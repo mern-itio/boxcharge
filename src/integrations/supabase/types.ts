@@ -19,6 +19,8 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
+          meta_description: string | null
+          meta_title: string | null
           name: string
           slug: string
           updated_at: string
@@ -28,6 +30,8 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          meta_description?: string | null
+          meta_title?: string | null
           name: string
           slug: string
           updated_at?: string
@@ -37,6 +41,8 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          meta_description?: string | null
+          meta_title?: string | null
           name?: string
           slug?: string
           updated_at?: string
@@ -282,6 +288,7 @@ export type Database = {
           logo_url: string | null
           site_name: string | null
           site_url: string | null
+          social_facebook: string | null
           social_linkedin: string | null
           social_twitter: string | null
           social_youtube: string | null
@@ -303,6 +310,7 @@ export type Database = {
           logo_url?: string | null
           site_name?: string | null
           site_url?: string | null
+          social_facebook?: string | null
           social_linkedin?: string | null
           social_twitter?: string | null
           social_youtube?: string | null
@@ -324,6 +332,7 @@ export type Database = {
           logo_url?: string | null
           site_name?: string | null
           site_url?: string | null
+          social_facebook?: string | null
           social_linkedin?: string | null
           social_twitter?: string | null
           social_youtube?: string | null
