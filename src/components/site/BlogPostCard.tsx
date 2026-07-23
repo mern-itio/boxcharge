@@ -44,7 +44,7 @@ export function BlogPostCard({ post, className = "", metaPrefix }: Props) {
         <div className="aspect-[16/9] overflow-hidden border-b border-border/40 bg-card/30">
           <img
             src={post.cover_url}
-            alt=""
+            alt={`${post.title} — BoxCharge Blog`}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />

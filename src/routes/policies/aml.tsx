@@ -1,18 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PolicyPage } from "@/components/site/PolicyPage";
 import { buildHead } from "@/components/seo/buildHead";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+
+const SLUG = "policies/aml";
+const seo = pageSeoDefaults[SLUG];
+const path = "/policies/aml";
 
 export const Route = createFileRoute("/policies/aml")({
-  head: () => buildHead({
-    title: "AML Policy — BoxCharge",
-    description: "BoxCharge's approach to anti-money-laundering controls, KYC, and partner compliance coordination.",
-    path: "/policies/aml",
-    breadcrumbs: [
-      { name: "Home", path: "/" },
-      { name: "Policies", path: "/policies/aml" },
-      { name: "AML Policy", path: "/policies/aml" },
-    ],
-  }),
+  loader: () => resolvePageSeo(SLUG, seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
+      path,
+      keywords: meta.keywords,
+      breadcrumbs: [
+        { name: "Home", path: "/" },
+        { name: "Policies", path: "/policies/aml" },
+        { name: "AML Policy", path },
+      ],
+    });
+  },
   component: () => (
     <PolicyPage
       title="AML Policy"

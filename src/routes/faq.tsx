@@ -3,6 +3,8 @@ import { CmsHtmlBody } from "@/components/cms/CmsHtmlBody";
 import { PageHero } from "@/components/site/PageHero";
 import { Section, FAQAccordion } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
 
 const groups = [
   {
@@ -48,15 +50,24 @@ const groups = [
 ];
 
 const allFaq = groups.flatMap((g) => g.items);
+const seo = pageSeoDefaults.faq;
 
 export const Route = createFileRoute("/faq")({
-  head: () => buildHead({
-    title: "FAQ — Common Questions About BoxCharge",
-    description: "Answers to common questions about BoxCharge merchant services, gateway, APMs, security, and onboarding.",
-    path: "/faq",
-    breadcrumbs: [{ name: "Home", path: "/" }, { name: "FAQ", path: "/faq" }],
-    faq: allFaq,
-  }),
+  loader: () => resolvePageSeo("faq", seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
+      path: "/faq",
+      keywords: meta.keywords,
+      breadcrumbs: [
+        { name: "Home", path: "/" },
+        { name: "FAQ", path: "/faq" },
+      ],
+      faq: allFaq,
+    });
+  },
   component: FAQPage,
 });
 

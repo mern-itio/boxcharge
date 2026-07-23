@@ -3,28 +3,37 @@ import { ArrowRight, Globe2, Network, Route as RouteIcon, Wallet, Banknote, Laye
 import { CmsHtmlBody } from "@/components/cms/CmsHtmlBody";
 import { PageHero } from "@/components/site/PageHero";
 import { Section, CtaBanner } from "@/components/site/PageBlocks";
+import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { buildHead } from "@/components/seo/buildHead";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
 
 const items = [
-  { icon: Globe2, title: "Global Merchant Services", to: "/solutions/global-merchant-services", body: "Support for international merchant account enablement and acquiring connectivity." },
-  { icon: Layers, title: "Offshore Merchant Accounts", to: "/solutions/offshore-merchant-accounts", body: "Structured offshore merchant enablement through partner-led onboarding." },
-  { icon: Network, title: "Cross-Border Payment Gateway", to: "/solutions/cross-border-payment-gateway", body: "Secure multi-currency gateway connectivity for cross-border transactions." },
+  { icon: Globe2, title: "Global Merchant Services", to: "/solutions/global-merchant-services", body: "International merchant accounts and multi-currency acquiring for global growth." },
+  { icon: Layers, title: "Offshore Merchant Accounts", to: "/solutions/offshore-merchant-accounts", body: "Partner-led offshore merchant enablement for multi-jurisdiction businesses." },
+  { icon: Network, title: "Cross-Border Payment Gateway", to: "/solutions/cross-border-payment-gateway", body: "Secure multi-currency gateway connectivity for international checkout." },
   { icon: RouteIcon, title: "Payment Orchestration", to: "/solutions/payment-orchestration", body: "Cascading logic, multi-acquirer connectivity, and performance-aware routing." },
-  { icon: Wallet, title: "Alternative Payment Methods", to: "/solutions/apm-connectivity", body: "Local and regional APM connectivity across multiple corridors." },
-  { icon: Banknote, title: "IBAN & Settlement Solutions", to: "/solutions/iban-settlement", body: "International collections, settlement flows, and account-based operations." },
+  { icon: Wallet, title: "Alternative Payment Methods", to: "/solutions/apm-connectivity", body: "Local wallets, bank transfers, and regional APM corridors." },
+  { icon: Banknote, title: "IBAN & Settlement Solutions", to: "/solutions/iban-settlement", body: "SEPA collections, IBAN issuance, and euro-area settlement flows." },
 ];
 
+const seo = pageSeoDefaults.solutions;
+
 export const Route = createFileRoute("/solutions/")({
-  head: () =>
-    buildHead({
-      title: "Solutions — Designed for Global Payment Operations",
-      description: "Explore BoxCharge solutions: global merchant services, cross-border gateway, payment orchestration, alternative payment methods, and IBAN settlement.",
+  loader: () => resolvePageSeo("solutions", seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
       path: "/solutions",
+      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Solutions", path: "/solutions" },
       ],
-    }),
+    });
+  },
   component: SolutionsLanding,
 });
 
@@ -60,6 +69,15 @@ function SolutionsLanding() {
           ))}
         </div>
       </Section>
+      <RelatedLinks
+        title="Technology & developer resources"
+        subtitle="Pair each solution with the infrastructure and integration paths that power live payments."
+        items={[
+          { label: "Smart Routing", to: "/technology/smart-routing", description: "Performance-aware acquirer selection." },
+          { label: "Hosted Checkout", to: "/developers/hosted-checkout", description: "PCI-friendly payment pages for faster launch." },
+          { label: "Payment insights", to: "/blog", description: "Guides on merchant accounts, gateways, and settlement." },
+        ]}
+      />
       <CtaBanner title="Find the Right Fit" cta={{ label: "Talk to a Specialist", href: "/contact" }} />
       </CmsHtmlBody>
     </>

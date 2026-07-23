@@ -1,18 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PolicyPage } from "@/components/site/PolicyPage";
 import { buildHead } from "@/components/seo/buildHead";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+
+const SLUG = "policies/merchant-protection";
+const seo = pageSeoDefaults[SLUG];
+const path = "/policies/merchant-protection";
 
 export const Route = createFileRoute("/policies/merchant-protection")({
-  head: () => buildHead({
-    title: "Merchant Protection Policy — BoxCharge",
-    description: "How BoxCharge supports merchant operations through monitoring, dispute coordination, and protective controls.",
-    path: "/policies/merchant-protection",
-    breadcrumbs: [
-      { name: "Home", path: "/" },
-      { name: "Policies", path: "/policies/merchant-protection" },
-      { name: "Merchant Protection Policy", path: "/policies/merchant-protection" },
-    ],
-  }),
+  loader: () => resolvePageSeo(SLUG, seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
+      path,
+      keywords: meta.keywords,
+      breadcrumbs: [
+        { name: "Home", path: "/" },
+        { name: "Policies", path: "/policies/merchant-protection" },
+        { name: "Merchant Protection Policy", path },
+      ],
+    });
+  },
   component: () => (
     <PolicyPage
       title="Merchant Protection Policy"

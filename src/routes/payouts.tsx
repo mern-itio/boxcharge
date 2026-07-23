@@ -14,23 +14,23 @@ import { buildHead } from "@/components/seo/buildHead";
 import { CmsHtmlBody } from "@/components/cms/CmsHtmlBody";
 import { PageHero } from "@/components/site/PageHero";
 import { Section, FAQAccordion, CtaBanner } from "@/components/site/PageBlocks";
+import { RelatedLinks } from "@/components/site/RelatedLinks";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+
+const seo = pageSeoDefaults.payouts;
 
 export const Route = createFileRoute("/payouts")({
-  head: () =>
-    buildHead({
-      title: "Global Payouts — One Balance, Many Rails — BoxCharge",
-      description:
-        "Send payouts to your customers, partners and suppliers worldwide via SEPA, Faster Payments, ACH, PIX, UPI and USDT. One balance, many rails.",
+  loader: () => resolvePageSeo("payouts", seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
       path: "/payouts",
-      keywords: [
-        "global payouts",
-        "SEPA payout",
-        "USDT TRC-20 payout",
-        "ACH payout",
-        "Faster Payments",
-        "cross-border disbursement",
-      ],
-    }),
+      keywords: meta.keywords,
+    });
+  },
   component: PayoutsPage,
 });
 
@@ -143,6 +143,28 @@ function PayoutsPage() {
       <Section eyebrow="FAQ" title="Payouts FAQ">
         <FAQAccordion items={faq} />
       </Section>
+
+      <RelatedLinks
+        title="Related settlement & merchant services"
+        subtitle="Pair payouts with IBAN collections and international merchant enablement."
+        items={[
+          {
+            label: "IBAN & SEPA Settlement",
+            to: "/solutions/iban-settlement",
+            description: "Dedicated and virtual IBANs for euro-area collections and payouts.",
+          },
+          {
+            label: "Offshore Merchant Accounts",
+            to: "/solutions/offshore-merchant-accounts",
+            description: "International merchant enablement that feeds settlement balances.",
+          },
+          {
+            label: "Contact BoxCharge",
+            to: "/contact",
+            description: "Discuss rails, corridors, and disbursement volumes.",
+          },
+        ]}
+      />
 
       <CtaBanner
         title="Replace 4 payout tools with one balance"

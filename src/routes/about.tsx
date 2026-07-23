@@ -5,21 +5,34 @@ import { PageHero } from "@/components/site/PageHero";
 import { Section, CapabilityCards, CtaBanner } from "@/components/site/PageBlocks";
 import { AnimatedCounter } from "@/components/site/AnimatedCounter";
 import { buildHead, serviceSchema } from "@/components/seo/buildHead";
+import { RelatedLinks } from "@/components/site/RelatedLinks";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+
+const seo = pageSeoDefaults.about;
 
 export const Route = createFileRoute("/about")({
-  head: () =>
-    buildHead({
-      title: "About BoxCharge — Building Smarter Payment Infrastructure",
-      description:
-        "BoxCharge is a global payment infrastructure and merchant enablement company supporting cross-border payments, payment orchestration, and secure transaction processing.",
+  loader: () => resolvePageSeo("about", seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
       path: "/about",
-      keywords: ["about boxcharge", "payment infrastructure company", "global merchant services provider"],
+      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "About Us", path: "/about" },
       ],
-      schemas: [serviceSchema("BoxCharge Payment Infrastructure", "Global payment infrastructure and merchant enablement.", "/about")],
-    }),
+      schemas: [
+        serviceSchema(
+          "BoxCharge Payment Infrastructure",
+          "Global payment infrastructure and merchant enablement.",
+          "/about",
+        ),
+      ],
+    });
+  },
   component: AboutPage,
 });
 
@@ -118,6 +131,28 @@ function AboutPage() {
           ))}
         </div>
       </Section>
+
+      <RelatedLinks
+        title="Explore BoxCharge solutions"
+        subtitle="See how merchant services, orchestration, and settlement fit together."
+        items={[
+          {
+            label: "Global Merchant Services",
+            to: "/solutions/global-merchant-services",
+            description: "International merchant accounts and multi-currency acquiring.",
+          },
+          {
+            label: "Payment Orchestration",
+            to: "/solutions/payment-orchestration",
+            description: "Smart routing and cascading across acquiring partners.",
+          },
+          {
+            label: "Insights & guides",
+            to: "/blog",
+            description: "Practical articles on payments, merchant accounts, and settlement.",
+          },
+        ]}
+      />
 
       <CtaBanner
         title="Start Your Payment Discussion"

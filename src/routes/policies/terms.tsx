@@ -1,18 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PolicyPage } from "@/components/site/PolicyPage";
 import { buildHead } from "@/components/seo/buildHead";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+
+const SLUG = "policies/terms";
+const seo = pageSeoDefaults[SLUG];
+const path = "/policies/terms";
 
 export const Route = createFileRoute("/policies/terms")({
-  head: () => buildHead({
-    title: "Terms of Use — BoxCharge",
-    description: "Terms governing access to BoxCharge's website, documentation, and services.",
-    path: "/policies/terms",
-    breadcrumbs: [
-      { name: "Home", path: "/" },
-      { name: "Policies", path: "/policies/terms" },
-      { name: "Terms of Use", path: "/policies/terms" },
-    ],
-  }),
+  loader: () => resolvePageSeo(SLUG, seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
+      path,
+      keywords: meta.keywords,
+      breadcrumbs: [
+        { name: "Home", path: "/" },
+        { name: "Policies", path: "/policies/terms" },
+        { name: "Terms of Use", path },
+      ],
+    });
+  },
   component: () => (
     <PolicyPage
       title="Terms of Use"

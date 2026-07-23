@@ -33,6 +33,7 @@ export function ImageUploadField({ label, value, onChange, hint }: Props) {
   const [uploading, setUploading] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [filename, setFilename] = useState("");
+  const [altText, setAltText] = useState("");
   const qc = useQueryClient();
   const recordFn = useServerFn(recordMedia);
   const currentFilename = filenameFromUrl(value);
@@ -42,6 +43,7 @@ export function ImageUploadField({ label, value, onChange, hint }: Props) {
     try {
       const url = await uploadCmsImage(file, recordFn, {
         filename: filename.trim() || file.name,
+        alt: altText.trim() || undefined,
       });
       qc.invalidateQueries({ queryKey: ["cms", "media"] });
       onChange(url);
@@ -89,12 +91,25 @@ export function ImageUploadField({ label, value, onChange, hint }: Props) {
 
       <div className="mt-3 space-y-2">
         <div>
-          <Label className="text-xs text-muted-foreground">File name (for uploads)</Label>
+          <Label className="text-xs text-muted-foreground">SEO file name (for uploads)</Label>
           <Input
             value={filename}
             onChange={(e) => setFilename(e.target.value)}
             className="mt-1 font-mono text-xs"
-            placeholder="hero-banner.png"
+            placeholder="offshore-merchant-account-hero.jpg"
+          />
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            Use lowercase keywords and hyphens. Prefer 1200×630 for social/OG images.
+          </p>
+        </div>
+        <div>
+          <Label className="text-xs text-muted-foreground">Alt text (for uploads)</Label>
+          <Input
+            value={altText}
+            onChange={(e) => setAltText(e.target.value)}
+            className="mt-1 text-xs"
+            placeholder="Describe the image for SEO and accessibility"
+            maxLength={200}
           />
         </div>
         <div>
@@ -118,7 +133,7 @@ export function ImageUploadField({ label, value, onChange, hint }: Props) {
               className="mt-1 font-mono text-xs text-muted-foreground"
             />
             <p className="mt-1 text-[11px] text-muted-foreground">
-              Rename uploaded files in Admin → Media Library.
+              Rename files or edit alt text in Admin → Media Library.
             </p>
           </div>
         )}
@@ -128,7 +143,7 @@ export function ImageUploadField({ label, value, onChange, hint }: Props) {
         <div className="relative mt-2 inline-block max-w-full">
           <img
             src={value}
-            alt=""
+            alt={currentFilename ? `Selected media: ${currentFilename}` : "Selected media preview"}
             className="max-h-44 rounded-md border border-border/60 object-cover"
           />
           <Button

@@ -11,6 +11,7 @@ import {
   Check,
   Sparkles,
 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/site/Reveal";
 import { CodeTabs, createPaymentSamples } from "@/components/site/CodeTabs";
@@ -18,6 +19,7 @@ import { BrandIconRow, PaymentMethodIcon } from "@/components/site/PaymentMethod
 import { SecurityFeatureIcon } from "@/components/site/SecurityFeatureIcons";
 import { useContent } from "@/hooks/useContent";
 import { cmsList, sectionHeader } from "@/lib/homeCms";
+import { solutionCardPath } from "@/lib/internalLinks";
 
 const trust = [
   "Global Merchant Services",
@@ -77,18 +79,35 @@ export function Solutions() {
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeader eyebrow={header.eyebrow} title={header.title} subtitle={header.subtitle} />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {cards.map(({ icon: Icon, title, body }, i) => (
-            <Reveal key={title} delay={i * 80}>
-              <div className="group glass gradient-border card-lift relative overflow-hidden rounded-2xl p-6">
+          {cards.map(({ icon: Icon, title, body }, i) => {
+            const to = solutionCardPath(title);
+            const cardClass =
+              "group glass gradient-border card-lift relative overflow-hidden rounded-2xl p-6";
+            const cardInner = (
+              <>
                 <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary/30 to-accent/20 ring-1 ring-white/10">
                   <Icon className="h-5 w-5 text-primary" />
                 </div>
                 <h3 className="text-lg font-semibold">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
-                <ArrowRight className="absolute right-5 top-5 h-4 w-4 -translate-x-2 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-60" />
-              </div>
-            </Reveal>
-          ))}
+                {to && (
+                  <ArrowRight className="absolute right-5 top-5 h-4 w-4 -translate-x-2 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-60" />
+                )}
+              </>
+            );
+
+            return (
+              <Reveal key={title} delay={i * 80}>
+                {to ? (
+                  <Link to={to} className={`block ${cardClass}`}>
+                    {cardInner}
+                  </Link>
+                ) : (
+                  <div className={cardClass}>{cardInner}</div>
+                )}
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

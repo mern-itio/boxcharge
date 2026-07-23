@@ -6,7 +6,10 @@ import { ApplyForm } from "@/components/site/ApplyForm";
 import { FAQAccordion } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
 import { TelegramIcon } from "@/components/site/TelegramIcon";
+import { XIcon } from "@/components/site/XIcon";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
 import {
   Building2,
   Calendar,
@@ -17,21 +20,25 @@ import {
   Mail,
   MessageSquare,
   ShieldCheck,
-  Twitter,
 } from "lucide-react";
 
+const seo = pageSeoDefaults.contact;
+
 export const Route = createFileRoute("/contact")({
-  head: () =>
-    buildHead({
-      title: "Contact BoxCharge — Start a Conversation",
-      description:
-        "Reach the BoxCharge team for business inquiries, technical questions, and onboarding discussions. Typical response within one business day.",
+  loader: () => resolvePageSeo("contact", seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
       path: "/contact",
+      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Contact", path: "/contact" },
       ],
-    }),
+    });
+  },
   component: ContactPage,
 });
 
@@ -109,7 +116,7 @@ function ContactPage() {
   const socialProfiles = [
     { label: "LinkedIn", href: settings?.social_linkedin, icon: Linkedin },
     { label: "Facebook", href: settings?.social_facebook, icon: Facebook },
-    { label: "X (Twitter)", href: settings?.social_twitter, icon: Twitter },
+    { label: "X", href: settings?.social_twitter, icon: XIcon },
     { label: "Telegram", href: settings?.social_telegram, icon: TelegramIcon },
   ].filter((profile) => profile.href);
 

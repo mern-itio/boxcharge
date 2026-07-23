@@ -2,7 +2,13 @@ import { useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { listMedia, deleteMedia, recordMedia, updateMediaFilename } from "@/lib/cms.functions";
+import {
+  listMedia,
+  deleteMedia,
+  recordMedia,
+  updateMediaFilename,
+  updateMediaAlt,
+} from "@/lib/cms.functions";
 import { uploadCmsImage } from "@/lib/mediaUpload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +25,7 @@ function MediaLibrary() {
   const recordFn = useServerFn(recordMedia);
   const deleteFn = useServerFn(deleteMedia);
   const renameFn = useServerFn(updateMediaFilename);
+  const altFn = useServerFn(updateMediaAlt);
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -26,6 +33,8 @@ function MediaLibrary() {
   const [filename, setFilename] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState("");
+  const [editingAltId, setEditingAltId] = useState<string | null>(null);
+  const [editAlt, setEditAlt] = useState("");
 
   const { data: items = [] } = useQuery({ queryKey: ["cms", "media"], queryFn: () => listFn() });
 
@@ -45,6 +54,17 @@ function MediaLibrary() {
       qc.invalidateQueries({ queryKey: ["cms", "media"] });
       setEditingId(null);
       toast.success("Filename updated");
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const saveAlt = useMutation({
+    mutationFn: ({ id, alt: nextAlt }: { id: string; alt: string }) =>
+      altFn({ data: { id, alt: nextAlt } }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["cms", "media"] });
+      setEditingAltId(null);
+      toast.success("Alt text updated");
     },
     onError: (e: Error) => toast.error(e.message),
   });
@@ -71,21 +91,49 @@ function MediaLibrary() {
     <div>
       <h1 className="text-2xl font-semibold">Media library</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Upload images here or directly from blog/page editors. All uploads appear in this library.
+        Use keyword-rich filenames (e.g.{" "}
+        <span className="font-mono text-foreground/80">offshore-merchant-account-boxcharge.jpg</span>) and
+        descriptive alt text. Prefer 1200×630 for Open Graph images.
       </p>
 
-      <div className="mt-5 rounded-xl border border-border/60 bg-card/30 p-4 space-y-3">
+      <div className="mt-5 space-y-3 rounded-xl border border-border/60 bg-card/30 p-4">
         <div>
-          <Label className="text-sm">File name</Label>
-          <Input value={filename} onChange={(e) => setFilename(e.target.value)} className="mt-1" placeholder="hero-banner.png" maxLength={255} />
+          <Label className="text-sm">SEO file name</Label>
+          <Input
+            value={filename}
+            onChange={(e) => setFilename(e.target.value)}
+            className="mt-1"
+            placeholder="cross-border-payment-gateway-hero.jpg"
+            maxLength={255}
+          />
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            Lowercase, hyphens, include the topic keyword. Avoid IMG_1234.jpg.
+          </p>
         </div>
         <div>
-          <Label className="text-sm">Alt text (optional, recommended for accessibility)</Label>
-          <Input value={alt} onChange={(e) => setAlt(e.target.value)} className="mt-1" maxLength={200} />
+          <Label className="text-sm">Alt text (recommended)</Label>
+          <Input
+            value={alt}
+            onChange={(e) => setAlt(e.target.value)}
+            className="mt-1"
+            placeholder="BoxCharge cross-border payment gateway dashboard"
+            maxLength={200}
+          />
         </div>
         <div className="flex items-center gap-3">
-          <input ref={fileRef} type="file" accept="image/*" onChange={handleUpload} disabled={uploading} className="text-sm" />
-          {uploading && <span className="text-xs text-muted-foreground"><Upload className="inline h-3 w-3" /> Uploading…</span>}
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            onChange={handleUpload}
+            disabled={uploading}
+            className="text-sm"
+          />
+          {uploading && (
+            <span className="text-xs text-muted-foreground">
+              <Upload className="inline h-3 w-3" /> Uploading…
+            </span>
+          )}
         </div>
       </div>
 
@@ -93,12 +141,16 @@ function MediaLibrary() {
         {items.map((m) => (
           <div key={m.id} className="rounded-xl border border-border/60 bg-card/30 p-2">
             <div className="aspect-video overflow-hidden rounded-md bg-background/40">
-              <img src={m.url} alt={m.alt ?? ""} className="h-full w-full object-cover" />
+              <img src={m.url} alt={m.alt || m.filename} className="h-full w-full object-cover" />
             </div>
             {editingId === m.id ? (
               <div className="mt-2 flex gap-1">
                 <Input value={editName} onChange={(e) => setEditName(e.target.value)} className="h-8 text-xs" />
-                <Button size="sm" className="h-8 px-2" onClick={() => rename.mutate({ id: m.id, filename: editName })}>
+                <Button
+                  size="sm"
+                  className="h-8 px-2"
+                  onClick={() => rename.mutate({ id: m.id, filename: editName })}
+                >
                   <Check className="h-3 w-3" />
                 </Button>
               </div>
@@ -109,14 +161,45 @@ function MediaLibrary() {
                   size="sm"
                   variant="ghost"
                   className="h-7 w-7 p-0"
+                  aria-label="Edit filename"
                   onClick={() => {
                     setEditingId(m.id);
                     setEditName(m.filename);
+                    setEditingAltId(null);
                   }}
                 >
                   <Pencil className="h-3 w-3" />
                 </Button>
               </div>
+            )}
+            {editingAltId === m.id ? (
+              <div className="mt-2 flex gap-1">
+                <Input
+                  value={editAlt}
+                  onChange={(e) => setEditAlt(e.target.value)}
+                  className="h-8 text-xs"
+                  placeholder="Descriptive alt text"
+                />
+                <Button
+                  size="sm"
+                  className="h-8 px-2"
+                  onClick={() => saveAlt.mutate({ id: m.id, alt: editAlt })}
+                >
+                  <Check className="h-3 w-3" />
+                </Button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="mt-1 block w-full truncate text-left text-[11px] text-muted-foreground hover:text-foreground"
+                onClick={() => {
+                  setEditingAltId(m.id);
+                  setEditAlt(m.alt ?? "");
+                  setEditingId(null);
+                }}
+              >
+                Alt: {m.alt?.trim() ? m.alt : "Add alt text…"}
+              </button>
             )}
             <div className="mt-2 flex gap-2">
               <Button

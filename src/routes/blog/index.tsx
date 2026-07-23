@@ -12,17 +12,26 @@ import {
 } from "@/lib/cms.functions";
 import { BlogPostCard } from "@/components/site/BlogPostCard";
 
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+
+const seo = pageSeoDefaults.blog;
+
 export const Route = createFileRoute("/blog/")({
-  head: () =>
-    buildHead({
-      title: "BoxCharge Blog",
-      description: "Latest insights from BoxCharge.",
+  loader: () => resolvePageSeo("blog", seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
       path: "/blog",
+      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Blog", path: "/blog" },
       ],
-    }),
+    });
+  },
   component: BlogIndex,
 });
 

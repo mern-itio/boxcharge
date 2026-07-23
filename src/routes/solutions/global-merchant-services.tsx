@@ -2,18 +2,34 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SolutionPage } from "@/components/site/SolutionPage";
 import { buildHead, serviceSchema } from "@/components/seo/buildHead";
 import { solutionConfigs } from "@/content/solutions";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
 
-const cfg = solutionConfigs["global-merchant-services"];
+const SLUG = "global-merchant-services";
+const cfg = solutionConfigs[SLUG];
+const path = `/solutions/${SLUG}`;
 
 export const Route = createFileRoute("/solutions/global-merchant-services")({
-  head: () =>
-    buildHead({
-      title: cfg.title + " — BoxCharge",
-      description: cfg.summary,
-      path: "/solutions/global-merchant-services",
+  loader: () =>
+    resolvePageSeo(`solutions/${SLUG}`, {
+      title: cfg.metaTitle,
+      description: cfg.metaDescription,
+      keywords: cfg.keywords,
+    }),
+  head: ({ loaderData }) => {
+    const seo = seoFromLoader(loaderData, {
+      title: cfg.metaTitle,
+      description: cfg.metaDescription,
+      keywords: cfg.keywords,
+    });
+    return buildHead({
+      title: seo.title,
+      description: seo.description,
+      path,
+      keywords: seo.keywords,
       breadcrumbs: cfg.breadcrumbs,
       faq: cfg.faq,
-      schemas: [serviceSchema(cfg.title, cfg.summary, "/solutions/global-merchant-services")],
-    }),
+      schemas: [serviceSchema(cfg.title, cfg.metaDescription, path)],
+    });
+  },
   component: () => <SolutionPage config={cfg} />,
 });

@@ -1,18 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PolicyPage } from "@/components/site/PolicyPage";
 import { buildHead } from "@/components/seo/buildHead";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+
+const SLUG = "policies/chargeback";
+const seo = pageSeoDefaults[SLUG];
+const path = "/policies/chargeback";
 
 export const Route = createFileRoute("/policies/chargeback")({
-  head: () => buildHead({
-    title: "Chargeback Management — BoxCharge",
-    description: "Guidance on chargeback handling, dispute workflows, and merchant responsibilities.",
-    path: "/policies/chargeback",
-    breadcrumbs: [
-      { name: "Home", path: "/" },
-      { name: "Policies", path: "/policies/chargeback" },
-      { name: "Chargeback Management", path: "/policies/chargeback" },
-    ],
-  }),
+  loader: () => resolvePageSeo(SLUG, seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
+      path,
+      keywords: meta.keywords,
+      breadcrumbs: [
+        { name: "Home", path: "/" },
+        { name: "Policies", path: "/policies/chargeback" },
+        { name: "Chargeback Management", path },
+      ],
+    });
+  },
   component: () => (
     <PolicyPage
       title="Chargeback Management"

@@ -38,18 +38,9 @@ import { Button } from "@/components/ui/button";
 import { buildHead } from "@/components/seo/buildHead";
 import { useHomeSections } from "@/lib/homeCms";
 
-const DEFAULT_SEO = {
-  title: "BoxCharge — Global Merchant Services & Payment Infrastructure",
-  description:
-    "Accept payments anywhere your customers are. BoxCharge connects merchants to 70+ acquiring partners and 40+ payment methods through one secure, intelligent payment platform.",
-  keywords: [
-    "global merchant services",
-    "cross-border payment gateway",
-    "payment orchestration",
-    "alternative payment methods",
-    "payment infrastructure",
-  ],
-};
+import { pageSeoDefaults } from "@/content/seoCopy";
+
+const DEFAULT_SEO = pageSeoDefaults.home;
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => context.queryClient.ensureQueryData(pageContentQuery("home")),

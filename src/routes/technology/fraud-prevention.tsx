@@ -2,17 +2,33 @@ import { createFileRoute } from "@tanstack/react-router";
 import { TechnologyPage } from "@/components/site/TechnologyPage";
 import { buildHead } from "@/components/seo/buildHead";
 import { technologyConfigs } from "@/content/technology";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
 
-const cfg = technologyConfigs["fraud-prevention"];
+const SLUG = "fraud-prevention";
+const cfg = technologyConfigs[SLUG];
+const path = `/technology/${SLUG}`;
 
 export const Route = createFileRoute("/technology/fraud-prevention")({
-  head: () =>
-    buildHead({
-      title: cfg.title + " — BoxCharge Technology",
-      description: cfg.summary,
-      path: "/technology/fraud-prevention",
+  loader: () =>
+    resolvePageSeo(`technology/${SLUG}`, {
+      title: cfg.metaTitle,
+      description: cfg.metaDescription,
+      keywords: cfg.keywords,
+    }),
+  head: ({ loaderData }) => {
+    const seo = seoFromLoader(loaderData, {
+      title: cfg.metaTitle,
+      description: cfg.metaDescription,
+      keywords: cfg.keywords,
+    });
+    return buildHead({
+      title: seo.title,
+      description: seo.description,
+      path,
+      keywords: seo.keywords,
       breadcrumbs: cfg.breadcrumbs,
       faq: cfg.faq,
-    }),
+    });
+  },
   component: () => <TechnologyPage config={cfg} />,
 });

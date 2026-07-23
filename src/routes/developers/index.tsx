@@ -4,6 +4,9 @@ import { CmsHtmlBody } from "@/components/cms/CmsHtmlBody";
 import { PageHero } from "@/components/site/PageHero";
 import { Section, CtaBanner } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { RelatedLinks } from "@/components/site/RelatedLinks";
 
 const items = [
   { icon: Code2, title: "API Reference", to: "/developers/api-reference", body: "PAYIN S2S — simple, encrypted, webhooks, refunds (Peyx-compatible)." },
@@ -12,13 +15,23 @@ const items = [
   { icon: ShoppingCart, title: "Hosted Checkout", to: "/developers/hosted-checkout", body: "PCI-friendly hosted payment page with branding controls." },
 ];
 
+const seo = pageSeoDefaults.developers;
+
 export const Route = createFileRoute("/developers/")({
-  head: () => buildHead({
-    title: "Developers — Built for Fast and Flexible Integration",
-    description: "Integrate BoxCharge using REST APIs, S2S flows, signed webhooks, and hosted checkout.",
-    path: "/developers",
-    breadcrumbs: [{ name: "Home", path: "/" }, { name: "Developers", path: "/developers" }],
-  }),
+  loader: () => resolvePageSeo("developers", seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
+      path: "/developers",
+      keywords: meta.keywords,
+      breadcrumbs: [
+        { name: "Home", path: "/" },
+        { name: "Developers", path: "/developers" },
+      ],
+    });
+  },
   component: DevLanding,
 });
 
@@ -48,6 +61,27 @@ function DevLanding() {
           ))}
         </div>
       </Section>
+      <RelatedLinks
+        title="Payment products to explore next"
+        subtitle="After integrating, connect the APIs to the commercial solutions your merchants need."
+        items={[
+          {
+            label: "Cross-Border Payment Gateway",
+            to: "/solutions/cross-border-payment-gateway",
+            description: "Accept cards and APMs across regions.",
+          },
+          {
+            label: "Payment Orchestration",
+            to: "/solutions/payment-orchestration",
+            description: "Smart routing and cascading behind one integration.",
+          },
+          {
+            label: "Technology stack",
+            to: "/technology",
+            description: "3DS, tokenization, fraud controls, and more.",
+          },
+        ]}
+      />
       <CtaBanner title="Start Building With BoxCharge" cta={{ label: "Request Integration Access", href: "/contact" }} />
       </CmsHtmlBody>
     </>

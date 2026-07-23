@@ -129,6 +129,21 @@ export const updateMediaFilename = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+export const updateMediaAlt = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { id: string; alt: string }) =>
+    z.object({ id: z.string().uuid(), alt: z.string().max(500) }).parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase as SBClient, context.userId);
+    const { error } = await (context.supabase as SBClient)
+      .from("media_assets")
+      .update({ alt: data.alt.trim() || null })
+      .eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
 // -------- Admin team --------
 export const listAdmins = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

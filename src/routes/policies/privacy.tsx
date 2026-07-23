@@ -1,18 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PolicyPage } from "@/components/site/PolicyPage";
 import { buildHead } from "@/components/seo/buildHead";
+import { pageSeoDefaults } from "@/content/seoCopy";
+import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+
+const SLUG = "policies/privacy";
+const seo = pageSeoDefaults[SLUG];
+const path = "/policies/privacy";
 
 export const Route = createFileRoute("/policies/privacy")({
-  head: () => buildHead({
-    title: "Privacy Policy — BoxCharge",
-    description: "How BoxCharge collects, uses, and protects information related to merchants, applicants, and visitors.",
-    path: "/policies/privacy",
-    breadcrumbs: [
-      { name: "Home", path: "/" },
-      { name: "Policies", path: "/policies/privacy" },
-      { name: "Privacy Policy", path: "/policies/privacy" },
-    ],
-  }),
+  loader: () => resolvePageSeo(SLUG, seo),
+  head: ({ loaderData }) => {
+    const meta = seoFromLoader(loaderData, seo);
+    return buildHead({
+      title: meta.title,
+      description: meta.description,
+      path,
+      keywords: meta.keywords,
+      breadcrumbs: [
+        { name: "Home", path: "/" },
+        { name: "Policies", path: "/policies/privacy" },
+        { name: "Privacy Policy", path },
+      ],
+    });
+  },
   component: () => (
     <PolicyPage
       title="Privacy Policy"

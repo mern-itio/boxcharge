@@ -1,10 +1,14 @@
 import { CmsHtmlBody } from "@/components/cms/CmsHtmlBody";
 import { PageHero } from "./PageHero";
 import { Section, CapabilityCards, FAQAccordion, CtaBanner } from "./PageBlocks";
+import { RelatedLinks, type RelatedLink } from "./RelatedLinks";
 
 export interface DeveloperPageConfig {
   eyebrow: string;
   title: string;
+  metaTitle: string;
+  metaDescription: string;
+  keywords?: string[];
   summary: string;
   breadcrumbs: Array<{ name: string; path: string }>;
   overview: string;
@@ -15,6 +19,7 @@ export interface DeveloperPageConfig {
   authentication: string;
   implementationNotes: string[];
   faq: Array<{ q: string; a: string }>;
+  related?: RelatedLink[];
 }
 
 export function DeveloperPage({ config }: { config: DeveloperPageConfig }) {
@@ -77,6 +82,14 @@ export function DeveloperPage({ config }: { config: DeveloperPageConfig }) {
       <Section eyebrow="FAQ" title="Developer FAQ">
         <FAQAccordion items={config.faq} />
       </Section>
+
+      {config.related && config.related.length > 0 && (
+        <RelatedLinks
+          title="Related docs & products"
+          subtitle="Move from integration docs into the payment products and security layers that use these APIs."
+          items={config.related}
+        />
+      )}
 
       <CtaBanner
         title="Start Building With BoxCharge"

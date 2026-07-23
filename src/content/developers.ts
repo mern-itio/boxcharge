@@ -10,6 +10,10 @@ export const developerConfigs: Record<string, DeveloperPageConfig> = {
   "api-integration": {
     eyebrow: "Developers",
     title: "API Integration",
+    metaTitle: "Payment API Integration Guide | REST Endpoints — BoxCharge",
+    metaDescription:
+      "Integrate BoxCharge payment APIs for transaction creation, status checks, tokenization, and webhooks. HTTPS, bearer auth, and developer-ready examples.",
+    keywords: ["payment api integration", "boxcharge api", "rest payment api"],
     summary: "RESTful payment APIs for creating transactions, retrieving status, and managing tokenized references.",
     breadcrumbs: baseCrumbs("API Integration", "api-integration"),
     overview: "The BoxCharge API exposes endpoints for payment creation, status retrieval, tokenization, and webhook configuration. All requests use HTTPS and bearer authentication.",
@@ -53,10 +57,19 @@ Content-Type: application/json
     faq: [
       { q: "Is there a sandbox environment?", a: "Yes. Sandbox credentials are provided during onboarding and integration coordination." },
     ],
+    related: [
+      { label: "Server-to-Server", to: "/developers/s2s-integration", description: "Backend card payments with 3DS handling." },
+      { label: "Webhooks", to: "/developers/webhooks", description: "Signed lifecycle events for payment status." },
+      { label: "Cross-Border Gateway", to: "/solutions/cross-border-payment-gateway", description: "Commercial gateway product powered by these APIs." },
+    ],
   },
   "s2s-integration": {
     eyebrow: "Developers",
     title: "Server-to-Server Integration",
+    metaTitle: "Server-to-Server Payment API (S2S) | Card Processing — BoxCharge",
+    metaDescription:
+      "Build BoxCharge S2S card payments with POST /api/s2s, 3DS authurl redirects, and webhook confirmation. Simple JSON or encrypted payload modes.",
+    keywords: ["s2s payment api", "server to server payments", "3ds payment integration"],
     summary: "PAYIN S2S — POST /api/s2s with public_key, terNO, and card details. 3DS via authurl.",
     breadcrumbs: baseCrumbs("Server-to-Server Integration", "s2s-integration"),
     overview: "Server-to-server integration posts payment data from your backend to BoxCharge. Use Simple S2S (JSON) or Encrypted S2S (AES-256-CBC). Full reference: /developers/api-reference",
@@ -99,10 +112,19 @@ Content-Type: application/json
     faq: [
       { q: "Do I need PCI certification?", a: "S2S with raw card data requires appropriate PCI scope. Tokenized flows reduce that scope." },
     ],
+    related: [
+      { label: "API Reference", to: "/developers/api-reference", description: "Full PAYIN endpoint reference." },
+      { label: "Tokenization", to: "/technology/tokenization", description: "Prefer tokens over raw PAN where possible." },
+      { label: "Hosted Checkout", to: "/developers/hosted-checkout", description: "Lower PCI scope with a hosted payment page." },
+    ],
   },
   "webhooks": {
     eyebrow: "Developers",
     title: "Webhook Notifications",
+    metaTitle: "Payment Webhooks | Signed Event Notifications — BoxCharge",
+    metaDescription:
+      "Receive signed BoxCharge webhooks for payment status, refunds, chargebacks, and settlement. HMAC SHA-256 verification with retry-safe handlers.",
+    keywords: ["payment webhooks", "hmac webhook verification", "payment event notifications"],
     summary: "Asynchronous event notifications for payment lifecycle and settlement events.",
     breadcrumbs: baseCrumbs("Webhook Notifications", "webhooks"),
     overview: "BoxCharge delivers signed webhook events for payment status changes, refunds, chargebacks, and settlement updates. Each event is signed with HMAC SHA-256 for verification.",
@@ -141,10 +163,19 @@ Content-Type: application/json
     faq: [
       { q: "How are retries handled?", a: "Failed deliveries are retried with exponential backoff over a defined window." },
     ],
+    related: [
+      { label: "API Integration", to: "/developers/api-integration", description: "Create payments that emit webhook events." },
+      { label: "S2S Integration", to: "/developers/s2s-integration", description: "Confirm final S2S status via webhooks." },
+      { label: "Payouts", to: "/payouts", description: "Disbursement rails that also emit status events." },
+    ],
   },
   "hosted-checkout": {
     eyebrow: "Developers",
     title: "Hosted Checkout",
+    metaTitle: "Hosted Checkout Payment Page | PCI-Friendly — BoxCharge",
+    metaDescription:
+      "Launch BoxCharge hosted checkout for cards and APMs. Reduce PCI scope with a branded payment page, session APIs, and webhook-confirmed results.",
+    keywords: ["hosted checkout", "pci friendly checkout", "payment page api"],
     summary: "PCI-friendly hosted payment page with customizable branding and supported methods.",
     breadcrumbs: baseCrumbs("Hosted Checkout", "hosted-checkout"),
     overview: "Hosted Checkout offloads PAN entry to a BoxCharge-hosted page, reducing PCI scope on the merchant side while supporting cards, APMs, and tokenized flows.",
@@ -184,6 +215,11 @@ Content-Type: application/json
     ],
     faq: [
       { q: "Can I customize the page?", a: "Yes. Branding parameters and supported methods can be configured per session." },
+    ],
+    related: [
+      { label: "Alternative Payment Methods", to: "/solutions/apm-connectivity", description: "Enable local methods in checkout." },
+      { label: "3DS Authentication", to: "/technology/3ds-authentication", description: "Cardholder authentication in hosted flows." },
+      { label: "API Integration", to: "/developers/api-integration", description: "Create sessions and handle return states." },
     ],
   },
 };

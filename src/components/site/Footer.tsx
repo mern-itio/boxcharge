@@ -1,8 +1,9 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { Facebook, Globe, Linkedin, Mail, Twitter, Youtube } from "lucide-react";
+import { Facebook, Globe, Linkedin, Mail, Youtube } from "lucide-react";
 import logo from "@/assets/boxcharge-logo.png";
 import { TelegramIcon } from "@/components/site/TelegramIcon";
+import { XIcon } from "@/components/site/XIcon";
 import { useContent } from "@/hooks/useContent";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
@@ -141,7 +142,7 @@ export function Footer() {
   const socials = [
     { href: settings?.social_linkedin ?? "", label: "LinkedIn", icon: Linkedin },
     { href: settings?.social_facebook ?? "", label: "Facebook", icon: Facebook },
-    { href: settings?.social_twitter ?? "", label: "Twitter", icon: Twitter },
+    { href: settings?.social_twitter ?? "", label: "X", icon: XIcon },
     { href: settings?.social_telegram ?? "", label: "Telegram", icon: TelegramIcon },
     { href: settings?.social_youtube ?? "", label: "YouTube", icon: Youtube },
   ].filter((s) => s.href);

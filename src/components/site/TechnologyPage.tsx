@@ -1,10 +1,14 @@
 import { CmsHtmlBody } from "@/components/cms/CmsHtmlBody";
 import { PageHero } from "./PageHero";
 import { Section, CapabilityCards, FAQAccordion, CtaBanner } from "./PageBlocks";
+import { RelatedLinks, type RelatedLink } from "./RelatedLinks";
 
 export interface TechnologyPageConfig {
   eyebrow: string;
   title: string;
+  metaTitle: string;
+  metaDescription: string;
+  keywords?: string[];
   summary: string;
   breadcrumbs: Array<{ name: string; path: string }>;
   overview: string;
@@ -12,6 +16,7 @@ export interface TechnologyPageConfig {
   useCases: string[];
   securityBenefits: string[];
   faq: Array<{ q: string; a: string }>;
+  related?: RelatedLink[];
 }
 
 export function TechnologyPage({ config }: { config: TechnologyPageConfig }) {
@@ -28,39 +33,51 @@ export function TechnologyPage({ config }: { config: TechnologyPageConfig }) {
       />
 
       <CmsHtmlBody slug={cmsSlug}>
-      <Section eyebrow="Overview" title={config.title + " Overview"}>
-        <p className="max-w-3xl text-base leading-relaxed text-muted-foreground">{config.overview}</p>
-      </Section>
+        <Section eyebrow="Overview" title={config.title + " Overview"}>
+          <p className="max-w-3xl text-base leading-relaxed text-muted-foreground">{config.overview}</p>
+        </Section>
 
-      <Section eyebrow="How It Works" title="Inside the Layer">
-        <CapabilityCards items={config.howItWorks} />
-      </Section>
+        <Section eyebrow="How It Works" title="Inside the Layer">
+          <CapabilityCards items={config.howItWorks} />
+        </Section>
 
-      <Section eyebrow="Use Cases" title="Where It Applies">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {config.useCases.map((u) => (
-            <div key={u} className="glass rounded-xl px-4 py-3 text-sm text-foreground/85">{u}</div>
-          ))}
-        </div>
-      </Section>
+        <Section eyebrow="Use Cases" title="Where It Applies">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {config.useCases.map((u) => (
+              <div key={u} className="glass rounded-xl px-4 py-3 text-sm text-foreground/85">
+                {u}
+              </div>
+            ))}
+          </div>
+        </Section>
 
-      <Section eyebrow="Security" title="Security Benefits">
-        <ul className="grid max-w-3xl gap-3 sm:grid-cols-2">
-          {config.securityBenefits.map((s) => (
-            <li key={s} className="text-sm text-foreground/85">• {s}</li>
-          ))}
-        </ul>
-      </Section>
+        <Section eyebrow="Security" title="Security Benefits">
+          <ul className="grid max-w-3xl gap-3 sm:grid-cols-2">
+            {config.securityBenefits.map((s) => (
+              <li key={s} className="text-sm text-foreground/85">
+                • {s}
+              </li>
+            ))}
+          </ul>
+        </Section>
 
-      <Section eyebrow="FAQ" title="Frequently Asked Questions">
-        <FAQAccordion items={config.faq} />
-      </Section>
+        <Section eyebrow="FAQ" title="Frequently Asked Questions">
+          <FAQAccordion items={config.faq} />
+        </Section>
 
-      <CtaBanner
-        title="Explore BoxCharge Technology"
-        body="See how our infrastructure layers fit your payment operations."
-        cta={{ label: "Request Consultation", href: "/contact" }}
-      />
+        {config.related && config.related.length > 0 && (
+          <RelatedLinks
+            title="Related technology & solutions"
+            subtitle="Connect this layer with the solutions and integrations that use it in production."
+            items={config.related}
+          />
+        )}
+
+        <CtaBanner
+          title="Explore BoxCharge Technology"
+          body="See how our infrastructure layers fit your payment operations, approval goals, and security requirements."
+          cta={{ label: "Request Consultation", href: "/contact" }}
+        />
       </CmsHtmlBody>
     </>
   );

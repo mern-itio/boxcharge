@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/PageBlocks";
+import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { buildHead } from "@/components/seo/buildHead";
 import { postPreviewText } from "@/lib/postPreview";
 import { resolveOgImageUrl } from "@/lib/ogImage";
@@ -134,6 +135,28 @@ function ArticlePage() {
           )}
         </article>
       </Section>
+
+      <RelatedLinks
+        title="Continue exploring BoxCharge"
+        subtitle="Connect this article with the payment products and documentation most teams evaluate next."
+        items={[
+          {
+            label: "Payment solutions",
+            to: "/solutions",
+            description: "Merchant accounts, gateway, orchestration, APMs, and IBAN settlement.",
+          },
+          {
+            label: "Technology layers",
+            to: "/technology",
+            description: "Smart routing, 3DS, tokenization, and fraud controls.",
+          },
+          {
+            label: "Talk to a specialist",
+            to: "/contact",
+            description: "Discuss onboarding, corridors, and integration options.",
+          },
+        ]}
+      />
     </>
   );
 }
