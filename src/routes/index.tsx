@@ -46,11 +46,11 @@ export const Route = createFileRoute("/")({
   loader: async ({ context }) => context.queryClient.ensureQueryData(pageContentQuery("home")),
   head: ({ loaderData }) => {
     const map = (loaderData ?? {}) as Record<string, unknown>;
-    const title = String(map.meta_title || DEFAULT_SEO.title);
-    const description = String(map.meta_description || DEFAULT_SEO.description);
+    const metaTitle = String(map.meta_title ?? "").trim();
+    const metaDescription = String(map.meta_description ?? "").trim();
     return buildHead({
-      title,
-      description,
+      title: metaTitle || DEFAULT_SEO.title,
+      description: metaDescription || DEFAULT_SEO.description,
       path: "/",
       keywords: DEFAULT_SEO.keywords,
     });

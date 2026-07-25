@@ -32,7 +32,11 @@ const SITE_NAME = "BoxCharge";
 const TITLE_SUFFIX = " | BoxCharge";
 
 export function buildHead(seo: PageSeo) {
-  const fullTitle = seo.title.endsWith(SITE_NAME) ? seo.title : seo.title + TITLE_SUFFIX;
+  // Only append the brand suffix when the title doesn't already mention BoxCharge
+  // anywhere (case-insensitive). Prevents "... | BoxCharge" duplication on titles
+  // like "BoxCharge — Global Merchant Services".
+  const title = seo.title.trim();
+  const fullTitle = /boxcharge/i.test(title) ? title : title + TITLE_SUFFIX;
   const pageUrl = resolvePageUrl(seo.path, seo.siteUrl);
   const imageUrl = resolveOgImageUrl(seo.image, seo.siteUrl);
   const imageAlt = seo.imageAlt?.trim() || fullTitle;
