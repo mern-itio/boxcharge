@@ -3,7 +3,7 @@ import { SolutionPage } from "@/components/site/SolutionPage";
 import { Section } from "@/components/site/PageBlocks";
 import { buildHead, serviceSchema } from "@/components/seo/buildHead";
 import { solutionConfigs } from "@/content/solutions";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const SLUG = "iban-settlement";
 const cfg = solutionConfigs[SLUG];
@@ -33,10 +33,8 @@ export const Route = createFileRoute("/solutions/iban-settlement")({
       keywords: cfg.keywords,
     });
     return buildHead({
-      title: seo.title,
-      description: seo.description,
+      ...seoHeadFields(seo),
       path,
-      keywords: seo.keywords,
       breadcrumbs: cfg.breadcrumbs,
       faq: cfg.faq,
       schemas: [serviceSchema(cfg.title, cfg.metaDescription, path)],

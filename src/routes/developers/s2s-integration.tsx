@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { DeveloperPage } from "@/components/site/DeveloperPage";
 import { buildHead } from "@/components/seo/buildHead";
 import { developerConfigs } from "@/content/developers";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const SLUG = "s2s-integration";
 const cfg = developerConfigs[SLUG];
@@ -22,10 +22,8 @@ export const Route = createFileRoute("/developers/s2s-integration")({
       keywords: cfg.keywords,
     });
     return buildHead({
-      title: seo.title,
-      description: seo.description,
+      ...seoHeadFields(seo),
       path,
-      keywords: seo.keywords,
       breadcrumbs: cfg.breadcrumbs,
       faq: cfg.faq,
     });

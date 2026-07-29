@@ -6,7 +6,7 @@ import { Section, CtaBanner } from "@/components/site/PageBlocks";
 import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { buildHead } from "@/components/seo/buildHead";
 import { pageSeoDefaults } from "@/content/seoCopy";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const items = [
   { icon: RouteIcon, title: "Smart Routing", to: "/technology/smart-routing", body: "Performance-aware routing across acquirers and corridors." },
@@ -24,10 +24,8 @@ export const Route = createFileRoute("/technology/")({
   head: ({ loaderData }) => {
     const meta = seoFromLoader(loaderData, seo);
     return buildHead({
-      title: meta.title,
-      description: meta.description,
+      ...seoHeadFields(meta),
       path: "/technology",
-      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Technology", path: "/technology" },

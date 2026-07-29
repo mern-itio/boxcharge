@@ -48,11 +48,14 @@ export const Route = createFileRoute("/")({
     const map = (loaderData ?? {}) as Record<string, unknown>;
     const metaTitle = String(map.meta_title ?? "").trim();
     const metaDescription = String(map.meta_description ?? "").trim();
+    const ogImage = String(map.og_image ?? "").trim();
     return buildHead({
       title: metaTitle || DEFAULT_SEO.title,
       description: metaDescription || DEFAULT_SEO.description,
       path: "/",
       keywords: DEFAULT_SEO.keywords,
+      image: ogImage || null,
+      imageAlt: metaTitle || DEFAULT_SEO.title,
     });
   },
   component: Home,

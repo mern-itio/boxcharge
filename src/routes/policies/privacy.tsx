@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PolicyPage } from "@/components/site/PolicyPage";
 import { buildHead } from "@/components/seo/buildHead";
 import { pageSeoDefaults } from "@/content/seoCopy";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const SLUG = "policies/privacy";
 const seo = pageSeoDefaults[SLUG];
@@ -13,10 +13,8 @@ export const Route = createFileRoute("/policies/privacy")({
   head: ({ loaderData }) => {
     const meta = seoFromLoader(loaderData, seo);
     return buildHead({
-      title: meta.title,
-      description: meta.description,
+      ...seoHeadFields(meta),
       path,
-      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Policies", path: "/policies/privacy" },

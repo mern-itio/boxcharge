@@ -5,7 +5,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { Section, CtaBanner } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
 import { pageSeoDefaults } from "@/content/seoCopy";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 import { RelatedLinks } from "@/components/site/RelatedLinks";
 
 const items = [
@@ -22,10 +22,8 @@ export const Route = createFileRoute("/developers/")({
   head: ({ loaderData }) => {
     const meta = seoFromLoader(loaderData, seo);
     return buildHead({
-      title: meta.title,
-      description: meta.description,
+      ...seoHeadFields(meta),
       path: "/developers",
-      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Developers", path: "/developers" },

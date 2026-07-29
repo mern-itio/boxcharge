@@ -7,7 +7,7 @@ import { AnimatedCounter } from "@/components/site/AnimatedCounter";
 import { buildHead, serviceSchema } from "@/components/seo/buildHead";
 import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { pageSeoDefaults } from "@/content/seoCopy";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const seo = pageSeoDefaults.about;
 
@@ -16,10 +16,8 @@ export const Route = createFileRoute("/about")({
   head: ({ loaderData }) => {
     const meta = seoFromLoader(loaderData, seo);
     return buildHead({
-      title: meta.title,
-      description: meta.description,
+      ...seoHeadFields(meta),
       path: "/about",
-      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "About Us", path: "/about" },

@@ -9,7 +9,7 @@ import { TelegramIcon } from "@/components/site/TelegramIcon";
 import { XIcon } from "@/components/site/XIcon";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { pageSeoDefaults } from "@/content/seoCopy";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 import {
   Building2,
   Calendar,
@@ -29,10 +29,8 @@ export const Route = createFileRoute("/contact")({
   head: ({ loaderData }) => {
     const meta = seoFromLoader(loaderData, seo);
     return buildHead({
-      title: meta.title,
-      description: meta.description,
+      ...seoHeadFields(meta),
       path: "/contact",
-      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Contact", path: "/contact" },

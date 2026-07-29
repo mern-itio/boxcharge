@@ -6,7 +6,7 @@ import { Section, CtaBanner } from "@/components/site/PageBlocks";
 import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { buildHead } from "@/components/seo/buildHead";
 import { pageSeoDefaults } from "@/content/seoCopy";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const items = [
   { icon: Globe2, title: "Global Merchant Services", to: "/solutions/global-merchant-services", body: "International merchant accounts and multi-currency acquiring for global growth." },
@@ -24,10 +24,8 @@ export const Route = createFileRoute("/solutions/")({
   head: ({ loaderData }) => {
     const meta = seoFromLoader(loaderData, seo);
     return buildHead({
-      title: meta.title,
-      description: meta.description,
+      ...seoHeadFields(meta),
       path: "/solutions",
-      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Solutions", path: "/solutions" },

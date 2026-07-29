@@ -39,8 +39,19 @@ function heroBlocks(): BlockDef[] {
 
 function metaBlocks(): BlockDef[] {
   return [
-    { key: "meta_title", label: "SEO title", type: "text", help: "Used in <title> + OG (requires republish)." },
-    { key: "meta_description", label: "SEO description", type: "textarea" },
+    { key: "meta_title", label: "SEO title", type: "text", help: "Used in <title> + OG title. Brand suffix is added only if BoxCharge is not already in the title." },
+    {
+      key: "meta_description",
+      label: "SEO description",
+      type: "textarea",
+      help: "Used in meta description + og:description + twitter:description.",
+    },
+    {
+      key: "og_image",
+      label: "OG / social share image",
+      type: "image",
+      help: "Open Graph + Twitter image (recommended 1200×630). Falls back to the site default if empty.",
+    },
   ];
 }
 

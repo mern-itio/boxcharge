@@ -16,7 +16,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { Section, FAQAccordion, CtaBanner } from "@/components/site/PageBlocks";
 import { RelatedLinks } from "@/components/site/RelatedLinks";
 import { pageSeoDefaults } from "@/content/seoCopy";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const seo = pageSeoDefaults.payouts;
 
@@ -25,10 +25,8 @@ export const Route = createFileRoute("/payouts")({
   head: ({ loaderData }) => {
     const meta = seoFromLoader(loaderData, seo);
     return buildHead({
-      title: meta.title,
-      description: meta.description,
+      ...seoHeadFields(meta),
       path: "/payouts",
-      keywords: meta.keywords,
     });
   },
   component: PayoutsPage,

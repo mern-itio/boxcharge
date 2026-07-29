@@ -4,7 +4,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { Section, FAQAccordion } from "@/components/site/PageBlocks";
 import { buildHead } from "@/components/seo/buildHead";
 import { pageSeoDefaults } from "@/content/seoCopy";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const groups = [
   {
@@ -57,10 +57,8 @@ export const Route = createFileRoute("/faq")({
   head: ({ loaderData }) => {
     const meta = seoFromLoader(loaderData, seo);
     return buildHead({
-      title: meta.title,
-      description: meta.description,
+      ...seoHeadFields(meta),
       path: "/faq",
-      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "FAQ", path: "/faq" },

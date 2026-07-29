@@ -136,9 +136,10 @@ function renderEditor(def: BlockDef, value: unknown, set: (v: unknown) => void) 
     case "image":
       return (
         <ImageUploadField
-          label="Image"
+          label={def.label}
           value={String(value ?? "")}
           onChange={(url) => set(url)}
+          hint={def.help ?? "Recommended 1200×630 for Open Graph / social share images."}
         />
       );
     case "markdown": {

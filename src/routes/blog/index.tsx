@@ -13,7 +13,7 @@ import {
 import { BlogPostCard } from "@/components/site/BlogPostCard";
 
 import { pageSeoDefaults } from "@/content/seoCopy";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const seo = pageSeoDefaults.blog;
 
@@ -22,10 +22,8 @@ export const Route = createFileRoute("/blog/")({
   head: ({ loaderData }) => {
     const meta = seoFromLoader(loaderData, seo);
     return buildHead({
-      title: meta.title,
-      description: meta.description,
+      ...seoHeadFields(meta),
       path: "/blog",
-      keywords: meta.keywords,
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: "Blog", path: "/blog" },

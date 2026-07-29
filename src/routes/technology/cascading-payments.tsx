@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { TechnologyPage } from "@/components/site/TechnologyPage";
 import { buildHead } from "@/components/seo/buildHead";
 import { technologyConfigs } from "@/content/technology";
-import { resolvePageSeo, seoFromLoader } from "@/lib/pageSeo";
+import { resolvePageSeo, seoFromLoader, seoHeadFields } from "@/lib/pageSeo";
 
 const SLUG = "cascading-payments";
 const cfg = technologyConfigs[SLUG];
@@ -22,10 +22,8 @@ export const Route = createFileRoute("/technology/cascading-payments")({
       keywords: cfg.keywords,
     });
     return buildHead({
-      title: seo.title,
-      description: seo.description,
+      ...seoHeadFields(seo),
       path,
-      keywords: seo.keywords,
       breadcrumbs: cfg.breadcrumbs,
       faq: cfg.faq,
     });
