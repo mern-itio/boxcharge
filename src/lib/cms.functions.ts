@@ -286,6 +286,68 @@ export const listPublishedPosts = createServerFn({ method: "GET" })
     return data ?? [];
   });
 
+const publishedPostsPageInput = z.object({
+  page: z.number().int().min(1).default(1),
+  pageSize: z.number().int().min(1).max(50).default(12),
+  categorySlug: z.string().min(1).max(160).optional(),
+});
+
+/** Server-paginated published posts for crawlable /blog/page/N/ listings. */
+export const listPublishedPostsPage = createServerFn({ method: "GET" })
+  .inputValidator((input: unknown) => publishedPostsPageInput.parse(input ?? {}))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const pageSize = data.pageSize;
+    let categoryId: string | null = null;
+
+    if (data.categorySlug) {
+      const { data: category, error: categoryError } = await supabaseAdmin
+        .from("categories")
+        .select("id")
+        .eq("slug", data.categorySlug)
+        .maybeSingle();
+      if (categoryError) throw new Error(categoryError.message);
+      if (!category) {
+        return { posts: [], total: 0, page: 1, pageSize, totalPages: 1 };
+      }
+      categoryId = category.id;
+    }
+
+    let countQuery = supabaseAdmin
+      .from("posts")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "published");
+    if (categoryId) countQuery = countQuery.eq("category_id", categoryId);
+
+    const { count, error: countError } = await countQuery;
+    if (countError) throw new Error(countError.message);
+
+    const total = count ?? 0;
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+    const page = Math.min(data.page, totalPages);
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
+
+    let listQuery = supabaseAdmin
+      .from("posts")
+      .select("id,slug,title,excerpt,content_html,cover_url,tags,published_at,category:categories(name,slug)")
+      .eq("status", "published")
+      .order("published_at", { ascending: false, nullsFirst: false })
+      .range(from, to);
+    if (categoryId) listQuery = listQuery.eq("category_id", categoryId);
+
+    const { data: posts, error } = await listQuery;
+    if (error) throw new Error(error.message);
+
+    return {
+      posts: posts ?? [],
+      total,
+      page,
+      pageSize,
+      totalPages,
+    };
+  });
+
 export const getPostBySlug = createServerFn({ method: "GET" })
   .inputValidator((input: { slug: string }) => z.object({ slug: z.string().min(1).max(160) }).parse(input))
   .handler(async ({ data }) => {
@@ -586,6 +648,21 @@ export const getCategoryArchive = createServerFn({ method: "GET" })
 
     if (postsError) throw new Error(postsError.message);
     return { category, posts: posts ?? [] };
+  });
+
+export const getCategoryBySlug = createServerFn({ method: "GET" })
+  .inputValidator((input: { slug: string }) =>
+    z.object({ slug: z.string().min(1).max(160) }).parse(input),
+  )
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: category, error } = await supabaseAdmin
+      .from("categories")
+      .select("*")
+      .eq("slug", data.slug)
+      .maybeSingle();
+    if (error) throw new Error(error.message);
+    return category;
   });
 
 // ============================================================

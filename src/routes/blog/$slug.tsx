@@ -9,6 +9,9 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
+    // Reserve /blog/page/* for paginated listings (not a post slug).
+    if (params.slug === "page") throw notFound();
+
     const { data, error } = await supabase
       .from("posts")
       .select("*, category:categories(name, slug)")

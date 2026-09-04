@@ -26,6 +26,9 @@ export interface PageSeo {
   faq?: Array<{ q: string; a: string }>;
   schemas?: Array<Record<string, unknown>>;
   robots?: string; // e.g. "noindex, nofollow"
+  /** Optional crawlable pagination link relations */
+  prevPath?: string | null;
+  nextPath?: string | null;
 }
 
 const SITE_NAME = "BoxCharge";
@@ -112,7 +115,15 @@ export function buildHead(seo: PageSeo) {
 
   return {
     meta,
-    links: [{ rel: "canonical", href: pageUrl }],
+    links: [
+      { rel: "canonical", href: pageUrl },
+      ...(seo.prevPath
+        ? [{ rel: "prev", href: resolvePageUrl(seo.prevPath, seo.siteUrl) }]
+        : []),
+      ...(seo.nextPath
+        ? [{ rel: "next", href: resolvePageUrl(seo.nextPath, seo.siteUrl) }]
+        : []),
+    ],
     scripts: ldScripts,
   };
 }

@@ -9,98 +9,66 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as PayoutsRouteImport } from './routes/payouts'
-import { Route as FaqRouteImport } from './routes/faq'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as SlugRouteImport } from './routes/$slug'
-import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as TechnologyIndexRouteImport } from './routes/technology/index'
-import { Route as SolutionsIndexRouteImport } from './routes/solutions/index'
-import { Route as DevelopersIndexRouteImport } from './routes/developers/index'
-import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as SlugRouteImport } from './routes/$slug'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as PayoutsRouteImport } from './routes/payouts'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as TechnologyTokenizationRouteImport } from './routes/technology/tokenization'
-import { Route as TechnologySmartRoutingRouteImport } from './routes/technology/smart-routing'
-import { Route as TechnologyPciSecurityRouteImport } from './routes/technology/pci-security'
-import { Route as TechnologyFraudPreventionRouteImport } from './routes/technology/fraud-prevention'
-import { Route as TechnologyCascadingPaymentsRouteImport } from './routes/technology/cascading-payments'
-import { Route as Technology3dsAuthenticationRouteImport } from './routes/technology/3ds-authentication'
-import { Route as SolutionsPaymentOrchestrationRouteImport } from './routes/solutions/payment-orchestration'
-import { Route as SolutionsOffshoreMerchantAccountsRouteImport } from './routes/solutions/offshore-merchant-accounts'
-import { Route as SolutionsIbanSettlementRouteImport } from './routes/solutions/iban-settlement'
-import { Route as SolutionsGlobalMerchantServicesRouteImport } from './routes/solutions/global-merchant-services'
-import { Route as SolutionsCrossBorderPaymentGatewayRouteImport } from './routes/solutions/cross-border-payment-gateway'
-import { Route as SolutionsApmConnectivityRouteImport } from './routes/solutions/apm-connectivity'
-import { Route as PoliciesTermsRouteImport } from './routes/policies/terms'
-import { Route as PoliciesPrivacyRouteImport } from './routes/policies/privacy'
-import { Route as PoliciesMerchantProtectionRouteImport } from './routes/policies/merchant-protection'
-import { Route as PoliciesChargebackRouteImport } from './routes/policies/chargeback'
-import { Route as PoliciesAmlRouteImport } from './routes/policies/aml'
-import { Route as PSlugRouteImport } from './routes/p.$slug'
-import { Route as DevelopersWebhooksRouteImport } from './routes/developers/webhooks'
-import { Route as DevelopersS2sIntegrationRouteImport } from './routes/developers/s2s-integration'
-import { Route as DevelopersHostedCheckoutRouteImport } from './routes/developers/hosted-checkout'
-import { Route as DevelopersApiIntegrationRouteImport } from './routes/developers/api-integration'
-import { Route as CategorySlugRouteImport } from './routes/category/$slug'
-import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
-import { Route as AdminTeamRouteImport } from './routes/admin/team'
-import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
-import { Route as AdminSeoRouteImport } from './routes/admin/seo'
-import { Route as AdminMenusRouteImport } from './routes/admin/menus'
-import { Route as AdminMediaRouteImport } from './routes/admin/media'
 import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
-import { Route as DevelopersApiReferenceIndexRouteImport } from './routes/developers/api-reference/index'
-import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
+import { Route as AdminMediaRouteImport } from './routes/admin/media'
+import { Route as AdminMenusRouteImport } from './routes/admin/menus'
+import { Route as AdminSeoRouteImport } from './routes/admin/seo'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminTeamRouteImport } from './routes/admin/team'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as CategorySlugRouteRouteImport } from './routes/category/$slug/route'
+import { Route as DevelopersIndexRouteImport } from './routes/developers/index'
+import { Route as DevelopersApiIntegrationRouteImport } from './routes/developers/api-integration'
+import { Route as DevelopersHostedCheckoutRouteImport } from './routes/developers/hosted-checkout'
+import { Route as DevelopersS2sIntegrationRouteImport } from './routes/developers/s2s-integration'
+import { Route as DevelopersWebhooksRouteImport } from './routes/developers/webhooks'
+import { Route as PSlugRouteImport } from './routes/p.$slug'
+import { Route as PoliciesAmlRouteImport } from './routes/policies/aml'
+import { Route as PoliciesChargebackRouteImport } from './routes/policies/chargeback'
+import { Route as PoliciesMerchantProtectionRouteImport } from './routes/policies/merchant-protection'
+import { Route as PoliciesPrivacyRouteImport } from './routes/policies/privacy'
+import { Route as PoliciesTermsRouteImport } from './routes/policies/terms'
+import { Route as SolutionsIndexRouteImport } from './routes/solutions/index'
+import { Route as SolutionsApmConnectivityRouteImport } from './routes/solutions/apm-connectivity'
+import { Route as SolutionsCrossBorderPaymentGatewayRouteImport } from './routes/solutions/cross-border-payment-gateway'
+import { Route as SolutionsGlobalMerchantServicesRouteImport } from './routes/solutions/global-merchant-services'
+import { Route as SolutionsIbanSettlementRouteImport } from './routes/solutions/iban-settlement'
+import { Route as SolutionsOffshoreMerchantAccountsRouteImport } from './routes/solutions/offshore-merchant-accounts'
+import { Route as SolutionsPaymentOrchestrationRouteImport } from './routes/solutions/payment-orchestration'
+import { Route as TechnologyIndexRouteImport } from './routes/technology/index'
+import { Route as Technology3dsAuthenticationRouteImport } from './routes/technology/3ds-authentication'
+import { Route as TechnologyCascadingPaymentsRouteImport } from './routes/technology/cascading-payments'
+import { Route as TechnologyFraudPreventionRouteImport } from './routes/technology/fraud-prevention'
+import { Route as TechnologyPciSecurityRouteImport } from './routes/technology/pci-security'
+import { Route as TechnologySmartRoutingRouteImport } from './routes/technology/smart-routing'
+import { Route as TechnologyTokenizationRouteImport } from './routes/technology/tokenization'
 import { Route as AdminPagesIndexRouteImport } from './routes/admin/pages/index'
-import { Route as DevelopersApiReferenceSlugRouteImport } from './routes/developers/api-reference/$slug'
-import { Route as AdminPostsIdRouteImport } from './routes/admin/posts/$id'
 import { Route as AdminPagesSplatRouteImport } from './routes/admin/pages/$'
+import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
+import { Route as AdminPostsIdRouteImport } from './routes/admin/posts/$id'
+import { Route as BlogPagePageRouteImport } from './routes/blog/page/$page'
+import { Route as CategorySlugIndexRouteImport } from './routes/category/$slug/index'
+import { Route as DevelopersApiReferenceIndexRouteImport } from './routes/developers/api-reference/index'
+import { Route as DevelopersApiReferenceSlugRouteImport } from './routes/developers/api-reference/$slug'
 import { Route as AdminPagesEditIdRouteImport } from './routes/admin/pages/edit/$id'
+import { Route as CategorySlugPagePageRouteImport } from './routes/category/$slug/page/$page'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
-  id: '/robots.txt',
-  path: '/robots.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PayoutsRoute = PayoutsRouteImport.update({
-  id: '/payouts',
-  path: '/payouts',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FaqRoute = FaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SlugRoute = SlugRouteImport.update({
@@ -108,34 +76,49 @@ const SlugRoute = SlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TechnologyIndexRoute = TechnologyIndexRouteImport.update({
-  id: '/technology/',
-  path: '/technology/',
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
-  id: '/solutions/',
-  path: '/solutions/',
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DevelopersIndexRoute = DevelopersIndexRouteImport.update({
-  id: '/developers/',
-  path: '/developers/',
+const PayoutsRoute = PayoutsRouteImport.update({
+  id: '/payouts',
+  path: '/payouts',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -143,114 +126,60 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const TechnologyTokenizationRoute = TechnologyTokenizationRouteImport.update({
-  id: '/technology/tokenization',
-  path: '/technology/tokenization',
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminMenusRoute = AdminMenusRouteImport.update({
+  id: '/menus',
+  path: '/menus',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminSeoRoute = AdminSeoRouteImport.update({
+  id: '/seo',
+  path: '/seo',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TechnologySmartRoutingRoute = TechnologySmartRoutingRouteImport.update({
-  id: '/technology/smart-routing',
-  path: '/technology/smart-routing',
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TechnologyPciSecurityRoute = TechnologyPciSecurityRouteImport.update({
-  id: '/technology/pci-security',
-  path: '/technology/pci-security',
+const CategorySlugRouteRoute = CategorySlugRouteRouteImport.update({
+  id: '/category/$slug',
+  path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TechnologyFraudPreventionRoute =
-  TechnologyFraudPreventionRouteImport.update({
-    id: '/technology/fraud-prevention',
-    path: '/technology/fraud-prevention',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const TechnologyCascadingPaymentsRoute =
-  TechnologyCascadingPaymentsRouteImport.update({
-    id: '/technology/cascading-payments',
-    path: '/technology/cascading-payments',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const Technology3dsAuthenticationRoute =
-  Technology3dsAuthenticationRouteImport.update({
-    id: '/technology/3ds-authentication',
-    path: '/technology/3ds-authentication',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const SolutionsPaymentOrchestrationRoute =
-  SolutionsPaymentOrchestrationRouteImport.update({
-    id: '/solutions/payment-orchestration',
-    path: '/solutions/payment-orchestration',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const SolutionsOffshoreMerchantAccountsRoute =
-  SolutionsOffshoreMerchantAccountsRouteImport.update({
-    id: '/solutions/offshore-merchant-accounts',
-    path: '/solutions/offshore-merchant-accounts',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const SolutionsIbanSettlementRoute = SolutionsIbanSettlementRouteImport.update({
-  id: '/solutions/iban-settlement',
-  path: '/solutions/iban-settlement',
+const DevelopersIndexRoute = DevelopersIndexRouteImport.update({
+  id: '/developers/',
+  path: '/developers/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SolutionsGlobalMerchantServicesRoute =
-  SolutionsGlobalMerchantServicesRouteImport.update({
-    id: '/solutions/global-merchant-services',
-    path: '/solutions/global-merchant-services',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const SolutionsCrossBorderPaymentGatewayRoute =
-  SolutionsCrossBorderPaymentGatewayRouteImport.update({
-    id: '/solutions/cross-border-payment-gateway',
-    path: '/solutions/cross-border-payment-gateway',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const SolutionsApmConnectivityRoute =
-  SolutionsApmConnectivityRouteImport.update({
-    id: '/solutions/apm-connectivity',
-    path: '/solutions/apm-connectivity',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PoliciesTermsRoute = PoliciesTermsRouteImport.update({
-  id: '/policies/terms',
-  path: '/policies/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PoliciesPrivacyRoute = PoliciesPrivacyRouteImport.update({
-  id: '/policies/privacy',
-  path: '/policies/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PoliciesMerchantProtectionRoute =
-  PoliciesMerchantProtectionRouteImport.update({
-    id: '/policies/merchant-protection',
-    path: '/policies/merchant-protection',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PoliciesChargebackRoute = PoliciesChargebackRouteImport.update({
-  id: '/policies/chargeback',
-  path: '/policies/chargeback',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PoliciesAmlRoute = PoliciesAmlRouteImport.update({
-  id: '/policies/aml',
-  path: '/policies/aml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PSlugRoute = PSlugRouteImport.update({
-  id: '/p/$slug',
-  path: '/p/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DevelopersWebhooksRoute = DevelopersWebhooksRouteImport.update({
-  id: '/developers/webhooks',
-  path: '/developers/webhooks',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DevelopersS2sIntegrationRoute =
-  DevelopersS2sIntegrationRouteImport.update({
-    id: '/developers/s2s-integration',
-    path: '/developers/s2s-integration',
+const DevelopersApiIntegrationRoute =
+  DevelopersApiIntegrationRouteImport.update({
+    id: '/developers/api-integration',
+    path: '/developers/api-integration',
     getParentRoute: () => rootRouteImport,
   } as any)
 const DevelopersHostedCheckoutRoute =
@@ -259,77 +188,129 @@ const DevelopersHostedCheckoutRoute =
     path: '/developers/hosted-checkout',
     getParentRoute: () => rootRouteImport,
   } as any)
-const DevelopersApiIntegrationRoute =
-  DevelopersApiIntegrationRouteImport.update({
-    id: '/developers/api-integration',
-    path: '/developers/api-integration',
+const DevelopersS2sIntegrationRoute =
+  DevelopersS2sIntegrationRouteImport.update({
+    id: '/developers/s2s-integration',
+    path: '/developers/s2s-integration',
     getParentRoute: () => rootRouteImport,
   } as any)
-const CategorySlugRoute = CategorySlugRouteImport.update({
-  id: '/category/$slug',
-  path: '/category/$slug',
+const DevelopersWebhooksRoute = DevelopersWebhooksRouteImport.update({
+  id: '/developers/webhooks',
+  path: '/developers/webhooks',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
+const PSlugRoute = PSlugRouteImport.update({
+  id: '/p/$slug',
+  path: '/p/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminTeamRoute = AdminTeamRouteImport.update({
-  id: '/team',
-  path: '/team',
-  getParentRoute: () => AdminRouteRoute,
+const PoliciesAmlRoute = PoliciesAmlRouteImport.update({
+  id: '/policies/aml',
+  path: '/policies/aml',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AdminRouteRoute,
+const PoliciesChargebackRoute = PoliciesChargebackRouteImport.update({
+  id: '/policies/chargeback',
+  path: '/policies/chargeback',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AdminSeoRoute = AdminSeoRouteImport.update({
-  id: '/seo',
-  path: '/seo',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminMenusRoute = AdminMenusRouteImport.update({
-  id: '/menus',
-  path: '/menus',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminMediaRoute = AdminMediaRouteImport.update({
-  id: '/media',
-  path: '/media',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
-  id: '/categories',
-  path: '/categories',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const DevelopersApiReferenceIndexRoute =
-  DevelopersApiReferenceIndexRouteImport.update({
-    id: '/developers/api-reference/',
-    path: '/developers/api-reference/',
+const PoliciesMerchantProtectionRoute =
+  PoliciesMerchantProtectionRouteImport.update({
+    id: '/policies/merchant-protection',
+    path: '/policies/merchant-protection',
     getParentRoute: () => rootRouteImport,
   } as any)
-const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
-  id: '/posts/',
-  path: '/posts/',
-  getParentRoute: () => AdminRouteRoute,
+const PoliciesPrivacyRoute = PoliciesPrivacyRouteImport.update({
+  id: '/policies/privacy',
+  path: '/policies/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliciesTermsRoute = PoliciesTermsRouteImport.update({
+  id: '/policies/terms',
+  path: '/policies/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
+  id: '/solutions/',
+  path: '/solutions/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsApmConnectivityRoute =
+  SolutionsApmConnectivityRouteImport.update({
+    id: '/solutions/apm-connectivity',
+    path: '/solutions/apm-connectivity',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SolutionsCrossBorderPaymentGatewayRoute =
+  SolutionsCrossBorderPaymentGatewayRouteImport.update({
+    id: '/solutions/cross-border-payment-gateway',
+    path: '/solutions/cross-border-payment-gateway',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SolutionsGlobalMerchantServicesRoute =
+  SolutionsGlobalMerchantServicesRouteImport.update({
+    id: '/solutions/global-merchant-services',
+    path: '/solutions/global-merchant-services',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SolutionsIbanSettlementRoute = SolutionsIbanSettlementRouteImport.update({
+  id: '/solutions/iban-settlement',
+  path: '/solutions/iban-settlement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsOffshoreMerchantAccountsRoute =
+  SolutionsOffshoreMerchantAccountsRouteImport.update({
+    id: '/solutions/offshore-merchant-accounts',
+    path: '/solutions/offshore-merchant-accounts',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SolutionsPaymentOrchestrationRoute =
+  SolutionsPaymentOrchestrationRouteImport.update({
+    id: '/solutions/payment-orchestration',
+    path: '/solutions/payment-orchestration',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TechnologyIndexRoute = TechnologyIndexRouteImport.update({
+  id: '/technology/',
+  path: '/technology/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Technology3dsAuthenticationRoute =
+  Technology3dsAuthenticationRouteImport.update({
+    id: '/technology/3ds-authentication',
+    path: '/technology/3ds-authentication',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TechnologyCascadingPaymentsRoute =
+  TechnologyCascadingPaymentsRouteImport.update({
+    id: '/technology/cascading-payments',
+    path: '/technology/cascading-payments',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TechnologyFraudPreventionRoute =
+  TechnologyFraudPreventionRouteImport.update({
+    id: '/technology/fraud-prevention',
+    path: '/technology/fraud-prevention',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TechnologyPciSecurityRoute = TechnologyPciSecurityRouteImport.update({
+  id: '/technology/pci-security',
+  path: '/technology/pci-security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TechnologySmartRoutingRoute = TechnologySmartRoutingRouteImport.update({
+  id: '/technology/smart-routing',
+  path: '/technology/smart-routing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TechnologyTokenizationRoute = TechnologyTokenizationRouteImport.update({
+  id: '/technology/tokenization',
+  path: '/technology/tokenization',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminPagesIndexRoute = AdminPagesIndexRouteImport.update({
   id: '/pages/',
   path: '/pages/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const DevelopersApiReferenceSlugRoute =
-  DevelopersApiReferenceSlugRouteImport.update({
-    id: '/developers/api-reference/$slug',
-    path: '/developers/api-reference/$slug',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
-  id: '/posts/$id',
-  path: '/posts/$id',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminPagesSplatRoute = AdminPagesSplatRouteImport.update({
@@ -337,10 +318,47 @@ const AdminPagesSplatRoute = AdminPagesSplatRouteImport.update({
   path: '/pages/$',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
+  id: '/posts/$id',
+  path: '/posts/$id',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const BlogPagePageRoute = BlogPagePageRouteImport.update({
+  id: '/blog/page/$page',
+  path: '/blog/page/$page',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategorySlugIndexRoute = CategorySlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CategorySlugRouteRoute,
+} as any)
+const DevelopersApiReferenceIndexRoute =
+  DevelopersApiReferenceIndexRouteImport.update({
+    id: '/developers/api-reference/',
+    path: '/developers/api-reference/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const DevelopersApiReferenceSlugRoute =
+  DevelopersApiReferenceSlugRouteImport.update({
+    id: '/developers/api-reference/$slug',
+    path: '/developers/api-reference/$slug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AdminPagesEditIdRoute = AdminPagesEditIdRouteImport.update({
   id: '/pages/edit/$id',
   path: '/pages/edit/$id',
   getParentRoute: () => AdminRouteRoute,
+} as any)
+const CategorySlugPagePageRoute = CategorySlugPagePageRouteImport.update({
+  id: '/page/$page',
+  path: '/page/$page',
+  getParentRoute: () => CategorySlugRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -355,6 +373,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/category/$slug': typeof CategorySlugRouteRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/menus': typeof AdminMenusRoute
@@ -362,7 +381,6 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/category/$slug': typeof CategorySlugRoute
   '/developers/api-integration': typeof DevelopersApiIntegrationRoute
   '/developers/hosted-checkout': typeof DevelopersHostedCheckoutRoute
   '/developers/s2s-integration': typeof DevelopersS2sIntegrationRoute
@@ -392,11 +410,14 @@ export interface FileRoutesByFullPath {
   '/technology/': typeof TechnologyIndexRoute
   '/admin/pages/$': typeof AdminPagesSplatRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/blog/page/$page': typeof BlogPagePageRoute
   '/developers/api-reference/$slug': typeof DevelopersApiReferenceSlugRoute
   '/admin/pages/': typeof AdminPagesIndexRoute
   '/admin/posts/': typeof AdminPostsIndexRoute
+  '/category/$slug/': typeof CategorySlugIndexRoute
   '/developers/api-reference/': typeof DevelopersApiReferenceIndexRoute
   '/admin/pages/edit/$id': typeof AdminPagesEditIdRoute
+  '/category/$slug/page/$page': typeof CategorySlugPagePageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -416,7 +437,6 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/category/$slug': typeof CategorySlugRoute
   '/developers/api-integration': typeof DevelopersApiIntegrationRoute
   '/developers/hosted-checkout': typeof DevelopersHostedCheckoutRoute
   '/developers/s2s-integration': typeof DevelopersS2sIntegrationRoute
@@ -446,11 +466,14 @@ export interface FileRoutesByTo {
   '/technology': typeof TechnologyIndexRoute
   '/admin/pages/$': typeof AdminPagesSplatRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/blog/page/$page': typeof BlogPagePageRoute
   '/developers/api-reference/$slug': typeof DevelopersApiReferenceSlugRoute
   '/admin/pages': typeof AdminPagesIndexRoute
   '/admin/posts': typeof AdminPostsIndexRoute
+  '/category/$slug': typeof CategorySlugIndexRoute
   '/developers/api-reference': typeof DevelopersApiReferenceIndexRoute
   '/admin/pages/edit/$id': typeof AdminPagesEditIdRoute
+  '/category/$slug/page/$page': typeof CategorySlugPagePageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -465,6 +488,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/category/$slug': typeof CategorySlugRouteRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/menus': typeof AdminMenusRoute
@@ -472,7 +496,6 @@ export interface FileRoutesById {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
   '/blog/$slug': typeof BlogSlugRoute
-  '/category/$slug': typeof CategorySlugRoute
   '/developers/api-integration': typeof DevelopersApiIntegrationRoute
   '/developers/hosted-checkout': typeof DevelopersHostedCheckoutRoute
   '/developers/s2s-integration': typeof DevelopersS2sIntegrationRoute
@@ -502,11 +525,14 @@ export interface FileRoutesById {
   '/technology/': typeof TechnologyIndexRoute
   '/admin/pages/$': typeof AdminPagesSplatRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/blog/page/$page': typeof BlogPagePageRoute
   '/developers/api-reference/$slug': typeof DevelopersApiReferenceSlugRoute
   '/admin/pages/': typeof AdminPagesIndexRoute
   '/admin/posts/': typeof AdminPostsIndexRoute
+  '/category/$slug/': typeof CategorySlugIndexRoute
   '/developers/api-reference/': typeof DevelopersApiReferenceIndexRoute
   '/admin/pages/edit/$id': typeof AdminPagesEditIdRoute
+  '/category/$slug/page/$page': typeof CategorySlugPagePageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -522,6 +548,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/category/$slug'
     | '/admin/categories'
     | '/admin/media'
     | '/admin/menus'
@@ -529,7 +556,6 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/team'
     | '/blog/$slug'
-    | '/category/$slug'
     | '/developers/api-integration'
     | '/developers/hosted-checkout'
     | '/developers/s2s-integration'
@@ -559,11 +585,14 @@ export interface FileRouteTypes {
     | '/technology/'
     | '/admin/pages/$'
     | '/admin/posts/$id'
+    | '/blog/page/$page'
     | '/developers/api-reference/$slug'
     | '/admin/pages/'
     | '/admin/posts/'
+    | '/category/$slug/'
     | '/developers/api-reference/'
     | '/admin/pages/edit/$id'
+    | '/category/$slug/page/$page'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -583,7 +612,6 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/team'
     | '/blog/$slug'
-    | '/category/$slug'
     | '/developers/api-integration'
     | '/developers/hosted-checkout'
     | '/developers/s2s-integration'
@@ -613,11 +641,14 @@ export interface FileRouteTypes {
     | '/technology'
     | '/admin/pages/$'
     | '/admin/posts/$id'
+    | '/blog/page/$page'
     | '/developers/api-reference/$slug'
     | '/admin/pages'
     | '/admin/posts'
+    | '/category/$slug'
     | '/developers/api-reference'
     | '/admin/pages/edit/$id'
+    | '/category/$slug/page/$page'
   id:
     | '__root__'
     | '/'
@@ -631,6 +662,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/category/$slug'
     | '/admin/categories'
     | '/admin/media'
     | '/admin/menus'
@@ -638,7 +670,6 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/team'
     | '/blog/$slug'
-    | '/category/$slug'
     | '/developers/api-integration'
     | '/developers/hosted-checkout'
     | '/developers/s2s-integration'
@@ -668,11 +699,14 @@ export interface FileRouteTypes {
     | '/technology/'
     | '/admin/pages/$'
     | '/admin/posts/$id'
+    | '/blog/page/$page'
     | '/developers/api-reference/$slug'
     | '/admin/pages/'
     | '/admin/posts/'
+    | '/category/$slug/'
     | '/developers/api-reference/'
     | '/admin/pages/edit/$id'
+    | '/category/$slug/page/$page'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -687,8 +721,8 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  CategorySlugRouteRoute: typeof CategorySlugRouteRouteWithChildren
   BlogSlugRoute: typeof BlogSlugRoute
-  CategorySlugRoute: typeof CategorySlugRoute
   DevelopersApiIntegrationRoute: typeof DevelopersApiIntegrationRoute
   DevelopersHostedCheckoutRoute: typeof DevelopersHostedCheckoutRoute
   DevelopersS2sIntegrationRoute: typeof DevelopersS2sIntegrationRoute
@@ -715,66 +749,18 @@ export interface RootRouteChildren {
   DevelopersIndexRoute: typeof DevelopersIndexRoute
   SolutionsIndexRoute: typeof SolutionsIndexRoute
   TechnologyIndexRoute: typeof TechnologyIndexRoute
+  BlogPagePageRoute: typeof BlogPagePageRoute
   DevelopersApiReferenceSlugRoute: typeof DevelopersApiReferenceSlugRoute
   DevelopersApiReferenceIndexRoute: typeof DevelopersApiReferenceIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/robots.txt': {
-      id: '/robots.txt'
-      path: '/robots.txt'
-      fullPath: '/robots.txt'
-      preLoaderRoute: typeof RobotsDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/payouts': {
-      id: '/payouts'
-      path: '/payouts'
-      fullPath: '/payouts'
-      preLoaderRoute: typeof PayoutsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$slug': {
@@ -784,6 +770,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -791,39 +784,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/technology/': {
-      id: '/technology/'
-      path: '/technology'
-      fullPath: '/technology/'
-      preLoaderRoute: typeof TechnologyIndexRouteImport
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/solutions/': {
-      id: '/solutions/'
-      path: '/solutions'
-      fullPath: '/solutions/'
-      preLoaderRoute: typeof SolutionsIndexRouteImport
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/developers/': {
-      id: '/developers/'
-      path: '/developers'
-      fullPath: '/developers/'
-      preLoaderRoute: typeof DevelopersIndexRouteImport
+    '/payouts': {
+      id: '/payouts'
+      path: '/payouts'
+      fullPath: '/payouts'
+      preLoaderRoute: typeof PayoutsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -833,200 +840,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/technology/tokenization': {
-      id: '/technology/tokenization'
-      path: '/technology/tokenization'
-      fullPath: '/technology/tokenization'
-      preLoaderRoute: typeof TechnologyTokenizationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/technology/smart-routing': {
-      id: '/technology/smart-routing'
-      path: '/technology/smart-routing'
-      fullPath: '/technology/smart-routing'
-      preLoaderRoute: typeof TechnologySmartRoutingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/technology/pci-security': {
-      id: '/technology/pci-security'
-      path: '/technology/pci-security'
-      fullPath: '/technology/pci-security'
-      preLoaderRoute: typeof TechnologyPciSecurityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/technology/fraud-prevention': {
-      id: '/technology/fraud-prevention'
-      path: '/technology/fraud-prevention'
-      fullPath: '/technology/fraud-prevention'
-      preLoaderRoute: typeof TechnologyFraudPreventionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/technology/cascading-payments': {
-      id: '/technology/cascading-payments'
-      path: '/technology/cascading-payments'
-      fullPath: '/technology/cascading-payments'
-      preLoaderRoute: typeof TechnologyCascadingPaymentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/technology/3ds-authentication': {
-      id: '/technology/3ds-authentication'
-      path: '/technology/3ds-authentication'
-      fullPath: '/technology/3ds-authentication'
-      preLoaderRoute: typeof Technology3dsAuthenticationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/payment-orchestration': {
-      id: '/solutions/payment-orchestration'
-      path: '/solutions/payment-orchestration'
-      fullPath: '/solutions/payment-orchestration'
-      preLoaderRoute: typeof SolutionsPaymentOrchestrationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/offshore-merchant-accounts': {
-      id: '/solutions/offshore-merchant-accounts'
-      path: '/solutions/offshore-merchant-accounts'
-      fullPath: '/solutions/offshore-merchant-accounts'
-      preLoaderRoute: typeof SolutionsOffshoreMerchantAccountsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/iban-settlement': {
-      id: '/solutions/iban-settlement'
-      path: '/solutions/iban-settlement'
-      fullPath: '/solutions/iban-settlement'
-      preLoaderRoute: typeof SolutionsIbanSettlementRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/global-merchant-services': {
-      id: '/solutions/global-merchant-services'
-      path: '/solutions/global-merchant-services'
-      fullPath: '/solutions/global-merchant-services'
-      preLoaderRoute: typeof SolutionsGlobalMerchantServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/cross-border-payment-gateway': {
-      id: '/solutions/cross-border-payment-gateway'
-      path: '/solutions/cross-border-payment-gateway'
-      fullPath: '/solutions/cross-border-payment-gateway'
-      preLoaderRoute: typeof SolutionsCrossBorderPaymentGatewayRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/solutions/apm-connectivity': {
-      id: '/solutions/apm-connectivity'
-      path: '/solutions/apm-connectivity'
-      fullPath: '/solutions/apm-connectivity'
-      preLoaderRoute: typeof SolutionsApmConnectivityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/policies/terms': {
-      id: '/policies/terms'
-      path: '/policies/terms'
-      fullPath: '/policies/terms'
-      preLoaderRoute: typeof PoliciesTermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/policies/privacy': {
-      id: '/policies/privacy'
-      path: '/policies/privacy'
-      fullPath: '/policies/privacy'
-      preLoaderRoute: typeof PoliciesPrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/policies/merchant-protection': {
-      id: '/policies/merchant-protection'
-      path: '/policies/merchant-protection'
-      fullPath: '/policies/merchant-protection'
-      preLoaderRoute: typeof PoliciesMerchantProtectionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/policies/chargeback': {
-      id: '/policies/chargeback'
-      path: '/policies/chargeback'
-      fullPath: '/policies/chargeback'
-      preLoaderRoute: typeof PoliciesChargebackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/policies/aml': {
-      id: '/policies/aml'
-      path: '/policies/aml'
-      fullPath: '/policies/aml'
-      preLoaderRoute: typeof PoliciesAmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/p/$slug': {
-      id: '/p/$slug'
-      path: '/p/$slug'
-      fullPath: '/p/$slug'
-      preLoaderRoute: typeof PSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/developers/webhooks': {
-      id: '/developers/webhooks'
-      path: '/developers/webhooks'
-      fullPath: '/developers/webhooks'
-      preLoaderRoute: typeof DevelopersWebhooksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/developers/s2s-integration': {
-      id: '/developers/s2s-integration'
-      path: '/developers/s2s-integration'
-      fullPath: '/developers/s2s-integration'
-      preLoaderRoute: typeof DevelopersS2sIntegrationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/developers/hosted-checkout': {
-      id: '/developers/hosted-checkout'
-      path: '/developers/hosted-checkout'
-      fullPath: '/developers/hosted-checkout'
-      preLoaderRoute: typeof DevelopersHostedCheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/developers/api-integration': {
-      id: '/developers/api-integration'
-      path: '/developers/api-integration'
-      fullPath: '/developers/api-integration'
-      preLoaderRoute: typeof DevelopersApiIntegrationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/category/$slug': {
-      id: '/category/$slug'
-      path: '/category/$slug'
-      fullPath: '/category/$slug'
-      preLoaderRoute: typeof CategorySlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/team': {
-      id: '/admin/team'
-      path: '/team'
-      fullPath: '/admin/team'
-      preLoaderRoute: typeof AdminTeamRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/seo': {
-      id: '/admin/seo'
-      path: '/seo'
-      fullPath: '/admin/seo'
-      preLoaderRoute: typeof AdminSeoRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/menus': {
-      id: '/admin/menus'
-      path: '/menus'
-      fullPath: '/admin/menus'
-      preLoaderRoute: typeof AdminMenusRouteImport
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/media': {
@@ -1036,46 +854,235 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMediaRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/categories': {
-      id: '/admin/categories'
-      path: '/categories'
-      fullPath: '/admin/categories'
-      preLoaderRoute: typeof AdminCategoriesRouteImport
+    '/admin/menus': {
+      id: '/admin/menus'
+      path: '/menus'
+      fullPath: '/admin/menus'
+      preLoaderRoute: typeof AdminMenusRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/developers/api-reference/': {
-      id: '/developers/api-reference/'
-      path: '/developers/api-reference'
-      fullPath: '/developers/api-reference/'
-      preLoaderRoute: typeof DevelopersApiReferenceIndexRouteImport
+    '/admin/seo': {
+      id: '/admin/seo'
+      path: '/seo'
+      fullPath: '/admin/seo'
+      preLoaderRoute: typeof AdminSeoRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/team': {
+      id: '/admin/team'
+      path: '/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminTeamRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/posts/': {
-      id: '/admin/posts/'
-      path: '/posts'
-      fullPath: '/admin/posts/'
-      preLoaderRoute: typeof AdminPostsIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category/$slug': {
+      id: '/category/$slug'
+      path: '/category/$slug'
+      fullPath: '/category/$slug'
+      preLoaderRoute: typeof CategorySlugRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers/': {
+      id: '/developers/'
+      path: '/developers'
+      fullPath: '/developers/'
+      preLoaderRoute: typeof DevelopersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers/api-integration': {
+      id: '/developers/api-integration'
+      path: '/developers/api-integration'
+      fullPath: '/developers/api-integration'
+      preLoaderRoute: typeof DevelopersApiIntegrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers/hosted-checkout': {
+      id: '/developers/hosted-checkout'
+      path: '/developers/hosted-checkout'
+      fullPath: '/developers/hosted-checkout'
+      preLoaderRoute: typeof DevelopersHostedCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers/s2s-integration': {
+      id: '/developers/s2s-integration'
+      path: '/developers/s2s-integration'
+      fullPath: '/developers/s2s-integration'
+      preLoaderRoute: typeof DevelopersS2sIntegrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers/webhooks': {
+      id: '/developers/webhooks'
+      path: '/developers/webhooks'
+      fullPath: '/developers/webhooks'
+      preLoaderRoute: typeof DevelopersWebhooksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/p/$slug': {
+      id: '/p/$slug'
+      path: '/p/$slug'
+      fullPath: '/p/$slug'
+      preLoaderRoute: typeof PSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/policies/aml': {
+      id: '/policies/aml'
+      path: '/policies/aml'
+      fullPath: '/policies/aml'
+      preLoaderRoute: typeof PoliciesAmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/policies/chargeback': {
+      id: '/policies/chargeback'
+      path: '/policies/chargeback'
+      fullPath: '/policies/chargeback'
+      preLoaderRoute: typeof PoliciesChargebackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/policies/merchant-protection': {
+      id: '/policies/merchant-protection'
+      path: '/policies/merchant-protection'
+      fullPath: '/policies/merchant-protection'
+      preLoaderRoute: typeof PoliciesMerchantProtectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/policies/privacy': {
+      id: '/policies/privacy'
+      path: '/policies/privacy'
+      fullPath: '/policies/privacy'
+      preLoaderRoute: typeof PoliciesPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/policies/terms': {
+      id: '/policies/terms'
+      path: '/policies/terms'
+      fullPath: '/policies/terms'
+      preLoaderRoute: typeof PoliciesTermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/': {
+      id: '/solutions/'
+      path: '/solutions'
+      fullPath: '/solutions/'
+      preLoaderRoute: typeof SolutionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/apm-connectivity': {
+      id: '/solutions/apm-connectivity'
+      path: '/solutions/apm-connectivity'
+      fullPath: '/solutions/apm-connectivity'
+      preLoaderRoute: typeof SolutionsApmConnectivityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/cross-border-payment-gateway': {
+      id: '/solutions/cross-border-payment-gateway'
+      path: '/solutions/cross-border-payment-gateway'
+      fullPath: '/solutions/cross-border-payment-gateway'
+      preLoaderRoute: typeof SolutionsCrossBorderPaymentGatewayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/global-merchant-services': {
+      id: '/solutions/global-merchant-services'
+      path: '/solutions/global-merchant-services'
+      fullPath: '/solutions/global-merchant-services'
+      preLoaderRoute: typeof SolutionsGlobalMerchantServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/iban-settlement': {
+      id: '/solutions/iban-settlement'
+      path: '/solutions/iban-settlement'
+      fullPath: '/solutions/iban-settlement'
+      preLoaderRoute: typeof SolutionsIbanSettlementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/offshore-merchant-accounts': {
+      id: '/solutions/offshore-merchant-accounts'
+      path: '/solutions/offshore-merchant-accounts'
+      fullPath: '/solutions/offshore-merchant-accounts'
+      preLoaderRoute: typeof SolutionsOffshoreMerchantAccountsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/payment-orchestration': {
+      id: '/solutions/payment-orchestration'
+      path: '/solutions/payment-orchestration'
+      fullPath: '/solutions/payment-orchestration'
+      preLoaderRoute: typeof SolutionsPaymentOrchestrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology/': {
+      id: '/technology/'
+      path: '/technology'
+      fullPath: '/technology/'
+      preLoaderRoute: typeof TechnologyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology/3ds-authentication': {
+      id: '/technology/3ds-authentication'
+      path: '/technology/3ds-authentication'
+      fullPath: '/technology/3ds-authentication'
+      preLoaderRoute: typeof Technology3dsAuthenticationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology/cascading-payments': {
+      id: '/technology/cascading-payments'
+      path: '/technology/cascading-payments'
+      fullPath: '/technology/cascading-payments'
+      preLoaderRoute: typeof TechnologyCascadingPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology/fraud-prevention': {
+      id: '/technology/fraud-prevention'
+      path: '/technology/fraud-prevention'
+      fullPath: '/technology/fraud-prevention'
+      preLoaderRoute: typeof TechnologyFraudPreventionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology/pci-security': {
+      id: '/technology/pci-security'
+      path: '/technology/pci-security'
+      fullPath: '/technology/pci-security'
+      preLoaderRoute: typeof TechnologyPciSecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology/smart-routing': {
+      id: '/technology/smart-routing'
+      path: '/technology/smart-routing'
+      fullPath: '/technology/smart-routing'
+      preLoaderRoute: typeof TechnologySmartRoutingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology/tokenization': {
+      id: '/technology/tokenization'
+      path: '/technology/tokenization'
+      fullPath: '/technology/tokenization'
+      preLoaderRoute: typeof TechnologyTokenizationRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/pages/': {
       id: '/admin/pages/'
       path: '/pages'
       fullPath: '/admin/pages/'
       preLoaderRoute: typeof AdminPagesIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/developers/api-reference/$slug': {
-      id: '/developers/api-reference/$slug'
-      path: '/developers/api-reference/$slug'
-      fullPath: '/developers/api-reference/$slug'
-      preLoaderRoute: typeof DevelopersApiReferenceSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/posts/$id': {
-      id: '/admin/posts/$id'
-      path: '/posts/$id'
-      fullPath: '/admin/posts/$id'
-      preLoaderRoute: typeof AdminPostsIdRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/pages/$': {
@@ -1085,12 +1092,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagesSplatRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/posts/': {
+      id: '/admin/posts/'
+      path: '/posts'
+      fullPath: '/admin/posts/'
+      preLoaderRoute: typeof AdminPostsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/posts/$id': {
+      id: '/admin/posts/$id'
+      path: '/posts/$id'
+      fullPath: '/admin/posts/$id'
+      preLoaderRoute: typeof AdminPostsIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/blog/page/$page': {
+      id: '/blog/page/$page'
+      path: '/blog/page/$page'
+      fullPath: '/blog/page/$page'
+      preLoaderRoute: typeof BlogPagePageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category/$slug/': {
+      id: '/category/$slug/'
+      path: '/'
+      fullPath: '/category/$slug/'
+      preLoaderRoute: typeof CategorySlugIndexRouteImport
+      parentRoute: typeof CategorySlugRouteRoute
+    }
+    '/developers/api-reference/': {
+      id: '/developers/api-reference/'
+      path: '/developers/api-reference'
+      fullPath: '/developers/api-reference/'
+      preLoaderRoute: typeof DevelopersApiReferenceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers/api-reference/$slug': {
+      id: '/developers/api-reference/$slug'
+      path: '/developers/api-reference/$slug'
+      fullPath: '/developers/api-reference/$slug'
+      preLoaderRoute: typeof DevelopersApiReferenceSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/pages/edit/$id': {
       id: '/admin/pages/edit/$id'
       path: '/pages/edit/$id'
       fullPath: '/admin/pages/edit/$id'
       preLoaderRoute: typeof AdminPagesEditIdRouteImport
       parentRoute: typeof AdminRouteRoute
+    }
+    '/category/$slug/page/$page': {
+      id: '/category/$slug/page/$page'
+      path: '/page/$page'
+      fullPath: '/category/$slug/page/$page'
+      preLoaderRoute: typeof CategorySlugPagePageRouteImport
+      parentRoute: typeof CategorySlugRouteRoute
     }
   }
 }
@@ -1129,6 +1185,19 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
 )
 
+interface CategorySlugRouteRouteChildren {
+  CategorySlugIndexRoute: typeof CategorySlugIndexRoute
+  CategorySlugPagePageRoute: typeof CategorySlugPagePageRoute
+}
+
+const CategorySlugRouteRouteChildren: CategorySlugRouteRouteChildren = {
+  CategorySlugIndexRoute: CategorySlugIndexRoute,
+  CategorySlugPagePageRoute: CategorySlugPagePageRoute,
+}
+
+const CategorySlugRouteRouteWithChildren =
+  CategorySlugRouteRoute._addFileChildren(CategorySlugRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
@@ -1141,8 +1210,8 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  CategorySlugRouteRoute: CategorySlugRouteRouteWithChildren,
   BlogSlugRoute: BlogSlugRoute,
-  CategorySlugRoute: CategorySlugRoute,
   DevelopersApiIntegrationRoute: DevelopersApiIntegrationRoute,
   DevelopersHostedCheckoutRoute: DevelopersHostedCheckoutRoute,
   DevelopersS2sIntegrationRoute: DevelopersS2sIntegrationRoute,
@@ -1171,19 +1240,10 @@ const rootRouteChildren: RootRouteChildren = {
   DevelopersIndexRoute: DevelopersIndexRoute,
   SolutionsIndexRoute: SolutionsIndexRoute,
   TechnologyIndexRoute: TechnologyIndexRoute,
+  BlogPagePageRoute: BlogPagePageRoute,
   DevelopersApiReferenceSlugRoute: DevelopersApiReferenceSlugRoute,
   DevelopersApiReferenceIndexRoute: DevelopersApiReferenceIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

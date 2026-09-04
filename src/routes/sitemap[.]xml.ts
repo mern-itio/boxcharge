@@ -60,7 +60,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         const [{ data: posts }, { data: cmsPages }, { data: categories }] = await Promise.all([
           supabaseAdmin
             .from("posts")
-            .select("slug, updated_at, published_at")
+            .select("slug, updated_at, published_at, category_id")
             .eq("status", "published")
             .order("published_at", { ascending: false }),
           supabaseAdmin
@@ -70,12 +70,34 @@ export const Route = createFileRoute("/sitemap.xml")({
             .order("updated_at", { ascending: false }),
           supabaseAdmin
             .from("categories")
-            .select("slug, updated_at")
+            .select("slug, updated_at, id")
             .order("updated_at", { ascending: false }),
         ]);
 
+        const POSTS_PER_PAGE = 12;
+        const blogPageCount = Math.max(1, Math.ceil((posts?.length ?? 0) / POSTS_PER_PAGE));
+        const blogPageEntries = Array.from({ length: Math.max(0, blogPageCount - 1) }, (_, i) => ({
+          path: `/blog/page/${i + 2}/`,
+          priority: "0.5",
+          changefreq: "weekly" as const,
+        }));
+
+        const categoryPageEntries = (categories ?? []).flatMap((category) => {
+          const count = (posts ?? []).filter((p) => p.category_id === category.id).length;
+          const pages = Math.max(1, Math.ceil(count / POSTS_PER_PAGE));
+          return Array.from({ length: Math.max(0, pages - 1) }, (_, i) => ({
+            path: `/category/${category.slug}/page/${i + 2}/`,
+            priority: "0.5",
+            changefreq: "weekly" as const,
+            lastmod: category.updated_at?.slice(0, 10),
+          }));
+        });
+
         const entries = [
-          ...staticPaths,
+          ...staticPaths.map((e) =>
+            e.path === "/blog" ? { ...e, path: "/blog/" } : e,
+          ),
+          ...blogPageEntries,
           ...(posts ?? []).map((p) => ({
             path: `/blog/${p.slug}`,
             priority: "0.6",
@@ -89,11 +111,12 @@ export const Route = createFileRoute("/sitemap.xml")({
             lastmod: (p.updated_at || p.published_at || undefined)?.slice(0, 10),
           })),
           ...(categories ?? []).map((category) => ({
-            path: `/category/${category.slug}`,
+            path: `/category/${category.slug}/`,
             priority: "0.6",
             changefreq: "weekly" as const,
             lastmod: category.updated_at?.slice(0, 10),
           })),
+          ...categoryPageEntries,
         ];
 
         const urls = entries
