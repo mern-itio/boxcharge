@@ -2,6 +2,33 @@ import { createStart, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
 import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
+import {
+  lookupEnabledRedirect,
+  resolveRedirectLocation,
+  shouldSkipRedirectLookup,
+} from "@/lib/urlRedirects";
+
+const redirectMiddleware = createMiddleware().server(async ({ next, request }) => {
+  try {
+    const url = new URL(request.url);
+    if (!shouldSkipRedirectLookup(url.pathname, request.method)) {
+      const hit = await lookupEnabledRedirect(url.pathname);
+      if (hit) {
+        const location = resolveRedirectLocation(hit.to_url, url.origin);
+        return new Response(null, {
+          status: hit.status_code,
+          headers: {
+            Location: location,
+            "Cache-Control": "public, max-age=300",
+          },
+        });
+      }
+    }
+  } catch (error) {
+    console.error("[url-redirects] middleware error:", error);
+  }
+  return next();
+});
 
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
@@ -20,5 +47,5 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
 
 export const startInstance = createStart(() => ({
   functionMiddleware: [attachSupabaseAuth],
-  requestMiddleware: [errorMiddleware],
+  requestMiddleware: [redirectMiddleware, errorMiddleware],
 }));

@@ -1,5 +1,4 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
-import { CmsHtmlBody } from "@/components/cms/CmsHtmlBody";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/PageBlocks";
 import { BlogPostCard } from "@/components/site/BlogPostCard";
@@ -84,41 +83,38 @@ function BlogPageNumber() {
     <>
       <PageHero
         eyebrow="Blog"
-        title={`Payment Infrastructure Insights — Page ${page}`}
-        subtitle={`Articles ${from}–${to} of ${total}.`}
+        title="Payment Infrastructure Insights"
+        subtitle={`Page ${page} · Articles ${from}–${to} of ${total}`}
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Blog", path: "/blog/" },
           { name: `Page ${page}`, path: blogListPath(page) },
         ]}
-        cmsSlug="blog"
       />
 
-      <CmsHtmlBody slug="blog">
-        <Section>
-          <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
-            <div>
-              <p className="mb-4 text-sm text-muted-foreground">
-                Showing {from}–{to} of {total} articles
-              </p>
+      <Section>
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+          <div>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Showing {from}–{to} of {total} articles
+            </p>
 
-              <div className="grid gap-5 sm:grid-cols-2">
-                {posts.map((post) => (
-                  <BlogPostCard key={post.id} post={post} />
-                ))}
-              </div>
-
-              <BlogPagination
-                page={page}
-                totalPages={totalPages}
-                hrefForPage={blogListPath}
-              />
+            <div className="grid gap-5 sm:grid-cols-2">
+              {posts.map((post) => (
+                <BlogPostCard key={post.id} post={post} />
+              ))}
             </div>
 
-            <BlogCategorySidebar categories={categories} />
+            <BlogPagination
+              page={page}
+              totalPages={totalPages}
+              hrefForPage={blogListPath}
+            />
           </div>
-        </Section>
-      </CmsHtmlBody>
+
+          <BlogCategorySidebar categories={categories} />
+        </div>
+      </Section>
     </>
   );
 }

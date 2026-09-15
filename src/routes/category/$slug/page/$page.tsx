@@ -101,8 +101,8 @@ function CategoryPagedArchive() {
     <>
       <PageHero
         eyebrow="Blog Category"
-        title={`${category.name} — Page ${page}`}
-        subtitle={`Articles ${from}–${to} of ${total} in ${category.name}.`}
+        title={category.name}
+        subtitle={`Page ${page} · Articles ${from}–${to} of ${total}`}
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Blog", path: "/blog/" },

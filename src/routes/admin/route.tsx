@@ -6,7 +6,7 @@ import { bootstrapFirstAdmin, checkIsAdmin } from "@/lib/cms.functions";
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard, FileText, Newspaper, ListTree, Image as ImageIcon,
-  Palette, Users, LogOut, ExternalLink, Search, Tags,
+  Palette, Users, LogOut, ExternalLink, Search, Tags, ArrowRightLeft,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -44,6 +44,7 @@ const NAV: NavGroup[] = [
       { to: "/admin/menus", label: "Menus", icon: ListTree },
       { to: "/admin/settings", label: "Site Settings", icon: Palette },
       { to: "/admin/seo", label: "SEO Manager", icon: Search },
+      { to: "/admin/redirects", label: "URL Redirects", icon: ArrowRightLeft },
     ],
   },
   {

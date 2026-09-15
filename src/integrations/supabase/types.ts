@@ -345,6 +345,42 @@ export type Database = {
         }
         Relationships: []
       }
+      url_redirects: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          from_path: string
+          id: string
+          notes: string | null
+          status_code: number
+          to_url: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          from_path: string
+          id?: string
+          notes?: string | null
+          status_code?: number
+          to_url: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          from_path?: string
+          id?: string
+          notes?: string | null
+          status_code?: number
+          to_url?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

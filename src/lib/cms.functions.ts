@@ -759,3 +759,117 @@ export const deleteCmsPage = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+// -------- URL redirects (SEO) --------
+const redirectStatusCodes = [301, 302, 307, 308] as const;
+
+const redirectInput = z.object({
+  id: z.string().uuid().optional(),
+  from_path: z.string().min(1).max(800),
+  to_url: z.string().min(1).max(2000),
+  status_code: z.number().int().refine((n) => (redirectStatusCodes as readonly number[]).includes(n), {
+    message: "Redirect type must be 301, 302, 307, or 308.",
+  }),
+  enabled: z.boolean().default(true),
+  notes: z.string().max(500).nullable().optional(),
+});
+
+function pgUniqueConflict(message: string): boolean {
+  return /duplicate key|unique constraint/i.test(message);
+}
+
+export const listUrlRedirects = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertAdmin(context.supabase as SBClient, context.userId);
+    const { data, error } = await (context.supabase as SBClient)
+      .from("url_redirects")
+      .select("*")
+      .order("updated_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return data ?? [];
+  });
+
+export const upsertUrlRedirect = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => redirectInput.parse(input))
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase as SBClient, context.userId);
+    const {
+      normalizeFromPath,
+      normalizeToUrl,
+      assertNoSelfRedirect,
+      redirectLookupCandidates,
+      invalidateUrlRedirectCache,
+    } = await import("@/lib/urlRedirects");
+
+    const from_path = normalizeFromPath(data.from_path);
+    const to_url = normalizeToUrl(data.to_url);
+    assertNoSelfRedirect(from_path, to_url);
+
+    const sb = context.supabase as SBClient;
+    const candidates = redirectLookupCandidates(from_path);
+
+    const { data: existing, error: existingError } = await sb
+      .from("url_redirects")
+      .select("id,from_path")
+      .in("from_path", candidates);
+    if (existingError) throw new Error(existingError.message);
+
+    const conflict = (existing ?? []).find((row) => !data.id || row.id !== data.id);
+    if (conflict) {
+      throw new Error(
+        `A redirect already exists for "${conflict.from_path}". Edit or remove it first.`,
+      );
+    }
+
+    const payload = {
+      from_path,
+      to_url,
+      status_code: data.status_code,
+      enabled: data.enabled,
+      notes: data.notes?.trim() ? data.notes.trim() : null,
+      updated_by: context.userId,
+    };
+
+    if (data.id) {
+      const { error } = await sb.from("url_redirects").update(payload).eq("id", data.id);
+      if (error) {
+        if (pgUniqueConflict(error.message)) {
+          throw new Error(`A redirect already exists for "${from_path}".`);
+        }
+        throw new Error(error.message);
+      }
+      invalidateUrlRedirectCache();
+      return { ok: true, id: data.id, from_path };
+    }
+
+    const { data: ins, error } = await sb
+      .from("url_redirects")
+      .insert(payload)
+      .select("id")
+      .single();
+    if (error) {
+      if (pgUniqueConflict(error.message)) {
+        throw new Error(`A redirect already exists for "${from_path}".`);
+      }
+      throw new Error(error.message);
+    }
+    invalidateUrlRedirectCache();
+    return { ok: true, id: ins.id, from_path };
+  });
+
+export const deleteUrlRedirect = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { id: string }) => z.object({ id: z.string().uuid() }).parse(input))
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase as SBClient, context.userId);
+    const { invalidateUrlRedirectCache } = await import("@/lib/urlRedirects");
+    const { error } = await (context.supabase as SBClient)
+      .from("url_redirects")
+      .delete()
+      .eq("id", data.id);
+    if (error) throw new Error(error.message);
+    invalidateUrlRedirectCache();
+    return { ok: true };
+  });

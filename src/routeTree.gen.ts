@@ -24,6 +24,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
 import { Route as AdminMediaRouteImport } from './routes/admin/media'
 import { Route as AdminMenusRouteImport } from './routes/admin/menus'
+import { Route as AdminRedirectsRouteImport } from './routes/admin/redirects'
 import { Route as AdminSeoRouteImport } from './routes/admin/seo'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 import { Route as AdminTeamRouteImport } from './routes/admin/team'
@@ -139,6 +140,11 @@ const AdminMediaRoute = AdminMediaRouteImport.update({
 const AdminMenusRoute = AdminMenusRouteImport.update({
   id: '/menus',
   path: '/menus',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminRedirectsRoute = AdminRedirectsRouteImport.update({
+  id: '/redirects',
+  path: '/redirects',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminSeoRoute = AdminSeoRouteImport.update({
@@ -377,6 +383,7 @@ export interface FileRoutesByFullPath {
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/menus': typeof AdminMenusRoute
+  '/admin/redirects': typeof AdminRedirectsRoute
   '/admin/seo': typeof AdminSeoRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
@@ -433,6 +440,7 @@ export interface FileRoutesByTo {
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/menus': typeof AdminMenusRoute
+  '/admin/redirects': typeof AdminRedirectsRoute
   '/admin/seo': typeof AdminSeoRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
@@ -492,6 +500,7 @@ export interface FileRoutesById {
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/menus': typeof AdminMenusRoute
+  '/admin/redirects': typeof AdminRedirectsRoute
   '/admin/seo': typeof AdminSeoRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/team': typeof AdminTeamRoute
@@ -552,6 +561,7 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/redirects'
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/team'
@@ -608,6 +618,7 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/redirects'
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/team'
@@ -666,6 +677,7 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/media'
     | '/admin/menus'
+    | '/admin/redirects'
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/team'
@@ -859,6 +871,13 @@ declare module '@tanstack/react-router' {
       path: '/menus'
       fullPath: '/admin/menus'
       preLoaderRoute: typeof AdminMenusRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/redirects': {
+      id: '/admin/redirects'
+      path: '/redirects'
+      fullPath: '/admin/redirects'
+      preLoaderRoute: typeof AdminRedirectsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/seo': {
@@ -1155,6 +1174,7 @@ interface AdminRouteRouteChildren {
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminMediaRoute: typeof AdminMediaRoute
   AdminMenusRoute: typeof AdminMenusRoute
+  AdminRedirectsRoute: typeof AdminRedirectsRoute
   AdminSeoRoute: typeof AdminSeoRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminTeamRoute: typeof AdminTeamRoute
@@ -1170,6 +1190,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminMediaRoute: AdminMediaRoute,
   AdminMenusRoute: AdminMenusRoute,
+  AdminRedirectsRoute: AdminRedirectsRoute,
   AdminSeoRoute: AdminSeoRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminTeamRoute: AdminTeamRoute,

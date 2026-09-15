@@ -2,9 +2,11 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Section } from "@/components/site/PageBlocks";
 import { RelatedLinks } from "@/components/site/RelatedLinks";
+import { BlogCategorySidebar } from "@/components/site/BlogCategorySidebar";
 import { buildHead } from "@/components/seo/buildHead";
 import { postPreviewText } from "@/lib/postPreview";
 import { resolveOgImageUrl } from "@/lib/ogImage";
+import { listCategoriesWithPublishedCounts } from "@/lib/cms.functions";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/blog/$slug")({
@@ -12,22 +14,25 @@ export const Route = createFileRoute("/blog/$slug")({
     // Reserve /blog/page/* for paginated listings (not a post slug).
     if (params.slug === "page") throw notFound();
 
-    const { data, error } = await supabase
-      .from("posts")
-      .select("*, category:categories(name, slug)")
-      .eq("slug", params.slug)
-      .eq("status", "published")
-      .single();
+    const [{ data, error }, categories] = await Promise.all([
+      supabase
+        .from("posts")
+        .select("*, category:categories(name, slug)")
+        .eq("slug", params.slug)
+        .eq("status", "published")
+        .single(),
+      listCategoriesWithPublishedCounts(),
+    ]);
 
     if (error || !data) {
       throw notFound();
     }
 
-    return data;
+    return { post: data, categories };
   },
 
   head: ({ loaderData, params }) => {
-    if (!loaderData) {
+    if (!loaderData?.post) {
       return buildHead({
         title: "Article",
         description: "BoxCharge article.",
@@ -35,30 +40,31 @@ export const Route = createFileRoute("/blog/$slug")({
       });
     }
 
+    const post = loaderData.post;
     return buildHead({
-      title: loaderData.meta_title || `${loaderData.title} — BoxCharge Blog`,
+      title: post.meta_title || `${post.title} — BoxCharge Blog`,
       description:
-        loaderData.meta_description ||
-        postPreviewText(loaderData.content_html, loaderData.excerpt) ||
-        loaderData.excerpt ||
+        post.meta_description ||
+        postPreviewText(post.content_html, post.excerpt) ||
+        post.excerpt ||
         "",
       path: `/blog/${params.slug}`,
       ogType: "article",
-      image: loaderData.cover_url,
-      imageAlt: loaderData.title,
+      image: post.cover_url,
+      imageAlt: post.title,
       breadcrumbs: [
         { name: "Home", path: "/" },
-        { name: "Blog", path: "/blog" },
-        { name: loaderData.title, path: `/blog/${params.slug}` },
+        { name: "Blog", path: "/blog/" },
+        { name: post.title, path: `/blog/${params.slug}` },
       ],
       schemas: [
         {
           "@context": "https://schema.org",
           "@type": "Article",
-          headline: loaderData.title,
-          datePublished: loaderData.published_at,
-          image: loaderData.cover_url
-            ? [resolveOgImageUrl(loaderData.cover_url)]
+          headline: post.title,
+          datePublished: post.published_at,
+          image: post.cover_url
+            ? [resolveOgImageUrl(post.cover_url)]
             : [resolveOgImageUrl(null)],
           author: {
             "@type": "Organization",
@@ -87,7 +93,7 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function ArticlePage() {
-  const post = Route.useLoaderData();
+  const { post, categories } = Route.useLoaderData();
   const { slug } = Route.useParams();
   const category = post.category as { name: string; slug: string } | null | undefined;
   const publishedLabel = post.published_at
@@ -106,37 +112,46 @@ function ArticlePage() {
         compact
         breadcrumbs={[
           { name: "Home", path: "/" },
-          { name: "Blog", path: "/blog" },
+          { name: "Blog", path: "/blog/" },
           { name: post.title, path: `/blog/${slug}` },
         ]}
       />
 
       <Section tight className="!pt-0 pb-16">
-        {(category || publishedLabel) && (
-          <div className="mx-auto mb-4 flex max-w-4xl flex-wrap gap-3 text-xs text-muted-foreground">
-            {category && (
-              <Link
-                to="/category/$slug"
-                params={{ slug: category.slug }}
-                className="rounded-full border border-border/60 bg-card/40 px-3 py-1 uppercase tracking-wider transition hover:border-primary/50 hover:text-foreground"
-              >
-                {category.name}
-              </Link>
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+          <div>
+            {(category || publishedLabel) && (
+              <div className="mb-4 flex flex-wrap gap-3 text-xs text-muted-foreground">
+                {category && (
+                  <Link
+                    to="/category/$slug"
+                    params={{ slug: category.slug }}
+                    className="rounded-full border border-border/60 bg-card/40 px-3 py-1 uppercase tracking-wider transition hover:border-primary/50 hover:text-foreground"
+                  >
+                    {category.name}
+                  </Link>
+                )}
+                {publishedLabel && <span>Published {publishedLabel}</span>}
+              </div>
             )}
-            {publishedLabel && <span>Published {publishedLabel}</span>}
+            <article className="cms-prose max-w-none [&>:first-child]:mt-0">
+              {post.content_html ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: post.content_html,
+                  }}
+                />
+              ) : (
+                <p>No content available.</p>
+              )}
+            </article>
           </div>
-        )}
-        <article className="cms-prose mx-auto max-w-4xl [&>:first-child]:mt-0">
-          {post.content_html ? (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: post.content_html,
-              }}
-            />
-          ) : (
-            <p>No content available.</p>
-          )}
-        </article>
+
+          <BlogCategorySidebar
+            categories={categories}
+            activeSlug={category?.slug}
+          />
+        </div>
       </Section>
 
       <RelatedLinks
