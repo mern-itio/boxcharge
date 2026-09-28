@@ -45,8 +45,10 @@ export const Route = createFileRoute("/category/$slug/")({
 
     const { category, listing } = loaderData;
     const path = categoryListPath(category.slug, 1);
+    const cmsTitle = category.meta_title?.trim() || "";
     return buildHead({
-      title: category.meta_title || `${category.name} Articles`,
+      title: cmsTitle || `${category.name} Articles`,
+      exactTitle: Boolean(cmsTitle),
       description:
         category.meta_description ||
         category.description ||

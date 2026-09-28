@@ -25,6 +25,8 @@ export interface PageSeo {
   breadcrumbs?: Array<{ name: string; path: string }>;
   faq?: Array<{ q: string; a: string }>;
   schemas?: Array<Record<string, unknown>>;
+  /** Use the title exactly as provided. Blog CMS titles set this so "| BoxCharge" is not appended. */
+  exactTitle?: boolean;
   robots?: string; // e.g. "noindex, nofollow"
   /** Optional crawlable pagination link relations */
   prevPath?: string | null;
@@ -39,7 +41,7 @@ export function buildHead(seo: PageSeo) {
   // anywhere (case-insensitive). Prevents "... | BoxCharge" duplication on titles
   // like "BoxCharge — Global Merchant Services".
   const title = seo.title.trim();
-  const fullTitle = /boxcharge/i.test(title) ? title : title + TITLE_SUFFIX;
+  const fullTitle = seo.exactTitle || /boxcharge/i.test(title) ? title : title + TITLE_SUFFIX;
   const pageUrl = resolvePageUrl(seo.path, seo.siteUrl);
   const imageUrl = resolveOgImageUrl(seo.image, seo.siteUrl);
   const imageAlt = seo.imageAlt?.trim() || fullTitle;

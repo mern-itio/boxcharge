@@ -227,6 +227,9 @@ function PostEditor() {
             <div>
               <Label>Meta title</Label>
               <Input value={form.meta_title} onChange={(e) => setForm({ ...form, meta_title: e.target.value })} className="mt-1.5" placeholder="Defaults to title" />
+              <p className="mt-1.5 text-xs text-muted-foreground">
+                Shown exactly as entered. Nothing is appended automatically.
+              </p>
             </div>
             <div>
               <Label>Meta description</Label>

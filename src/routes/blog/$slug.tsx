@@ -41,8 +41,10 @@ export const Route = createFileRoute("/blog/$slug")({
     }
 
     const post = loaderData.post;
+    const cmsTitle = post.meta_title?.trim() || "";
     return buildHead({
-      title: post.meta_title || `${post.title} — BoxCharge Blog`,
+      title: cmsTitle || `${post.title} — BoxCharge Blog`,
+      exactTitle: Boolean(cmsTitle),
       description:
         post.meta_description ||
         postPreviewText(post.content_html, post.excerpt) ||

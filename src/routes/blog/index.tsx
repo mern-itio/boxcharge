@@ -39,6 +39,7 @@ export const Route = createFileRoute("/blog/")({
     const path = blogListPath(1);
     return buildHead({
       ...seoHeadFields(meta),
+      exactTitle: true,
       path,
       breadcrumbs: [
         { name: "Home", path: "/" },

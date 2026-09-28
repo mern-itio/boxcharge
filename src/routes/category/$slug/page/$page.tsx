@@ -59,7 +59,8 @@ export const Route = createFileRoute("/category/$slug/page/$page")({
     const { category, listing } = loaderData;
     const page = listing.page;
     const path = categoryListPath(category.slug, page);
-    const baseTitle = category.meta_title || `${category.name} Articles`;
+    const cmsTitle = category.meta_title?.trim() || "";
+    const baseTitle = cmsTitle || `${category.name} Articles`;
     const baseDescription =
       category.meta_description ||
       category.description ||
@@ -67,6 +68,7 @@ export const Route = createFileRoute("/category/$slug/page/$page")({
 
     return buildHead({
       title: `${baseTitle} — Page ${page}`,
+      exactTitle: Boolean(cmsTitle),
       description: `${baseDescription} Page ${page} of ${listing.totalPages}.`,
       path,
       breadcrumbs: [
