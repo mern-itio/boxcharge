@@ -160,7 +160,7 @@ export const PAGES: PageDef[] = [
       { key: "footer_blurb", label: "Footer blurb", type: "textarea" },
       { key: "footer_email", label: "Footer email", type: "text" },
       { key: "footer_domain", label: "Footer domain text", type: "text" },
-      { key: "whatsapp_number", label: "WhatsApp number", type: "text", help: "International format, digits only (e.g. 447700900123)." },
+      { key: "whatsapp_number", label: "WhatsApp number", type: "text", help: "International format, digits only (e.g. 447700183599)." },
       { key: "expert_band_title", label: "Expert band title", type: "text" },
       { key: "expert_band_subtitle", label: "Expert band subtitle", type: "text" },
     ],

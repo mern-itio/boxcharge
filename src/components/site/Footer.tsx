@@ -6,6 +6,7 @@ import { TelegramIcon } from "@/components/site/TelegramIcon";
 import { XIcon } from "@/components/site/XIcon";
 import { useContent } from "@/hooks/useContent";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { DEFAULT_WHATSAPP_NUMBER, resolveWhatsAppNumber, telegramHref, whatsAppHref } from "@/lib/chatLinks";
 
 const linkCols = [
   {
@@ -62,7 +63,7 @@ const linkCols = [
   },
 ];
 
-const WHATSAPP_NUMBER = "447700900123";
+const WHATSAPP_NUMBER = DEFAULT_WHATSAPP_NUMBER;
 const WHATSAPP_PREFILLS = [
   "Hi BoxCharge, I'd like to discuss merchant onboarding for my SaaS business.",
   "Hi BoxCharge, exploring cross-border payment options for our e-commerce store.",
@@ -114,12 +115,13 @@ function SocialIcon({
 export function Footer() {
   const { c } = useContent("global");
   const settings = useSiteSettings();
-  const waNumber = c("whatsapp_number", WHATSAPP_NUMBER);
+  const waNumber = resolveWhatsAppNumber(c("whatsapp_number", WHATSAPP_NUMBER));
   const [prefillIdx, setPrefillIdx] = useState(0);
   useEffect(() => {
     setPrefillIdx(Math.floor(Math.random() * WHATSAPP_PREFILLS.length));
   }, []);
-  const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(WHATSAPP_PREFILLS[prefillIdx])}`;
+  const waHref = whatsAppHref(waNumber, WHATSAPP_PREFILLS[prefillIdx]);
+  const tgHref = telegramHref(settings?.social_telegram);
 
   const blurb =
     settings?.footer_blurb ||
@@ -143,7 +145,7 @@ export function Footer() {
     { href: settings?.social_linkedin ?? "", label: "LinkedIn", icon: Linkedin },
     { href: settings?.social_facebook ?? "", label: "Facebook", icon: Facebook },
     { href: settings?.social_twitter ?? "", label: "X", icon: XIcon },
-    { href: settings?.social_telegram ?? "", label: "Telegram", icon: TelegramIcon },
+    { href: telegramHref(settings?.social_telegram), label: "Telegram", icon: TelegramIcon },
     { href: settings?.social_youtube ?? "", label: "YouTube", icon: Youtube },
   ].filter((s) => s.href);
 
@@ -169,6 +171,15 @@ export function Footer() {
               >
                 Start a Conversation
               </Link>
+              <a
+                href={tgHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-[#229ED9]/40 bg-[#229ED9]/10 px-5 py-2.5 text-xs font-semibold text-[#7dd3fc] transition hover:bg-[#229ED9]/20"
+              >
+                <TelegramIcon className="h-4 w-4" />
+                Telegram
+              </a>
               <a
                 href={waHref}
                 target="_blank"

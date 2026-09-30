@@ -165,7 +165,7 @@ function SettingsPage() {
             {field("social_linkedin", "LinkedIn URL")}
             {field("social_facebook", "Facebook URL")}
             {field("social_twitter", "Twitter / X URL")}
-            {field("social_telegram", "Telegram URL", "text", "https://t.me/boxcharge")}
+            {field("social_telegram", "Telegram URL", "text", "https://t.me/Go2Hub")}
             {field("social_youtube", "YouTube URL")}
           </div>
         </section>
